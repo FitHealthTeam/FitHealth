@@ -1,4 +1,4 @@
-package com.fithealthteam.fithealth;
+package com.fithealthteam.fithealth.huawei;
 
 import android.os.Bundle;
 
@@ -10,7 +10,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.fithealthteam.fithealth.databinding.ActivityMainBinding;
+import com.fithealthteam.fithealth.huawei.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 

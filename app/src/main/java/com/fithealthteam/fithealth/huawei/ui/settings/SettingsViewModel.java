@@ -1,4 +1,4 @@
-package com.fithealthteam.fithealth.ui.settings;
+package com.fithealthteam.fithealth.huawei.ui.settings;
 
 import androidx.lifecycle.ViewModel;
 

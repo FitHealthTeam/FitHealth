@@ -1,4 +1,4 @@
-package com.fithealthteam.fithealth.ui.exercise;
+package com.fithealthteam.fithealth.huawei.ui.exercise;
 
 import androidx.lifecycle.ViewModel;
 

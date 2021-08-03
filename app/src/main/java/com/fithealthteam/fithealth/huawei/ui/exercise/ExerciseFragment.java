@@ -1,4 +1,4 @@
-package com.fithealthteam.fithealth.ui.settings;
+package com.fithealthteam.fithealth.huawei.ui.exercise;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,26 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fithealthteam.fithealth.R;
+import com.fithealthteam.fithealth.huawei.R;
 
-public class SettingsFragment extends Fragment {
+public class ExerciseFragment extends Fragment {
 
-    private SettingsViewModel mViewModel;
+    private ExerciseViewModel mViewModel;
 
-    public static SettingsFragment newInstance() {
-        return new SettingsFragment();
+    public static ExerciseFragment newInstance() {
+        return new ExerciseFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.settings_fragment, container, false);
+        return inflater.inflate(R.layout.exercise_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ExerciseViewModel.class);
         // TODO: Use the ViewModel
     }
 

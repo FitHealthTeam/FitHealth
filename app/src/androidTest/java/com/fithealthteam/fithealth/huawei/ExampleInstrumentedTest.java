@@ -1,4 +1,4 @@
-package com.fithealthteam.fithealth;
+package com.fithealthteam.fithealth.huawei;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.fithealthteam.fithealth", appContext.getPackageName());
+        assertEquals("com.fithealthteam.fithealth.huawei", appContext.getPackageName());
     }
 }

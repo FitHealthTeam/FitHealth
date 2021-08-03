@@ -1,4 +1,4 @@
-package com.fithealthteam.fithealth.ui.exercise;
+package com.fithealthteam.fithealth.huawei.ui.community;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,26 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fithealthteam.fithealth.R;
+import com.fithealthteam.fithealth.huawei.R;
 
-public class ExerciseFragment extends Fragment {
+public class CommunityFragment extends Fragment {
 
-    private ExerciseViewModel mViewModel;
+    private CommunityViewModel mViewModel;
 
-    public static ExerciseFragment newInstance() {
-        return new ExerciseFragment();
+    public static CommunityFragment newInstance() {
+        return new CommunityFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.exercise_fragment, container, false);
+        return inflater.inflate(R.layout.community_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ExerciseViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(CommunityViewModel.class);
         // TODO: Use the ViewModel
     }
 

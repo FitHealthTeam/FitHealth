@@ -1,4 +1,4 @@
-package com.fithealthteam.fithealth;
+package com.fithealthteam.fithealth.huawei;
 
 import org.junit.Test;
 

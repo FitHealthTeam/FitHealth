@@ -1,4 +1,4 @@
-package com.fithealthteam.fithealth.ui.home;
+package com.fithealthteam.fithealth.huawei.ui.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

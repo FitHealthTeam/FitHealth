@@ -1,4 +1,4 @@
-package com.fithealthteam.fithealth.ui.home;
+package com.fithealthteam.fithealth.huawei.ui.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.fithealthteam.fithealth.R;
-import com.fithealthteam.fithealth.databinding.FragmentHomeBinding;
+import com.fithealthteam.fithealth.huawei.R;
+import com.fithealthteam.fithealth.huawei.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 
