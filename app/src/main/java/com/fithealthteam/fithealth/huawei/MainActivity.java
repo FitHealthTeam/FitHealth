@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         //if (is user) --> login  --> come back to main activity (boolean newUser = false)
         //else --> register user --> store to Db --> go back to main activity (boolean newUser = true)
 
+        //li-hao check for wether newUser is true --> if (newUser == true) --> go to create Diet plan activity to load data --> store to db --> intent back to here
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
