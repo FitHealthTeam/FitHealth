@@ -23,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        // if (not login) --> another user activity --
+        //if (is user) --> login  --> come back to main activity (boolean newUser = false)
+        //else --> register user --> store to Db --> go back to main activity (boolean newUser = true)
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
