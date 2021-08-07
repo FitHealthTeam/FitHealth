@@ -11,12 +11,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
 import com.fithealthteam.fithealth.huawei.R;
 
 public class CommunityFragment extends Fragment {
 
     private CommunityViewModel mViewModel;
+    private WebView webViewCommunity;
 
     public static CommunityFragment newInstance() {
         return new CommunityFragment();
@@ -25,14 +28,22 @@ public class CommunityFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.community_fragment, container, false);
+
+        View v = inflater.inflate(R.layout.community_fragment, container, false);
+
+        webViewCommunity = v.findViewById(R.id.communityWebView);
+        WebSettings webViewCommunitySettings = webViewCommunity.getSettings();
+        webViewCommunitySettings.setJavaScriptEnabled(true);
+        webViewCommunitySettings.setDomStorageEnabled(true);
+        webViewCommunity.loadUrl("https://fithealth.dra.agchosting.link/");
+
+        return v;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(CommunityViewModel.class);
         // TODO: Use the ViewModel
     }
-
 }

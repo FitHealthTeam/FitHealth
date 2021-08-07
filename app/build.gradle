@@ -18,7 +18,7 @@ android {
 
     signingConfigs {
         config {
-            storeFile file('C:\\Users\\User\\Documents\\GitHub\\FitHealth\\FitHealthTeam.jks')
+            storeFile file('C:\\FitHealthTeam.jks')
             storePassword 'MAD@FitHealth_2021'
             keyPassword 'MAD@FitHealth_2021'
             keyAlias 'key0'
