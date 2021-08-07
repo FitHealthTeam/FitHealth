@@ -38,11 +38,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override public void onBackPressed() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.communityFragment);
-        if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed) fragment).onBackPressed()) {
-            super.onBackPressed();
-        }
-    }
 
 }

@@ -9,8 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Message;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -22,7 +26,7 @@ import android.webkit.WebViewClient;
 import com.fithealthteam.fithealth.huawei.IOnBackPressed;
 import com.fithealthteam.fithealth.huawei.R;
 
-public class CommunityFragment extends Fragment implements IOnBackPressed {
+public class CommunityFragment extends Fragment {
 
     private CommunityViewModel mViewModel;
     private WebView webViewCommunity;
@@ -30,6 +34,17 @@ public class CommunityFragment extends Fragment implements IOnBackPressed {
     public static CommunityFragment newInstance() {
         return new CommunityFragment();
     }
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message message) {
+            switch (message.what) {
+                case 1:{
+                    webViewGoBack();
+                }break;
+            }
+        }
+    };
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -51,6 +66,20 @@ public class CommunityFragment extends Fragment implements IOnBackPressed {
             }
         });
 
+        webViewCommunity.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK
+                        && event.getAction() == MotionEvent.ACTION_UP
+                        && webViewCommunity.canGoBack()) {
+                    //send handler to invoke go back
+                    handler.sendEmptyMessage(1);
+                    return true;
+                }
+                return false;
+            }
+        });
+
         return v;
     }
 
@@ -63,15 +92,8 @@ public class CommunityFragment extends Fragment implements IOnBackPressed {
         // TODO: Use the ViewModel
     }
 
-    @Override
-    public boolean onBackPressed() {
-        if (webViewCommunity.canGoBack()) {
-            //action not popBackStack
-            webViewCommunity.goBack();
-            return true;
-        } else {
-            return false;
-        }
+    private void webViewGoBack(){
+        webViewCommunity.goBack();
     }
 
 }
