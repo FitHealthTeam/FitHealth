@@ -53,7 +53,9 @@ public class CommunityFragment extends Fragment {
         webViewCommunitySettings.setJavaScriptEnabled(true);
         webViewCommunitySettings.setDomStorageEnabled(true);
         webViewCommunitySettings.setJavaScriptCanOpenWindowsAutomatically(true);
+
         webViewCommunity.loadUrl("https://fithealth.dra.agchosting.link/index.html");
+
         webViewCommunity.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
@@ -62,6 +64,7 @@ public class CommunityFragment extends Fragment {
             }
         });
 
+        //listen for user to press back button
         webViewCommunity.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -78,8 +81,6 @@ public class CommunityFragment extends Fragment {
 
         return v;
     }
-
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
