@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //hide the top action bar and title
+        //getSupportActionBar().hide();
 
         // if (not login) --> another user activity --
         //if (is user) --> login  --> come back to main activity (boolean newUser = false)

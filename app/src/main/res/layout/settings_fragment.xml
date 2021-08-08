@@ -175,7 +175,7 @@
             android:id="@+id/achievement_badge"
             android:layout_width="37dp"
             android:layout_height="43dp"
-            android:src="@drawable/trophy_badge_" />
+            android:src="@drawable/trophy_badge" />
 
         <Space
             android:layout_width="20dp"
