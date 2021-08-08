@@ -38,7 +38,7 @@
         android:id="@+id/imageView4"
         android:layout_width="225dp"
         android:layout_height="0dp"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="5dp"
         android:layout_marginEnd="143dp"
         app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment_activity_main"
         app:layout_constraintEnd_toEndOf="parent"
