@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //hide the top action bar and title
-        //getSupportActionBar().hide();
+        getSupportActionBar().hide();
 
         // if (not login) --> another user activity --
         //if (is user) --> login  --> come back to main activity (boolean newUser = false)
