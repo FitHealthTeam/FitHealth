@@ -10,4 +10,7 @@
     <color name="graywhite">#FEF7F7</color>
     <color name="grey">#5C5C5C</color>
     <color name="green_btn">#61E97F</color>
+    <color name="yellow_layout">#F9E79F</color>
+    <color name="light_grey">#EAECEE</color>
+    <color name="light_dark_salmon">#E8C9A5</color>
 </resources>
