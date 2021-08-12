@@ -14,28 +14,55 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.databinding.FragmentHomeBinding;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
 
+    // slider images list
+    SliderView mSliderView;
+    int[] images = {R.drawable.healthtips_1,
+            R.drawable.healthtips_2,
+            R.drawable.healthtips_3,
+            R.drawable.healthtips_4,
+            R.drawable.healthtips_5};
+
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
+        //final TextView textView = binding.textHome;
+
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+                //textView.setText(s);
             }
         });
         return root;
+
+
+        // slider image
+        //mSliderView = findViewById(R.id.image_slider);
+
+        SliderAdapter sliderAdapter = new SliderAdapter(images);
+
+        mSliderView.setSliderAdapter(sliderAdapter);
+        mSliderView.setIndicatorAnimation(IndicatorAnimationType.NONE);
+        mSliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        mSliderView.startAutoCycle();
+
+
     }
 
     @Override

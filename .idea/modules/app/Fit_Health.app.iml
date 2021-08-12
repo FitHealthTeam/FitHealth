@@ -144,6 +144,7 @@
     <orderEntry type="library" name="Gradle: com.huawei.hms:hatool:5.0.5.300@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.huawei.android.hms:security-base:1.1.5.302@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.huawei.hms:dynamic-api:1.0.13.303@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.smarteist:autoimageslider:1.4.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.huawei.agconnect:datastore-core:1.6.0.300@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.huawei.agconnect:agconnect-api-core:1.6.0.300@aar" level="project" />
   </component>
