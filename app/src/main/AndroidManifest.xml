@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FitHealth">
         <activity
+            android:name=".dialogbox.AddExerciseDialogActivity"
+            android:exported="true" />
+        <activity
+            android:name=".dialogbox.AddMealDialogActivity"
+            android:exported="true" />
+        <activity
             android:name=".myplan.MyPlanActivity"
             android:exported="true" />
         <activity

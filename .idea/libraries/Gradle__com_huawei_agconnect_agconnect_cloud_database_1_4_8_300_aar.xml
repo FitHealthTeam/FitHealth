@@ -7,6 +7,9 @@
       <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-3/500f0521d372d765c6d6fd39068cd774/transformed/jetified-agconnect-cloud-database-1.4.8.300/AndroidManifest.xml" />
       <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-3/500f0521d372d765c6d6fd39068cd774/transformed/jetified-agconnect-cloud-database-1.4.8.300/res" />
       <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-3/500f0521d372d765c6d6fd39068cd774/transformed/jetified-agconnect-cloud-database-1.4.8.300/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/d954345da50d5350213cc1ef60e510e6/transformed/jetified-agconnect-cloud-database-1.4.8.300/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d954345da50d5350213cc1ef60e510e6/transformed/jetified-agconnect-cloud-database-1.4.8.300/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d954345da50d5350213cc1ef60e510e6/transformed/jetified-agconnect-cloud-database-1.4.8.300/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

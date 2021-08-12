@@ -155,13 +155,13 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/button2"
+                app:layout_constraintBottom_toTopOf="@+id/addMealBtn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/addMealBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
@@ -183,7 +183,7 @@
                 android:text="Add Exercise"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/button2" />
+                app:layout_constraintStart_toEndOf="@+id/addMealBtn" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
