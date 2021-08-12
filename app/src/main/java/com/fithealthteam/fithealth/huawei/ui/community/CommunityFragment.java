@@ -21,6 +21,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.fithealthteam.fithealth.huawei.R;
+import com.fithealthteam.fithealth.huawei.databinding.CommunityFragmentBinding;
 
 public class CommunityFragment extends Fragment {
 
@@ -47,6 +48,8 @@ public class CommunityFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.community_fragment, container, false);
+
+
 
         webViewCommunity = v.findViewById(R.id.communityWebView);
         WebSettings webViewCommunitySettings = webViewCommunity.getSettings();
