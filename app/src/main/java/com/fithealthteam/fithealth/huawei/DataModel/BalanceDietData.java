@@ -5,6 +5,12 @@ public class BalanceDietData {
     private int calories;
     private boolean completeStatus;
 
+    public BalanceDietData(String mealName, int calories, boolean completeStatus) {
+        this.mealName = mealName;
+        this.calories = calories;
+        this.completeStatus = completeStatus;
+    }
+
     public String getMealName() {
         return mealName;
     }

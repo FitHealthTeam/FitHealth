@@ -36,12 +36,12 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        /*homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //final TextView textView = binding.textHome;
+        final TextView textView = binding.textHome;
 
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -49,20 +49,23 @@ public class HomeFragment extends Fragment {
                 //textView.setText(s);
             }
         });
-        return root;
+        return root;*/
 
+
+        //view object pass in
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
+        mSliderView = v.findViewById(R.id.image_slider);
 
         // slider image
-        //mSliderView = findViewById(R.id.image_slider);
 
-        /*SliderAdapter sliderAdapter = new SliderAdapter(images);
+        SliderAdapter sliderAdapter = new SliderAdapter(images);
 
         mSliderView.setSliderAdapter(sliderAdapter);
         mSliderView.setIndicatorAnimation(IndicatorAnimationType.NONE);
         mSliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        mSliderView.startAutoCycle();*/
+        mSliderView.startAutoCycle();
 
-
+        return v;
     }
 
     @Override
