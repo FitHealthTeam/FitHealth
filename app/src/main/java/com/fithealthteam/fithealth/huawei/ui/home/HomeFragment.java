@@ -56,9 +56,7 @@ public class HomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         mSliderView = v.findViewById(R.id.image_slider);
 
-
         // slider image
-        //mSliderView = findViewById(R.id.image_slider);
 
         SliderAdapter sliderAdapter = new SliderAdapter(images);
 
