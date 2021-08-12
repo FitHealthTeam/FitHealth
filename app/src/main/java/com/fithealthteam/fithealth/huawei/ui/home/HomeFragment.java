@@ -55,12 +55,12 @@ public class HomeFragment extends Fragment {
         // slider image
         //mSliderView = findViewById(R.id.image_slider);
 
-        SliderAdapter sliderAdapter = new SliderAdapter(images);
+        /*SliderAdapter sliderAdapter = new SliderAdapter(images);
 
         mSliderView.setSliderAdapter(sliderAdapter);
         mSliderView.setIndicatorAnimation(IndicatorAnimationType.NONE);
         mSliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        mSliderView.startAutoCycle();
+        mSliderView.startAutoCycle();*/
 
 
     }
