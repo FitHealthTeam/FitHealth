@@ -41,7 +41,7 @@ public class ExerciseFragment extends Fragment {
         binding = ExerciseFragmentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        ConstraintLayout TaskIndicateLayout = root.findViewById(R.id.TaskIndicateLayout);
+        ConstraintLayout TaskIndicateLayout = v.findViewById(R.id.TaskIndicateLayout);
 
         TaskIndicateLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +52,7 @@ public class ExerciseFragment extends Fragment {
         });
 
         //return the view object
-        return root;
+        return v;
     }
 
     @Override

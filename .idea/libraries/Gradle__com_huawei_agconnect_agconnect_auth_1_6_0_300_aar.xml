@@ -10,9 +10,6 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/73a9d92ab6e7e1248454b3410ce071b6/transformed/jetified-agconnect-auth-1.6.0.300/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/73a9d92ab6e7e1248454b3410ce071b6/transformed/jetified-agconnect-auth-1.6.0.300/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/73a9d92ab6e7e1248454b3410ce071b6/transformed/jetified-agconnect-auth-1.6.0.300/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/27708847f9353ac288fe32f26af0854d/transformed/jetified-agconnect-auth-1.6.0.300/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/27708847f9353ac288fe32f26af0854d/transformed/jetified-agconnect-auth-1.6.0.300/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/27708847f9353ac288fe32f26af0854d/transformed/jetified-agconnect-auth-1.6.0.300/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

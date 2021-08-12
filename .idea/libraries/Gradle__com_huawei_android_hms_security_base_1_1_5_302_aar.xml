@@ -10,9 +10,6 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6292401d319e0405bbacbbb3d4fcefb3/transformed/jetified-security-base-1.1.5.302/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6292401d319e0405bbacbbb3d4fcefb3/transformed/jetified-security-base-1.1.5.302/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/6292401d319e0405bbacbbb3d4fcefb3/transformed/jetified-security-base-1.1.5.302/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e1a05de82bf47bdd0df647677e03b271/transformed/jetified-security-base-1.1.5.302/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/e1a05de82bf47bdd0df647677e03b271/transformed/jetified-security-base-1.1.5.302/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e1a05de82bf47bdd0df647677e03b271/transformed/jetified-security-base-1.1.5.302/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.huawei.android.hms/security-base/1.1.5.302/da39a3ee5e6b4b0d3255bfef95601890afd80709/security-base-1.1.5.302-javadoc.jar!/" />
