@@ -7,7 +7,22 @@
     tools:context=".authentication.registerActivity">
 
     <TextView
-        android:id="@+id/register_tv2"
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="212dp"
+        android:layout_marginEnd="276dp"
+        android:text="Verification Code"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/loginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="132dp"
@@ -33,80 +48,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/submit_register"
-        android:layout_width="301dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="536dp"
-        android:layout_marginEnd="42dp"
-        android:backgroundTint="#B0A5A5"
-        android:text="Create Account"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/fname_register"
-        android:layout_width="301dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="47dp"
-        android:layout_marginTop="316dp"
-        android:layout_marginEnd="45dp"
-        android:ems="10"
-        android:hint="Insert your first name"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="460dp"
-        android:layout_marginEnd="294dp"
-        android:text="Gender"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="47dp"
-        android:layout_marginTop="376dp"
-        android:layout_marginEnd="268dp"
-        android:text="Last Name"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="296dp"
-        android:layout_marginEnd="268dp"
-        android:text="First Name"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <EditText
         android:id="@+id/email_register"
         android:layout_width="301dp"
@@ -117,21 +58,6 @@
         android:ems="10"
         android:hint="Insert your email address"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="216dp"
-        android:layout_marginEnd="276dp"
-        android:text="Password"
-        android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -153,15 +79,134 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:id="@+id/verify_code"
+        android:layout_width="123dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="232dp"
+        android:layout_marginEnd="45dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/submit_register"
+        android:layout_width="301dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="600dp"
+        android:layout_marginEnd="42dp"
+        android:backgroundTint="#B0A5A5"
+        android:text="Create Account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
         android:id="@+id/password_register"
         android:layout_width="304dp"
         android:layout_height="48dp"
         android:layout_marginStart="47dp"
-        android:layout_marginTop="236dp"
+        android:layout_marginTop="304dp"
         android:layout_marginEnd="42dp"
         android:ems="10"
         android:hint="password"
         android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/lname_register"
+        android:layout_width="301dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="464dp"
+        android:layout_marginEnd="45dp"
+        android:ems="10"
+        android:hint="Insert your last name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/fname_register"
+        android:layout_width="301dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="384dp"
+        android:layout_marginEnd="45dp"
+        android:ems="10"
+        android:hint="Insert your first name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="528dp"
+        android:layout_marginEnd="294dp"
+        android:text="Gender"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="364dp"
+        android:layout_marginEnd="268dp"
+        android:text="First Name"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="444dp"
+        android:layout_marginEnd="268dp"
+        android:text="Last Name"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="284dp"
+        android:layout_marginEnd="276dp"
+        android:text="Password"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -182,43 +227,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RadioButton
-        android:id="@+id/male"
-        android:layout_width="99dp"
-        android:layout_height="26dp"
-        android:text="Male"
-        tools:ignore="TouchTargetSizeCheck"
-        tools:layout_editor_absoluteX="43dp"
-        tools:layout_editor_absoluteY="491dp" />
-
-    <Space
-        android:layout_width="28dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        tools:layout_editor_absoluteX="142dp"
-        tools:layout_editor_absoluteY="491dp" />
-
-    <RadioButton
-        android:id="@+id/female"
-        android:layout_width="118dp"
-        android:layout_height="25dp"
-        android:text="Female"
-        tools:ignore="TouchTargetSizeCheck"
-        tools:layout_editor_absoluteX="192dp"
-        tools:layout_editor_absoluteY="491dp" />
-
-    <EditText
-        android:id="@+id/lname_register"
-        android:layout_width="301dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="47dp"
-        android:layout_marginTop="396dp"
-        android:layout_marginEnd="45dp"
-        android:ems="10"
-        android:hint="Insert your last name"
-        android:inputType="textPersonName"
+    <Button
+        android:id="@+id/verify_request"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="224dp"
+        android:layout_marginEnd="77dp"
+        android:backgroundTint="#B0A5A5"
+        android:text="Obtain Code"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -227,9 +245,10 @@
         android:layout_width="300dp"
         android:layout_height="27dp"
         android:layout_marginStart="46dp"
-        android:layout_marginTop="512dp"
+        android:layout_marginTop="556dp"
         android:layout_marginEnd="47dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -238,8 +257,25 @@
             android:layout_height="27dp"
             android:orientation="horizontal">
 
-        </LinearLayout>
+            <RadioButton
+                android:id="@+id/male"
+                android:layout_width="99dp"
+                android:layout_height="26dp"
+                android:text="Male"
+                tools:ignore="TouchTargetSizeCheck" />
 
+            <Space
+                android:layout_width="28dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:id="@+id/female"
+                android:layout_width="118dp"
+                android:layout_height="25dp"
+                android:text="Female"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

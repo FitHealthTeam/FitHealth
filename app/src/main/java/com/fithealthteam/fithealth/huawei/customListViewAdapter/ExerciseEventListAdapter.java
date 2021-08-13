@@ -14,18 +14,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.fithealthteam.fithealth.huawei.DataModel.BalanceDietData;
+import com.fithealthteam.fithealth.huawei.CloudDB.Exercise;
+
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.myplan.MyPlanActivity;
 
 import java.util.ArrayList;
 
-public class ExerciseEventListAdapter extends ArrayAdapter<BalanceDietData> {
+public class ExerciseEventListAdapter extends ArrayAdapter<Exercise> {
 
-    ArrayList<BalanceDietData> list = new ArrayList<>();
+    ArrayList<Exercise> list = new ArrayList<>();
     Context context;
 
-    public ExerciseEventListAdapter(Context context, ArrayList<BalanceDietData> listItems){
+    public ExerciseEventListAdapter(Context context, ArrayList<Exercise> listItems){
         super(context, R.layout.custom_exercise_event_list_adapter, listItems);
         this.context = context;
         list = listItems;
@@ -40,13 +41,13 @@ public class ExerciseEventListAdapter extends ArrayAdapter<BalanceDietData> {
 
             //place the data to the list view layout
             TextView eventName = convertView.findViewById(R.id.EventName);
-            eventName.setText(list.get(position).getMealName());
+            eventName.setText(list.get(position).getExerciseType());
 
             TextView eventCalories = convertView.findViewById(R.id.EventCalories);
             eventCalories.setText(list.get(position).getCalories() + " kcal");
 
             CheckBox completeStatus = convertView.findViewById(R.id.EventCompleteStatus);
-            completeStatus.setChecked(list.get(position).isCompleteStatus());
+            completeStatus.setChecked(list.get(position).getCompleteStatus());
 
             //check box event listener for completeStatus
             completeStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
