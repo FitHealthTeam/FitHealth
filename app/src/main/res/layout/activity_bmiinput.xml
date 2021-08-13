@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:backgroundTint="#AFAAAA"
+    tools:context=".BMIInput.BMIInput_Activity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calculate Your BMI"
+        android:textSize="30dp"
+        android:textColor="#BCBABA"
+        android:layout_marginTop="200dp"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your Weight in (kg)"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="40dp"/>
+
+    <EditText
+        android:id="@+id/weight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Please insert your weight"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="40dp"
+        android:padding="12dp"
+        android:inputType="numberDecimal"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your Height in (cm)"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="40dp"/>
+
+    <EditText
+        android:id="@+id/height"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Please insert your height"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="40dp"
+        android:padding="12dp"
+        android:inputType="numberDecimal"/>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="SAVE"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="40dp"
+        android:backgroundTint="#B0A5A5" />
+
+
+
+
+</LinearLayout>
