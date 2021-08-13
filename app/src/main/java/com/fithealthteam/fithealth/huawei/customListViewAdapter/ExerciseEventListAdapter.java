@@ -63,6 +63,7 @@ public class ExerciseEventListAdapter extends ArrayAdapter<Exercise> {
             removeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //invoke remove method in implemented activity
                     MyPlanActivity.removeListViewItem(position);
                 }
             });

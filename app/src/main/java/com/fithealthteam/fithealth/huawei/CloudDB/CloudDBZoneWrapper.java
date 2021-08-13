@@ -3,6 +3,7 @@ package com.fithealthteam.fithealth.huawei.CloudDB;
 import android.content.Context;
 import android.util.Log;
 
+import com.fithealthteam.fithealth.huawei.myplan.MyPlanActivity;
 import com.huawei.agconnect.cloud.database.AGConnectCloudDB;
 import com.huawei.agconnect.cloud.database.CloudDBZone;
 import com.huawei.agconnect.cloud.database.CloudDBZoneConfig;
@@ -29,6 +30,8 @@ public class CloudDBZoneWrapper {
     private ListenerHandler mRegister;
 
     private CloudDBZoneConfig mConfig;
+
+    private exerciseUICallBack exerciseCallback = exerciseUICallBack.DEFAULT;
 
     //initialize Cloud DB in Application
     public static void initAGConnectCloudDB(Context context) {
@@ -84,6 +87,11 @@ public class CloudDBZoneWrapper {
         }
     }
 
+    //add callback for update UI
+    public void addExerciseCallBack(exerciseUICallBack UICallBack){
+        exerciseCallback = UICallBack;
+    }
+
     /*
     * CloudDB CRUD Function Here
     * */
@@ -102,12 +110,14 @@ public class CloudDBZoneWrapper {
         queryTask.addOnSuccessListener(new OnSuccessListener<CloudDBZoneSnapshot<Exercise>>() {
             @Override
             public void onSuccess(CloudDBZoneSnapshot<Exercise> exerciseCloudDBZoneSnapshot) {
-                extractExerciseResult(exerciseCloudDBZoneSnapshot);
+                List<Exercise> tempResult = extractExerciseResult(exerciseCloudDBZoneSnapshot);
+                exerciseCallback.onAddorQuery(tempResult);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(Exception e) {
                 //show failure message
+                exerciseCallback.showError("Query Failed");
             }
         });
     }
@@ -128,6 +138,34 @@ public class CloudDBZoneWrapper {
             snapshot.release();
         }
         return list;
+    }
+
+    public interface exerciseUICallBack {
+        exerciseUICallBack DEFAULT = new exerciseUICallBack() {
+            @Override
+            public void onAddorQuery(List<Exercise> exerciseList) {
+
+            }
+
+            @Override
+            public void onSubscribe(List<Exercise> exerciseList) {
+
+            }
+
+            @Override
+            public void onDelete(List<Exercise> exerciseList) {
+
+            }
+
+            @Override
+            public void showError(String error) {
+
+            }
+        };
+        void onAddorQuery(List<Exercise> exerciseList);
+        void onSubscribe(List<Exercise> exerciseList);
+        void onDelete(List<Exercise> exerciseList);
+        void showError(String error);
     }
 
 }

@@ -11,14 +11,16 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
+import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
 import com.fithealthteam.fithealth.huawei.CloudDB.Exercise;
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.customListViewAdapter.ExerciseEventListAdapter;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MyPlanActivity extends AppCompatActivity {
+public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrapper.exerciseUICallBack {
 
     static ListView listView;
     static ArrayList<Exercise> list = new ArrayList<>();
@@ -47,11 +49,37 @@ public class MyPlanActivity extends AppCompatActivity {
 
     //remove item from list
     public static void removeListViewItem(int position){
-
+        list.remove(position);
+        listView.setAdapter(adapter);
     }
 
     //update the check box status in the object
     public static void completeItem(int position, boolean checkStatus){
         Log.d("Status", position + " is " + checkStatus);
+        list.get(position).setCompleteStatus(checkStatus);
+        adapter.setNotifyOnChange(true);
     }
+
+    //call back function from the CloudDBZoneWrapper
+    @Override
+    public void onAddorQuery(List<Exercise> exerciseList) {
+        list.addAll(exerciseList);
+        listView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onSubscribe(List<Exercise> exerciseList) {
+
+    }
+
+    @Override
+    public void onDelete(List<Exercise> exerciseList) {
+
+    }
+
+    @Override
+    public void showError(String error) {
+
+    }
+
 }
