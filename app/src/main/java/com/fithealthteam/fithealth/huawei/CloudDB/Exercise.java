@@ -15,28 +15,35 @@ import com.huawei.agconnect.cloud.database.annotations.PrimaryKeys;
 import java.util.Date;
 
 /**
- * Definition of ObjectType Event.
+ * Definition of ObjectType Exercise.
  *
  * @since 2021-08-13
  */
 @PrimaryKeys({"id"})
-public final class Event extends CloudDBZoneObject {
+public final class Exercise extends CloudDBZoneObject {
     private String id;
 
-    private Date date;
+    private String exerciseType;
 
     @DefaultValue(booleanValue = false)
     private Boolean completeStatus;
 
     private Double calories;
 
-    private String eventType;
+    private Date date;
 
     private String user_id;
 
-    public Event() {
-        super(Event.class);
+    public Exercise() {
+        super(Exercise.class);
         this.completeStatus = false;
+    }
+
+    public Exercise(String exerciseType, Double calories, boolean completeStatus) {
+        super(Exercise.class);
+        this.exerciseType = exerciseType;
+        this.calories = calories;
+        this.completeStatus = completeStatus;
     }
 
     public void setId(String id) {
@@ -47,12 +54,12 @@ public final class Event extends CloudDBZoneObject {
         return id;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setExerciseType(String exerciseType) {
+        this.exerciseType = exerciseType;
     }
 
-    public Date getDate() {
-        return date;
+    public String getExerciseType() {
+        return exerciseType;
     }
 
     public void setCompleteStatus(Boolean completeStatus) {
@@ -71,12 +78,12 @@ public final class Event extends CloudDBZoneObject {
         return calories;
     }
 
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public String getEventType() {
-        return eventType;
+    public Date getDate() {
+        return date;
     }
 
     public void setUser_id(String user_id) {

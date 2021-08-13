@@ -95,13 +95,13 @@ public class CloudDBZoneWrapper {
             return;
         }
 
-        Task<CloudDBZoneSnapshot<Event>> queryTask = mCloudDBZone.executeQuery(
-                CloudDBZoneQuery.where(Event.class),
+        Task<CloudDBZoneSnapshot<Exercise>> queryTask = mCloudDBZone.executeQuery(
+                CloudDBZoneQuery.where(Exercise.class),
                 CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_FROM_CLOUD_ONLY);
 
-        queryTask.addOnSuccessListener(new OnSuccessListener<CloudDBZoneSnapshot<Event>>() {
+        queryTask.addOnSuccessListener(new OnSuccessListener<CloudDBZoneSnapshot<Exercise>>() {
             @Override
-            public void onSuccess(CloudDBZoneSnapshot<Event> exerciseCloudDBZoneSnapshot) {
+            public void onSuccess(CloudDBZoneSnapshot<Exercise> exerciseCloudDBZoneSnapshot) {
                 extractExerciseResult(exerciseCloudDBZoneSnapshot);
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -113,13 +113,13 @@ public class CloudDBZoneWrapper {
     }
 
     //extract it from cloudDB list object into normal List<Exercise> Object
-    public List<Event> extractExerciseResult(CloudDBZoneSnapshot<Event> snapshot){
-        CloudDBZoneObjectList<Event> cursor = snapshot.getSnapshotObjects();
-        List<Event> list = new ArrayList<>();
+    public List<Exercise> extractExerciseResult(CloudDBZoneSnapshot<Exercise> snapshot){
+        CloudDBZoneObjectList<Exercise> cursor = snapshot.getSnapshotObjects();
+        List<Exercise> list = new ArrayList<>();
 
         try{
             while (cursor.hasNext()){
-                Event item = cursor.next();
+                Exercise item = cursor.next();
                 list.add(item);
             }
         } catch (AGConnectCloudDBException e) {
