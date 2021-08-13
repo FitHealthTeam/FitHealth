@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FitHealth">
         <activity
+            android:name=".BMIInput.BMIInput_Activity"
+            android:exported="true" />
+        <activity
             android:name=".dialogbox.AddExerciseDialogActivity"
             android:exported="true" />
         <activity

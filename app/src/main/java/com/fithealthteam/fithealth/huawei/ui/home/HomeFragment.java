@@ -1,9 +1,12 @@
 package com.fithealthteam.fithealth.huawei.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.fithealthteam.fithealth.huawei.BMIInput.BMIInput_Activity;
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.databinding.FragmentHomeBinding;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
@@ -30,6 +34,9 @@ public class HomeFragment extends Fragment {
             R.drawable.healthtips_3,
             R.drawable.healthtips_4,
             R.drawable.healthtips_5};
+    CalendarView mCalenderView;
+    TextView dateSelected;
+    ImageView editBMI;
 
 
 
@@ -54,9 +61,10 @@ public class HomeFragment extends Fragment {
 
         //view object pass in
         View v = inflater.inflate(R.layout.fragment_home, container, false);
-        mSliderView = v.findViewById(R.id.image_slider);
+
 
         // slider image
+        mSliderView = v.findViewById(R.id.image_slider);
 
         SliderAdapter sliderAdapter = new SliderAdapter(images);
 
@@ -64,6 +72,41 @@ public class HomeFragment extends Fragment {
         mSliderView.setIndicatorAnimation(IndicatorAnimationType.NONE);
         mSliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         mSliderView.startAutoCycle();
+
+
+        // calender view
+        mCalenderView = v.findViewById(R.id.calendarView);
+        dateSelected = v.findViewById(R.id.dateSelected);
+
+        mCalenderView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                String date = dayOfMonth + "/" + (month + 1) + "/" + year;
+                dateSelected.setText(date);
+            }
+        });
+
+
+        // BMI Input
+        editBMI = v.findViewById(R.id.editBMI);
+
+        editBMI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), BMIInput_Activity.class);
+                startActivity(intent);
+            }
+        });
+
+        // BMI value
+
+        TextView tvBMI = v.findViewById(R.id.tvBMIResult);
+
+        String bmi = getArguments().getString("BMI");
+        tvBMI.setText(bmi);
+
+
+
 
         return v;
     }
