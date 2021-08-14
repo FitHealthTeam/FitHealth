@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -39,5 +40,18 @@ public class authenticateActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    //prevent back button
+    @Override
+    public void onBackPressed() {
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode== KeyEvent.KEYCODE_BACK) {
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

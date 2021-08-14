@@ -29,19 +29,20 @@ public class MainActivity extends AppCompatActivity {
         //hide the top action bar and title
         getSupportActionBar().hide();
 
+        // if (not login) --> another user activity --
         AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
         if(user.equals(null) || user.isAnonymous()){
             Intent intent = new Intent(getApplicationContext(), authenticateActivity.class);
             startActivity(intent);
+            finish();
         }else{
             Log.d("HMS Auth User", user.getEmail());
         }
 
-        // if (not login) --> another user activity --
-        //if (is user) --> login  --> come back to main activity (boolean newUser = false)
-        //else --> register user --> store to Db --> go back to main activity (boolean newUser = true)
-
         //li-hao check for whether newUser is true --> if (newUser == true) --> go to create Diet plan activity to load data --> store to db --> intent back to here
+        if(!user.equals(null) || !user.isAnonymous()) {
+
+        }
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
