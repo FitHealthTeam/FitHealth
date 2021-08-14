@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
-        if(user.isAnonymous()){
+        if(user == null){
             Intent intent = new Intent(getApplicationContext(), authenticateActivity.class);
             startActivity(intent);
 
