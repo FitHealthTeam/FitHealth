@@ -78,6 +78,8 @@ public class HomeFragment extends Fragment {
         mCalenderView = v.findViewById(R.id.calendarView);
         dateSelected = v.findViewById(R.id.dateSelected);
 
+        //mCalenderView.setDate(20210814);
+
         mCalenderView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {

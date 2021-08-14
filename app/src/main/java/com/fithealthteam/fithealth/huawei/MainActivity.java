@@ -23,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
+    //account for testing and debuging
+    //id = test@xkx.me
+    //password = abc123456
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
