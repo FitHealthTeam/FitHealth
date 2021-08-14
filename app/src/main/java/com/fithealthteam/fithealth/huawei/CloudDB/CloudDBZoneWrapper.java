@@ -42,6 +42,7 @@ public class CloudDBZoneWrapper {
     public CloudDBZoneWrapper() {
         mCloudDB = AGConnectCloudDB.getInstance();
     }
+
     //create an object type
     public void createObjectType() {
         try {
@@ -56,7 +57,7 @@ public class CloudDBZoneWrapper {
      * Call AGConnectCloudDB.openCloudDBZone to open a cloudDBZone.
      * We set it with cloud cache mode, and data can be store in local storage
      */
-    //zone always is fithealth
+    //our zone always is fithealth
     public void openCloudDBZone() {
         mConfig = new CloudDBZoneConfig("fithealth",
                 CloudDBZoneConfig.CloudDBZoneSyncProperty.CLOUDDBZONE_CLOUD_CACHE,
@@ -141,6 +142,12 @@ public class CloudDBZoneWrapper {
         return list;
     }
 
+    //add call back method
+    public void addCallBack(exerciseUICallBack InputUICallBack){
+        exerciseCallback = InputUICallBack;
+    }
+
+    //call back method for exercise object type
     public interface exerciseUICallBack {
         exerciseUICallBack DEFAULT = new exerciseUICallBack() {
             @Override
