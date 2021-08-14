@@ -14,17 +14,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.fithealthteam.fithealth.huawei.CloudDB.exercise;
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.myplan.MyPlanActivity;
 
 import java.util.ArrayList;
 
-public class ExerciseEventListAdapter extends ArrayAdapter<Exercise> {
+public class ExerciseEventListAdapter extends ArrayAdapter<exercise> {
 
-    ArrayList<Exercise> list = new ArrayList<>();
+    ArrayList<exercise> list = new ArrayList<>();
     Context context;
 
-    public ExerciseEventListAdapter(Context context, ArrayList<Exercise> listItems){
+    public ExerciseEventListAdapter(Context context, ArrayList<exercise> listItems){
         super(context, R.layout.custom_exercise_event_list_adapter, listItems);
         this.context = context;
         list = listItems;
