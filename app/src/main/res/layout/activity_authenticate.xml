@@ -4,35 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#FEF7F7"
+    android:background="@drawable/auth_background"
     tools:context=".authentication.authenticateActivity">
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="392dp"
-        android:layout_height="809dp"
-        android:layout_marginEnd="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/auth_background" />
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="150dp"
         android:layout_height="48dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="613dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginBottom="146dp"
         android:backgroundTint="@color/graywhite"
         android:text="Login"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/registerButton"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="#D5D5D5"
-        app:strokeWidth="1dp"
-        tools:layout_editor_absoluteX="33dp" />
+        app:strokeWidth="1dp" />
 
     <Button
         android:id="@+id/registerButton"
