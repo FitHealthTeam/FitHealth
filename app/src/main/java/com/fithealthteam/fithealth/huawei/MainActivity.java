@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         if(user == null){
             Intent intent = new Intent(getApplicationContext(), authenticateActivity.class);
             startActivity(intent);
-
         }else{
             Log.d("HMS Auth User", user.getEmail());
         }
