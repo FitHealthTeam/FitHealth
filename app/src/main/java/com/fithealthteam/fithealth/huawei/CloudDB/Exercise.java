@@ -15,43 +15,51 @@ import com.huawei.agconnect.cloud.database.annotations.PrimaryKeys;
 import java.util.Date;
 
 /**
- * Definition of ObjectType Exercise.
+ * Definition of ObjectType exercise.
  *
- * @since 2021-08-13
+ * @since 2021-08-14
  */
-@PrimaryKeys({"id"})
-public final class Exercise extends CloudDBZoneObject {
-    private String id;
+@PrimaryKeys({"id", "uid"})
+public final class exercise extends CloudDBZoneObject {
+    private Integer id;
+
+    private String uid;
 
     private String exerciseType;
 
-    @DefaultValue(booleanValue = false)
-    private Boolean completeStatus;
-
     private Double calories;
 
-    private Date date;
-
-    private String user_id;
-
-    public Exercise() {
-        super(Exercise.class);
-        this.completeStatus = false;
-    }
-
-    public Exercise(String exerciseType, Double calories, boolean completeStatus) {
-        super(Exercise.class);
+    public exercise(Class<? extends CloudDBZoneObject> aClass, String exerciseType, Double calories, Boolean completeStatus) {
+        super(aClass);
         this.exerciseType = exerciseType;
         this.calories = calories;
         this.completeStatus = completeStatus;
     }
 
-    public void setId(String id) {
+    @DefaultValue(booleanValue = false)
+    private Boolean completeStatus;
+
+    private Date date;
+
+    public exercise() {
+        super(exercise.class);
+        this.completeStatus = false;
+    }
+
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getUid() {
+        return uid;
     }
 
     public void setExerciseType(String exerciseType) {
@@ -62,14 +70,6 @@ public final class Exercise extends CloudDBZoneObject {
         return exerciseType;
     }
 
-    public void setCompleteStatus(Boolean completeStatus) {
-        this.completeStatus = completeStatus;
-    }
-
-    public Boolean getCompleteStatus() {
-        return completeStatus;
-    }
-
     public void setCalories(Double calories) {
         this.calories = calories;
     }
@@ -78,20 +78,20 @@ public final class Exercise extends CloudDBZoneObject {
         return calories;
     }
 
+    public void setCompleteStatus(Boolean completeStatus) {
+        this.completeStatus = completeStatus;
+    }
+
+    public Boolean getCompleteStatus() {
+        return completeStatus;
+    }
+
     public void setDate(Date date) {
         this.date = date;
     }
 
     public Date getDate() {
         return date;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
-
-    public String getUser_id() {
-        return user_id;
     }
 
 }

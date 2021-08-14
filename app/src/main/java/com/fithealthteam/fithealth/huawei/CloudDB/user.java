@@ -17,7 +17,7 @@ import java.util.Date;
 /**
  * Definition of ObjectType user.
  *
- * @since 2021-08-13
+ * @since 2021-08-14
  */
 @PrimaryKeys({"id"})
 @Indexes({"userId:id"})
@@ -29,12 +29,6 @@ public final class user extends CloudDBZoneObject {
     private String lastName;
 
     private String gender;
-
-    @NotNull
-    @DefaultValue(stringValue = "user@example.com")
-    private String email;
-
-    private String password;
 
     private Double weight;
 
@@ -51,7 +45,6 @@ public final class user extends CloudDBZoneObject {
 
     public user() {
         super(user.class);
-        this.email = "user@example.com";
         this.drinkWater = false;
         this.excessiveCalories = false;
         this.subscribeTips = false;
@@ -87,22 +80,6 @@ public final class user extends CloudDBZoneObject {
 
     public String getGender() {
         return gender;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setWeight(Double weight) {

@@ -56,8 +56,9 @@ public class CloudDBZoneWrapper {
      * Call AGConnectCloudDB.openCloudDBZone to open a cloudDBZone.
      * We set it with cloud cache mode, and data can be store in local storage
      */
-    public void openCloudDBZone(String zone) {
-        mConfig = new CloudDBZoneConfig(zone,
+    //zone always is fithealth
+    public void openCloudDBZone() {
+        mConfig = new CloudDBZoneConfig("fithealth",
                 CloudDBZoneConfig.CloudDBZoneSyncProperty.CLOUDDBZONE_CLOUD_CACHE,
                 CloudDBZoneConfig.CloudDBZoneAccessProperty.CLOUDDBZONE_PUBLIC);
         mConfig.setPersistenceEnabled(true);
@@ -103,14 +104,14 @@ public class CloudDBZoneWrapper {
             return;
         }
 
-        Task<CloudDBZoneSnapshot<Exercise>> queryTask = mCloudDBZone.executeQuery(
-                CloudDBZoneQuery.where(Exercise.class),
+        Task<CloudDBZoneSnapshot<exercise>> queryTask = mCloudDBZone.executeQuery(
+                CloudDBZoneQuery.where(exercise.class),
                 CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_FROM_CLOUD_ONLY);
 
-        queryTask.addOnSuccessListener(new OnSuccessListener<CloudDBZoneSnapshot<Exercise>>() {
+        queryTask.addOnSuccessListener(new OnSuccessListener<CloudDBZoneSnapshot<exercise>>() {
             @Override
-            public void onSuccess(CloudDBZoneSnapshot<Exercise> exerciseCloudDBZoneSnapshot) {
-                List<Exercise> tempResult = extractExerciseResult(exerciseCloudDBZoneSnapshot);
+            public void onSuccess(CloudDBZoneSnapshot<exercise> exerciseCloudDBZoneSnapshot) {
+                List<exercise> tempResult = extractExerciseResult(exerciseCloudDBZoneSnapshot);
                 exerciseCallback.onAddorQuery(tempResult);
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -123,13 +124,13 @@ public class CloudDBZoneWrapper {
     }
 
     //extract it from cloudDB list object into normal List<Exercise> Object
-    public List<Exercise> extractExerciseResult(CloudDBZoneSnapshot<Exercise> snapshot){
-        CloudDBZoneObjectList<Exercise> cursor = snapshot.getSnapshotObjects();
-        List<Exercise> list = new ArrayList<>();
+    public List<exercise> extractExerciseResult(CloudDBZoneSnapshot<exercise> snapshot){
+        CloudDBZoneObjectList<exercise> cursor = snapshot.getSnapshotObjects();
+        List<exercise> list = new ArrayList<>();
 
         try{
             while (cursor.hasNext()){
-                Exercise item = cursor.next();
+                exercise item = cursor.next();
                 list.add(item);
             }
         } catch (AGConnectCloudDBException e) {
@@ -143,17 +144,17 @@ public class CloudDBZoneWrapper {
     public interface exerciseUICallBack {
         exerciseUICallBack DEFAULT = new exerciseUICallBack() {
             @Override
-            public void onAddorQuery(List<Exercise> exerciseList) {
+            public void onAddorQuery(List<exercise> exerciseList) {
 
             }
 
             @Override
-            public void onSubscribe(List<Exercise> exerciseList) {
+            public void onSubscribe(List<exercise> exerciseList) {
 
             }
 
             @Override
-            public void onDelete(List<Exercise> exerciseList) {
+            public void onDelete(List<exercise> exerciseList) {
 
             }
 
@@ -162,9 +163,9 @@ public class CloudDBZoneWrapper {
 
             }
         };
-        void onAddorQuery(List<Exercise> exerciseList);
-        void onSubscribe(List<Exercise> exerciseList);
-        void onDelete(List<Exercise> exerciseList);
+        void onAddorQuery(List<exercise> exerciseList);
+        void onSubscribe(List<exercise> exerciseList);
+        void onDelete(List<exercise> exerciseList);
         void showError(String error);
     }
 

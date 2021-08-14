@@ -14,8 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.fithealthteam.fithealth.huawei.CloudDB.Exercise;
-
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.myplan.MyPlanActivity;
 
