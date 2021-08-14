@@ -1,8 +1,11 @@
 package com.fithealthteam.fithealth.huawei;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 
+import com.fithealthteam.fithealth.huawei.authentication.authenticateActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +16,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.fithealthteam.fithealth.huawei.databinding.ActivityMainBinding;
+import com.huawei.agconnect.auth.AGConnectAuth;
+import com.huawei.agconnect.auth.AGConnectUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +29,14 @@ public class MainActivity extends AppCompatActivity {
         //hide the top action bar and title
         getSupportActionBar().hide();
 
+        AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
+        if(user.isAnonymous()){
+            Intent intent = new Intent(getApplicationContext(), authenticateActivity.class);
+            startActivity(intent);
+
+        }else{
+            Log.d("HMS Auth User", user.getEmail());
+        }
         // if (not login) --> another user activity --
         //if (is user) --> login  --> come back to main activity (boolean newUser = false)
         //else --> register user --> store to Db --> go back to main activity (boolean newUser = true)

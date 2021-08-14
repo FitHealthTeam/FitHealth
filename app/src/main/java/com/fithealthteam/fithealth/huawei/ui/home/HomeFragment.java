@@ -86,7 +86,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
+/*
         // BMI Input
         editBMI = v.findViewById(R.id.editBMI);
 
@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment {
 
         String bmi = getArguments().getString("BMI");
         tvBMI.setText(bmi);
-
+*/
 
 
 

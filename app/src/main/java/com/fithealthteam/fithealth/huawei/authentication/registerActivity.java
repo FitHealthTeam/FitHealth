@@ -115,9 +115,7 @@ public class registerActivity extends AppCompatActivity {
                                 // After an account is created, the user has signed in by default.
                                 AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
 
-
                                 //remember to update name gender
-
 
                                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                                 startActivity(intent);
