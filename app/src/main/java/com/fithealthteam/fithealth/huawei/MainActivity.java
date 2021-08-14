@@ -30,12 +30,13 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
-        if(user == null){
+        if(user.equals(null) || user.isAnonymous()){
             Intent intent = new Intent(getApplicationContext(), authenticateActivity.class);
             startActivity(intent);
         }else{
             Log.d("HMS Auth User", user.getEmail());
         }
+
         // if (not login) --> another user activity --
         //if (is user) --> login  --> come back to main activity (boolean newUser = false)
         //else --> register user --> store to Db --> go back to main activity (boolean newUser = true)

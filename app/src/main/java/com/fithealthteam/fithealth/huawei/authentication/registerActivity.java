@@ -52,8 +52,8 @@ public class registerActivity extends AppCompatActivity {
         //authentication
         VerifyCodeSettings settings = new VerifyCodeSettings.Builder()
                 .action(VerifyCodeSettings.ACTION_REGISTER_LOGIN)
-                .sendInterval(30)
-                .locale(Locale.CHINA)
+                .sendInterval(5)
+                .locale(Locale.SIMPLIFIED_CHINESE)
                 .build();
         Button verifyrqt = findViewById(R.id.verify_request);
         EditText verifyCode = findViewById(R.id.verify_code);
@@ -61,7 +61,7 @@ public class registerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!registerEmail.getText().toString().trim().equals(null) || !registerEmail.getText().toString().trim().isEmpty()) {
-                    Task<VerifyCodeResult> task = AGConnectAuth.getInstance().requestVerifyCode(String.valueOf(registerEmail.getText()), settings);
+                    Task<VerifyCodeResult> task = AGConnectAuth.getInstance().requestVerifyCode(registerEmail.getText().toString().trim(), settings);
                     task.addOnSuccessListener(TaskExecutors.uiThread(), new OnSuccessListener<VerifyCodeResult>() {
                         @Override
                         public void onSuccess(VerifyCodeResult verifyCodeResult) {
