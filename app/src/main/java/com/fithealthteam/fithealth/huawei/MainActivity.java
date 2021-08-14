@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         // if (not login) --> another user activity --
         AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
-        if(user.equals(null) || user.isAnonymous()){
+        if(user == null){
             Intent intent = new Intent(getApplicationContext(), authenticateActivity.class);
             startActivity(intent);
             finish();
@@ -40,9 +40,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //li-hao check for whether newUser is true --> if (newUser == true) --> go to create Diet plan activity to load data --> store to db --> intent back to here
-        if(!user.equals(null) || !user.isAnonymous()) {
 
-        }
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

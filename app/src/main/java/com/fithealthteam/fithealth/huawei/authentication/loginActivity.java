@@ -32,27 +32,32 @@ public class loginActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
-        if(user.isAnonymous() || user.equals(null)) {
+        if(user == null) {
             EditText emailLogin = findViewById(R.id.email_login);
             EditText passLogin = findViewById(R.id.password_login);
             Button loginBtn = findViewById(R.id.submit_login);
 
-            AGConnectAuthCredential credential = EmailAuthProvider.credentialWithPassword(emailLogin.getText().toString().trim(), passLogin.getText().toString());
-            AGConnectAuth.getInstance().signIn(credential)
-                    .addOnSuccessListener(new OnSuccessListener<SignInResult>() {
-                        @Override
-                        public void onSuccess(SignInResult signInResult) {
-                            Toast.makeText(getBaseContext(), "Successfully Login!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(Exception e) {
-                            Toast.makeText(getBaseContext(), "Invalid password or email address!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+            loginBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AGConnectAuthCredential credential = EmailAuthProvider.credentialWithPassword(emailLogin.getText().toString().trim(), passLogin.getText().toString());
+                    AGConnectAuth.getInstance().signIn(credential)
+                            .addOnSuccessListener(new OnSuccessListener<SignInResult>() {
+                                @Override
+                                public void onSuccess(SignInResult signInResult) {
+                                    Toast.makeText(getBaseContext(), "Successfully Login!", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(Exception e) {
+                                    Toast.makeText(getBaseContext(), "Invalid password or email address!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+            });
 
         }
 
