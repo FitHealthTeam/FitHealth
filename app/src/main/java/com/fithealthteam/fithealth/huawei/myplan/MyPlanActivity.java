@@ -6,22 +6,29 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
 import com.fithealthteam.fithealth.huawei.CloudDB.exercise;
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.customListViewAdapter.ExerciseEventListAdapter;
+import com.huawei.agconnect.auth.AGConnectAuth;
+import com.huawei.agconnect.auth.AGConnectUser;
+import com.huawei.agconnect.cloud.database.CloudDBZoneQuery;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrapper.exerciseUICallBack {
+public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrapper.exerciseUICallBack, ExerciseEventListAdapter.ExerciseListCallBack {
 
-    static ListView listView;
-    static ArrayList<exercise> list = new ArrayList<>();
-    static ExerciseEventListAdapter adapter;
+    private ListView listView;
+    private ArrayList<exercise> list = new ArrayList<>();
+    private ExerciseEventListAdapter adapter;
+
+    private HashMap<Integer, Integer> listPosition = new HashMap<>();
 
     private Handler handler = null;
     private CloudDBZoneWrapper cloudDBZoneWrapperInstance;
@@ -77,21 +84,32 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
 
         //setup list adapter
         adapter = new ExerciseEventListAdapter(getApplicationContext(),list);
+        adapter.addExerciseAdapterCallBack(MyPlanActivity.this);
         //listView.setAdapter(adapter);
 
     }
 
 
     //remove item from list
-    public static void removeListViewItem(int position){
+    public void removeItem(int position){
+        //execute delete function to delete item in cloud db
+        cloudDBZoneWrapperInstance.deleteExercise(list.get(position));
+
         list.remove(position);
+        //update the list view
         listView.setAdapter(adapter);
     }
 
     //update the check box status in the object
-    public static void completeItem(int position, boolean checkStatus){
+    public void completeItem(int position, boolean checkStatus){
         Log.d("Status", position + " is " + checkStatus);
         list.get(position).setCompleteStatus(checkStatus);
+
+        //get currentposition to exercise ID
+        Integer currentPosition = listPosition.get(position);
+
+        //execute the upsert function to update the exercise item
+        cloudDBZoneWrapperInstance.upsertExercise(list.get(position));
         adapter.setNotifyOnChange(true);
     }
 
@@ -101,7 +119,10 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
             cloudDBZoneWrapperInstance.addCallBack(MyPlanActivity.this);
             cloudDBZoneWrapperInstance.createObjectType();
             cloudDBZoneWrapperInstance.openCloudDBZone();
-            cloudDBZoneWrapperInstance.queryAllExercise();
+            AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
+            CloudDBZoneQuery<exercise> query = CloudDBZoneQuery.where(exercise.class)
+                    .equalTo("uid", user.getUid());
+            cloudDBZoneWrapperInstance.queryExercise(query);
         }, 1000);
     }
 
@@ -109,9 +130,20 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
     @Override
     public void onAddorQuery(List<exercise> exerciseList) {
         handler.post(()->{
+            double inputCalories = 0.00;
+
             list.clear();
-            list.addAll(exerciseList);
+            listPosition.clear();
+            for(int i = 0; i<exerciseList.size(); i++){
+                list.add(exerciseList.get(i));
+                listPosition.put(i, exerciseList.get(i).getId());
+                inputCalories += exerciseList.get(i).getCalories();
+            }
             listView.setAdapter(adapter);
+
+            TextView inputCaloriesText = findViewById(R.id.dailyCaloriesInput);
+            inputCaloriesText.setText( inputCalories + " kcal");
+
         });
     }
 

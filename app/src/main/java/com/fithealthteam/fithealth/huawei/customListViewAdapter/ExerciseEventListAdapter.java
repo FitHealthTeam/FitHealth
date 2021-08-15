@@ -24,6 +24,7 @@ public class ExerciseEventListAdapter extends ArrayAdapter<exercise> {
 
     ArrayList<exercise> list = new ArrayList<>();
     Context context;
+    ExerciseListCallBack adpaterCallback;
 
     public ExerciseEventListAdapter(Context context, ArrayList<exercise> listItems){
         super(context, R.layout.custom_exercise_event_list_adapter, listItems);
@@ -53,7 +54,7 @@ public class ExerciseEventListAdapter extends ArrayAdapter<exercise> {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     //process the complete check box when there is changes
-                    MyPlanActivity.completeItem(position, completeStatus.isChecked());
+                    adpaterCallback.completeItem(position, completeStatus.isChecked());
                 }
             });
 
@@ -63,13 +64,22 @@ public class ExerciseEventListAdapter extends ArrayAdapter<exercise> {
                 @Override
                 public void onClick(View v) {
                     //invoke remove method in implemented activity
-                    MyPlanActivity.removeListViewItem(position);
+                    adpaterCallback.removeItem(position);
                 }
             });
 
         }
         //return super.getView(position, convertView, parent);
         return convertView;
+    }
+
+    public void addExerciseAdapterCallBack(ExerciseListCallBack callback){
+        adpaterCallback = callback;
+    }
+
+    public  interface ExerciseListCallBack{
+        void removeItem(int position);
+        void completeItem(int position, boolean completeStatus);
     }
 
 }
