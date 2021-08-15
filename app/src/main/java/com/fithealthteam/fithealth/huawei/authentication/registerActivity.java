@@ -2,30 +2,24 @@ package com.fithealthteam.fithealth.huawei.authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
-import com.fithealthteam.fithealth.huawei.CloudDB.exercise;
 import com.fithealthteam.fithealth.huawei.CloudDB.user;
 import com.fithealthteam.fithealth.huawei.MainActivity;
 import com.fithealthteam.fithealth.huawei.R;
-import com.fithealthteam.fithealth.huawei.myplan.MyPlanActivity;
 import com.huawei.agconnect.auth.AGConnectAuth;
-import com.huawei.agconnect.auth.AGConnectAuthCredential;
 import com.huawei.agconnect.auth.AGConnectUser;
-import com.huawei.agconnect.auth.EmailAuthProvider;
 import com.huawei.agconnect.auth.EmailUser;
 import com.huawei.agconnect.auth.SignInResult;
 import com.huawei.agconnect.auth.VerifyCodeResult;
@@ -36,7 +30,9 @@ import com.huawei.hmf.tasks.OnSuccessListener;
 import com.huawei.hmf.tasks.Task;
 import com.huawei.hmf.tasks.TaskExecutors;
 
-import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -44,6 +40,7 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
 
     private Handler handler = null;
     private CloudDBZoneWrapper cloudDBZoneWrapper;
+    AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
 
     public registerActivity() {
         cloudDBZoneWrapper = new CloudDBZoneWrapper();
@@ -134,12 +131,27 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
                             @Override
                             public void onSuccess(SignInResult signInResult) {
                                 // After an account is created, the user has signed in by default.
-                                AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
-
-                                //remember to update name gender
-
+                                user newUser = new user();
+                                newUser.setId(user.getUid());
+                                newUser.setFirstName(fname.getText().toString());
+                                newUser.setLastName(lname.getText().toString());
+                                if(male.isSelected()) {
+                                    newUser.setGender("Male");
+                                }
+                                if(female.isChecked()) {
+                                    newUser.setGender("Female");
+                                }
+                                Date dobDate = null;
+                                try {
+                                    dobDate = new SimpleDateFormat("yyyy-MM-dd").parse(dob.getText().toString());
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                newUser.setDob(dobDate);
+                                addUserInfo(newUser);
                                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -173,6 +185,22 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
                     .equalTo("uid", user.getUid());
             cloudDBZoneWrapper.queryUser(query);
         }, 1000);
+    }
+
+    public void addUserInfo (user user) {
+
+        CloudDBZoneQuery<user> tempQuery  = CloudDBZoneQuery.where(user.class)
+                .equalTo("uid", this.user.getUid());
+
+        handler.post(()->{
+            cloudDBZoneWrapper.upsertUser(user);
+        });
+        onDestroy();
+    }
+
+    protected void onDestroy() {
+        handler.post(cloudDBZoneWrapper::closeCloudDBZone);
+        super.onDestroy();
     }
 
     @Override
