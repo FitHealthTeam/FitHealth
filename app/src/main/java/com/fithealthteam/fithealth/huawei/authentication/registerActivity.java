@@ -37,9 +37,10 @@ import com.huawei.hmf.tasks.Task;
 import com.huawei.hmf.tasks.TaskExecutors;
 
 import java.text.DateFormat;
+import java.util.List;
 import java.util.Locale;
 
-public class registerActivity extends AppCompatActivity {
+public class registerActivity extends AppCompatActivity implements CloudDBZoneWrapper.userUICallBack {
 
     private Handler handler = null;
     private CloudDBZoneWrapper cloudDBZoneWrapper;
@@ -171,5 +172,25 @@ public class registerActivity extends AppCompatActivity {
                     .equalTo("uid", user.getUid());
             cloudDBZoneWrapper.queryUser(query);
         }, 1000);
+    }
+
+    @Override
+    public void onAddorQuery(List<user> userList) {
+
+    }
+
+    @Override
+    public void onSubscribe(List<user> userList) {
+
+    }
+
+    @Override
+    public void onDelete(List<user> userList) {
+
+    }
+
+    @Override
+    public void showError(String error) {
+
     }
 }
