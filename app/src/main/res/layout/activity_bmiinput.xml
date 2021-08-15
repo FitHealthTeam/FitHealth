@@ -9,14 +9,19 @@
     android:backgroundTint="#AFAAAA"
     tools:context=".BMIInput.BMIInput_Activity">
 
-    <TextView
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bmi1"/>
+
+    <!--<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Calculate Your BMI"
         android:textSize="30dp"
         android:textColor="#BCBABA"
-        android:layout_marginTop="200dp"
-        android:layout_gravity="center" />
+        android:layout_marginTop="-100dp"
+        android:layout_gravity="center" /> -->
 
     <TextView
         android:layout_width="match_parent"
@@ -24,7 +29,7 @@
         android:text="Your Weight in (kg)"
         android:textSize="16dp"
         android:textStyle="bold"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="-20dp"
         android:layout_marginHorizontal="40dp"/>
 
     <EditText
@@ -64,6 +69,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginHorizontal="40dp"
         android:backgroundTint="#B0A5A5" />
+
 
 
 

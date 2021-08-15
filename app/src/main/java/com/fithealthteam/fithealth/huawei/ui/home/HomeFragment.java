@@ -1,13 +1,28 @@
 package com.fithealthteam.fithealth.huawei.ui.home;
 
+import static android.content.Context.ALARM_SERVICE;
+
+import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +37,8 @@ import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnima
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
+import java.util.Locale;
+
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
@@ -34,9 +51,16 @@ public class HomeFragment extends Fragment {
             R.drawable.healthtips_3,
             R.drawable.healthtips_4,
             R.drawable.healthtips_5};
+
     CalendarView mCalenderView;
     TextView dateSelected;
     ImageView editBMI;
+
+    private int currentProgress = 0;
+    private ProgressBar progressBar;
+    private Button btnSet,btnTimePick;
+
+    int minutes,seconds;
 
 
 
@@ -88,8 +112,8 @@ public class HomeFragment extends Fragment {
             }
         });*/
 
-/*
-        // BMI Input
+
+        // TO BMI Input Page
         editBMI = v.findViewById(R.id.editBMI);
 
         editBMI.setOnClickListener(new View.OnClickListener() {
@@ -100,17 +124,114 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // BMI value
+        // Retrieve BMI value
 
         TextView tvBMI = v.findViewById(R.id.tvBMIResult);
 
-        String bmi = getArguments().getString("BMI");
-        tvBMI.setText(bmi);
-*/
+        String passedBMI = getArguments().getString("BMI");
+        tvBMI.setText(passedBMI);
+
+        // Progress Bar
+        progressBar = v.findViewById(R.id.bmiIndicator);
+
+        if(passedBMI != null){
+            float i = Float.parseFloat(passedBMI);
+            //int a = Math.round(i);
+            if(i>=18.5 && i<=24.9){
+                currentProgress = 70;
+            }else if(i>=25 && i<=29.9){
+                currentProgress = 45;
+            }else if(i>=30 && i<=39.9){
+                currentProgress = 30;
+            }else {
+                currentProgress = 10;
+            }
+            progressBar.setProgress(currentProgress);
+        }
+
+        // Time Picker
+        btnTimePick = v.findViewById(R.id.btnTimePick);
+
+        btnTimePick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int selectedMinute, int selectedSecond) {
+                        minutes = selectedMinute;
+                        seconds = selectedSecond;
+                        btnTimePick.setText(String.format(Locale.getDefault(),"%02d:%02d",minutes,seconds));
+                    }
+                };
+                int style = AlertDialog.THEME_HOLO_LIGHT;
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(v.getContext(),style,onTimeSetListener,minutes,seconds,true);
+
+                timePickerDialog.setTitle("Select Time");
+                timePickerDialog.show();
+            }
+        });
+
+        // for fragment
+        //SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+
+        // Notification
+        createNotificationChannel();
+
+        btnSet = v.findViewById(R.id.btnSet);
+
+        btnSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(minutes == 0 || seconds == 0 ){
+                    Toast.makeText(v.getContext(), "Please Pick a Time First!", Toast.LENGTH_SHORT).show();
+                }else{
+
+                    Toast.makeText(v.getContext(), "Reminder Set!", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(v.getContext(),ReminderBroadcast.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(v.getContext(),0,intent,0);
+
+                    AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
+
+                    long timeAtButtonClick = System.currentTimeMillis();
+
+                    long minuteFromPick = minutes * 1000 * 60;
+                    long secondsFromPick = seconds * 1000;
+
+                    //long tenSecondsInMillis = 1000 * 10;
+
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,
+                            timeAtButtonClick + minuteFromPick + secondsFromPick,pendingIntent);
+                }
+
+                btnTimePick.setText("SET!");
+
+
+            }
+        });
+
 
 
 
         return v;
+    }
+
+    private void createNotificationChannel(){
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "ReminderChannel";
+            String description = "Channel for User Reminder";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("notify",name,importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+
+        }
+
     }
 
     @Override
