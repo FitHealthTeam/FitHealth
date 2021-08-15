@@ -161,6 +161,7 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
         });
     }
 
+
     //Initialize Cloud DB Wrapper to use
     public void initCloudDBWrapper(){
         handler.postDelayed(() -> {
