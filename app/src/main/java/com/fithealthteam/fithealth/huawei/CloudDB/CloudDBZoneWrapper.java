@@ -81,7 +81,6 @@ public class CloudDBZoneWrapper {
     //close the cloudDB zone
     public void closeCloudDBZone() {
         try {
-            mRegister.remove();
             mCloudDB.closeCloudDBZone(mCloudDBZone);
         } catch (AGConnectCloudDBException e) {
             Log.w(TAG, "closeCloudDBZone: " + e.getMessage());
@@ -196,7 +195,7 @@ public class CloudDBZoneWrapper {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(Exception e) {
-                exerciseCallback.showError("Upsert or Insert failed !");
+                exerciseCallback.showError("Insert or update was failed !");
             }
         });
     }
