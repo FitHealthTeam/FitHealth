@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         // if (not login) --> another user activity --
-        AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
+       AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
         if(user == null){
             Intent intent = new Intent(getApplicationContext(), authenticateActivity.class);
             startActivity(intent);
@@ -52,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d("HMS Auth User", user.getEmail());
             Log.d("HMS Auth User UID", user.getUid());
         }
-        }
-
 
         //li-hao check for whether newUser is true --> if (newUser == true) --> go to create Diet plan activity to load data --> store to db --> intent back to here
 
