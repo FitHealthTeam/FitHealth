@@ -4,18 +4,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
+import com.fithealthteam.fithealth.huawei.CloudDB.exercise;
+import com.fithealthteam.fithealth.huawei.CloudDB.user;
 import com.fithealthteam.fithealth.huawei.MainActivity;
 import com.fithealthteam.fithealth.huawei.R;
+import com.fithealthteam.fithealth.huawei.myplan.MyPlanActivity;
 import com.huawei.agconnect.auth.AGConnectAuth;
 import com.huawei.agconnect.auth.AGConnectAuthCredential;
 import com.huawei.agconnect.auth.AGConnectUser;
@@ -24,14 +30,23 @@ import com.huawei.agconnect.auth.EmailUser;
 import com.huawei.agconnect.auth.SignInResult;
 import com.huawei.agconnect.auth.VerifyCodeResult;
 import com.huawei.agconnect.auth.VerifyCodeSettings;
+import com.huawei.agconnect.cloud.database.CloudDBZoneQuery;
 import com.huawei.hmf.tasks.OnFailureListener;
 import com.huawei.hmf.tasks.OnSuccessListener;
 import com.huawei.hmf.tasks.Task;
 import com.huawei.hmf.tasks.TaskExecutors;
 
+import java.text.DateFormat;
 import java.util.Locale;
 
 public class registerActivity extends AppCompatActivity {
+
+    private Handler handler = null;
+    private CloudDBZoneWrapper cloudDBZoneWrapper;
+
+    public registerActivity() {
+        cloudDBZoneWrapper = new CloudDBZoneWrapper();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +61,7 @@ public class registerActivity extends AppCompatActivity {
         EditText lname = findViewById(R.id.lname_register);
         RadioButton male = findViewById(R.id.male);
         RadioButton female = findViewById(R.id.female);
+        EditText dob = findViewById(R.id.dob);
         Button submit = findViewById(R.id.submit_register);
         TextView login = findViewById(R.id.loginBtn);
 
@@ -74,7 +90,7 @@ public class registerActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Toast.makeText(getBaseContext(), "Please enter a valid email address!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Please enter an email address!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -85,6 +101,10 @@ public class registerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(verifyCode.getText().toString().trim().equals(null) || verifyCode.getText().toString().trim().isEmpty()) {
                     Toast.makeText(getBaseContext(), "Please insert the authentication code!", Toast.LENGTH_SHORT).show();
+                }
+
+                if (registerEmail.getText().toString().trim().equals(null) || registerEmail.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getBaseContext(), "Please enter an email address!", Toast.LENGTH_SHORT).show();
                 }
 
                 if(password.getText().toString().equals(null) || password.getText().toString().isEmpty()) {
@@ -138,6 +158,18 @@ public class registerActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
+    //Initialize Cloud DB Wrapper to use
+    public void initCloudDBWrapper(){
+        handler.postDelayed(() -> {
+            cloudDBZoneWrapper.addCallBack2(registerActivity.this);
+            cloudDBZoneWrapper.createObjectType();
+            cloudDBZoneWrapper.openCloudDBZone();
+            AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
+            CloudDBZoneQuery<user> query = CloudDBZoneQuery.where(user.class)
+                    .equalTo("uid", user.getUid());
+            cloudDBZoneWrapper.queryUser(query);
+        }, 1000);
     }
 }

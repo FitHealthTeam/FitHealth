@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.authentication.authenticateActivity;
+import com.fithealthteam.fithealth.huawei.authentication.passResetActivity;
 import com.huawei.agconnect.auth.AGConnectAuth;
 
 
@@ -75,6 +76,14 @@ public class SettingsFragment extends Fragment {
         * */
 
 
+        ImageView profileUpdate = v.findViewById(R.id.info_update);
+        profileUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), passResetActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return v;
     }

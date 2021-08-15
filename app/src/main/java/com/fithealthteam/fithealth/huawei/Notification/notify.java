@@ -14,7 +14,7 @@ public class notify extends Application {
         super.onCreate();
     }
 
-    private void createNotificationChannels() {
+    private void createNotificationChannel() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel1 = new NotificationChannel(
                     CHANNEL_ID_1,

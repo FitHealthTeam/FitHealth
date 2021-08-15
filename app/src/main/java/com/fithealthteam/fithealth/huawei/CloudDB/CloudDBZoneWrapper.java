@@ -35,6 +35,7 @@ public class CloudDBZoneWrapper {
 
     private exerciseUICallBack exerciseCallback = exerciseUICallBack.DEFAULT;
 
+    private userUICallBack userCallback = userUICallBack.DEFAULT;
 
     //get AGConnectCloudDB instance
     public CloudDBZoneWrapper() {
@@ -98,6 +99,11 @@ public class CloudDBZoneWrapper {
 
     //add callback for update UI
     public void addExerciseCallBack(exerciseUICallBack UICallBack){
+        exerciseCallback = UICallBack;
+    }
+
+    //add callback for update UI
+    public void addUserCallBack(exerciseUICallBack UICallBack){
         exerciseCallback = UICallBack;
     }
 
@@ -239,6 +245,143 @@ public class CloudDBZoneWrapper {
         void onAddorQuery(List<exercise> exerciseList);
         void onSubscribe(List<exercise> exerciseList);
         void onDelete(List<exercise> exerciseList);
+        void showError(String error);
+    }
+
+
+    //CRUD for user info
+    //query all user data from cloud
+    public void queryAllUser() {
+        if (mCloudDBZone == null) {
+            Log.w(TAG, "CloudDBZone is null, try re-open it");
+            return;
+        }
+        Task<CloudDBZoneSnapshot<user>> queryTask = mCloudDBZone.executeQuery(
+                CloudDBZoneQuery.where(user.class),
+                CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_FROM_CLOUD_ONLY);
+        queryTask.addOnSuccessListener(new OnSuccessListener<CloudDBZoneSnapshot<user>>() {
+            @Override
+            public void onSuccess(CloudDBZoneSnapshot<user> usersnapshot) {
+                List<user> tempResult = extractuserResult(usersnapshot);
+                userCallback.onAddorQuery(tempResult);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                userCallback.showError("Query user list from cloud failed");
+            }
+        });
+    }
+
+    //query particular user data
+    public void queryUser(CloudDBZoneQuery<user> userquery){
+        if(mCloudDBZone == null){
+            Log.w(TAG, "CloudDBZone is null, try re-open it");
+            return;
+        }
+
+        Task<CloudDBZoneSnapshot<user>> queryTask = mCloudDBZone.executeQuery(
+                userquery,
+                CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_FROM_CLOUD_ONLY);
+
+        queryTask.addOnSuccessListener(new OnSuccessListener<CloudDBZoneSnapshot<user>>() {
+            @Override
+            public void onSuccess(CloudDBZoneSnapshot<user> userCloudDBZoneSnapshot) {
+                List<user> tempResult = extractuserResult(userCloudDBZoneSnapshot);
+                userCallback.onAddorQuery(tempResult);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                //show failure message
+                userCallback.showError("Query user list from cloud failed");
+            }
+        });
+    }
+
+    //method help to extract the user data into array and send back to query user data above
+    public List<user> extractuserResult(CloudDBZoneSnapshot<user> usersnapshot){
+        CloudDBZoneObjectList<user> cursor = usersnapshot.getSnapshotObjects();
+        List<user> list = new ArrayList<>();
+
+        try{
+            while (cursor.hasNext()){
+                user userItem = cursor.next();
+                list.add(userItem);
+            }
+        } catch (AGConnectCloudDBException e) {
+            e.printStackTrace();
+        }finally {
+            usersnapshot.release();
+        }
+        return list;
+    }
+
+    //upsert function - update or add user data into the cloudDB
+    public void upsertUser(user user){
+        if (mCloudDBZone == null){
+            Log.w(TAG,"CloudDB Zone is null !");
+            return;
+        }
+
+        Task<Integer> upsertTask = mCloudDBZone.executeUpsert(user);
+        upsertTask.addOnSuccessListener(new OnSuccessListener<Integer>() {
+            @Override
+            public void onSuccess(Integer integer) {
+                Log.w(TAG, " upsert " + integer + " record");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                exerciseCallback.showError("Upsert or Insert to cloud failed !");
+            }
+        });
+    }
+
+    //remove the user data item from CloudDB
+    public void deleteUser(user user){
+        if(mCloudDBZone == null){
+            Log.w(TAG, "CloudDB Zone is null.");
+            return;
+        }
+        Task<Integer> deleteTask = mCloudDBZone.executeDelete(user);
+        if(deleteTask.getException() != null){
+            exerciseCallback.showError("Delete Exercise in cloud Failed !");
+            return;
+        }
+    }
+
+    //add call back method - to call
+    public void addCallBack2(userUICallBack InputUICallBack){
+        userCallback = InputUICallBack;
+    }
+
+    //call back method for user object type
+    public interface userUICallBack {
+        userUICallBack DEFAULT = new userUICallBack() {
+            @Override
+            public void onAddorQuery(List<user> userList) {
+
+            }
+
+            @Override
+            public void onSubscribe(List<user> userList) {
+
+            }
+
+            @Override
+            public void onDelete(List<user> userList) {
+
+            }
+
+            @Override
+            public void showError(String error) {
+
+            }
+        };
+        void onAddorQuery(List<user> userList);
+        void onSubscribe(List<user> userList);
+        void onDelete(List<user> userList);
         void showError(String error);
     }
 
