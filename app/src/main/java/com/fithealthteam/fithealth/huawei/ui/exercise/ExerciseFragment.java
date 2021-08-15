@@ -11,23 +11,40 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
+import com.fithealthteam.fithealth.huawei.CloudDB.exercise;
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.databinding.ExerciseFragmentBinding;
 import com.fithealthteam.fithealth.huawei.databinding.FragmentHomeBinding;
 import com.fithealthteam.fithealth.huawei.myplan.MyPlanActivity;
+import com.huawei.agconnect.auth.AGConnectAuth;
+import com.huawei.agconnect.auth.AGConnectUser;
+import com.huawei.agconnect.cloud.database.CloudDBZoneQuery;
+
+import java.util.List;
 
 
-
-
-public class ExerciseFragment extends Fragment {
+public class ExerciseFragment extends Fragment implements CloudDBZoneWrapper.exerciseUICallBack {
 
     private ExerciseViewModel mViewModel;
     private ExerciseFragmentBinding binding;
+
+    private CloudDBZoneWrapper cloudDBZoneWrapperInstance;
+
+    private Handler handler;
+    private View root;
+
+    public ExerciseFragment(){
+        cloudDBZoneWrapperInstance = new CloudDBZoneWrapper();
+    }
 
     public static ExerciseFragment newInstance() {
         return new ExerciseFragment();
@@ -44,7 +61,7 @@ public class ExerciseFragment extends Fragment {
 
         //binding to the fragment layout element
         binding = ExerciseFragmentBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        root = binding.getRoot();
 
         ConstraintLayout TaskIndicateLayout = root.findViewById(R.id.TaskIndicateLayout);
 
@@ -54,6 +71,12 @@ public class ExerciseFragment extends Fragment {
                 Intent i = new Intent(v.getContext(), MyPlanActivity.class);
                 startActivity(i);
             }
+        });
+
+        //init cloudDBZoneWrapper and update the percentage Indicator
+        handler = new Handler(Looper.getMainLooper());
+        handler.post(()->{
+            initCloudDBWrapper();
         });
 
 
@@ -68,5 +91,62 @@ public class ExerciseFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //init cloudDBZoneWrapper and update the percentage Indicator
+        handler = new Handler(Looper.getMainLooper());
+        handler.post(()->{
+            initCloudDBWrapper();
+        });
+    }
 
+    //Initialize Cloud DB Wrapper to use
+    public void initCloudDBWrapper(){
+        handler.postDelayed(() -> {
+            cloudDBZoneWrapperInstance.addCallBack(ExerciseFragment.this);
+            cloudDBZoneWrapperInstance.createObjectType();
+            cloudDBZoneWrapperInstance.openCloudDBZone();
+            AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
+            CloudDBZoneQuery<exercise> query = CloudDBZoneQuery.where(exercise.class)
+                    .equalTo("uid", user.getUid());
+            cloudDBZoneWrapperInstance.queryExercise(query);
+
+        }, 500);
+    }
+
+
+    @Override
+    public void onAddorQuery(List<exercise> exerciseList) {
+        handler.post(()->{
+            //calculate the count
+            TextView completionText = root.findViewById(R.id.taskCompletion);
+            int count = 0;
+            for (exercise item: exerciseList) {
+                if(item.getCompleteStatus()){
+                    count++;
+                }
+            }
+            completionText.setText(count + " of "+ exerciseList.size() +" has completed");
+
+            //update the percentage circle indicator in my plan acitivty
+            TextView percentageIndicator = root.findViewById(R.id.percentageIndicator);
+            percentageIndicator.setText((count/exerciseList.size()*100)+"%");
+        });
+    }
+
+    @Override
+    public void onSubscribe(List<exercise> exerciseList) {
+
+    }
+
+    @Override
+    public void onDelete(List<exercise> exerciseList) {
+
+    }
+
+    @Override
+    public void showError(String error) {
+
+    }
 }

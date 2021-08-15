@@ -111,6 +111,32 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
         //execute the upsert function to update the exercise item
         cloudDBZoneWrapperInstance.upsertExercise(list.get(position));
         adapter.setNotifyOnChange(true);
+
+        //show the burning calories
+        double burntCalories = 0.00;
+
+        for (exercise item: list) {
+            if (item.getCompleteStatus()){
+                burntCalories += item.getCalories();
+            }
+        }
+
+        TextView burntCaloriesText = findViewById(R.id.BurntCalories);
+        burntCaloriesText.setText(burntCalories + " kcal");
+
+        //calculate the count
+        TextView completionText = findViewById(R.id.taskCompletionIndoor);
+        int count = 0;
+        for (exercise item: list) {
+            if(item.getCompleteStatus()){
+                count++;
+            }
+        }
+        completionText.setText(count + " of "+ list.size() +" has completed");
+
+        //update the percentage circle indicator in my plan acitivty
+        TextView percentageIndicator = findViewById(R.id.percentageIndicatorIndoor);
+        percentageIndicator.setText((count/list.size()*100)+"%");
     }
 
     //Initialize Cloud DB Wrapper to use
@@ -123,6 +149,7 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
             CloudDBZoneQuery<exercise> query = CloudDBZoneQuery.where(exercise.class)
                     .equalTo("uid", user.getUid());
             cloudDBZoneWrapperInstance.queryExercise(query);
+
         }, 1000);
     }
 
@@ -130,19 +157,36 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
     @Override
     public void onAddorQuery(List<exercise> exerciseList) {
         handler.post(()->{
-            double inputCalories = 0.00;
+            double burntCalories = 0.00;
 
             list.clear();
             listPosition.clear();
             for(int i = 0; i<exerciseList.size(); i++){
                 list.add(exerciseList.get(i));
                 listPosition.put(i, exerciseList.get(i).getId());
-                inputCalories += exerciseList.get(i).getCalories();
+                if(exerciseList.get(i).getCompleteStatus()){
+                    burntCalories += exerciseList.get(i).getCalories();
+                }
             }
             listView.setAdapter(adapter);
 
-            TextView inputCaloriesText = findViewById(R.id.dailyCaloriesInput);
-            inputCaloriesText.setText( inputCalories + " kcal");
+            //show the burning calories
+            TextView burntCaloriesText = findViewById(R.id.BurntCalories);
+            burntCaloriesText.setText( burntCalories + " kcal");
+
+            //calculate the count
+            TextView completionText = findViewById(R.id.taskCompletionIndoor);
+            int count = 0;
+            for (exercise item: list) {
+                if(item.getCompleteStatus()){
+                    count++;
+                }
+            }
+            completionText.setText(count + " of "+ list.size() +" has completed");
+
+            //update the percentage circle indicator in my plan acitivty
+            TextView percentageIndicator = findViewById(R.id.percentageIndicatorIndoor);
+            percentageIndicator.setText((count/list.size()*100)+"%");
 
         });
     }

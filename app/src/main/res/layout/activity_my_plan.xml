@@ -50,13 +50,10 @@
             android:layout_height="27dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="60dp"
-            android:layout_marginEnd="7dp"
             android:text="1 of 3 has completed"
             android:textColor="@color/grey"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/percentageIndicatorIndoor"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/myplanTitleIndoor" />
 
@@ -76,12 +73,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/targetBurnCaloriesText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="31dp"
             android:layout_marginTop="10dp"
-            android:text="Daily Burnt Calories"
+            android:text="Target Burnt Calories"
             android:textColor="@color/grey"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -94,15 +91,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="31dp"
             android:layout_marginTop="10dp"
-            android:text="Daily Calories Input"
+            android:text="Burnt Calories"
             android:textColor="@color/grey"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/targetBurnCaloriesText" />
 
         <TextView
-            android:id="@+id/textView21"
+            android:id="@+id/targetBurntCalories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
@@ -115,7 +112,7 @@
             app:layout_constraintTop_toBottomOf="@+id/percentageIndicatorIndoor" />
 
         <TextView
-            android:id="@+id/dailyCaloriesInput"
+            android:id="@+id/BurntCalories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -125,7 +122,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView21" />
+            app:layout_constraintTop_toBottomOf="@+id/targetBurntCalories" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
