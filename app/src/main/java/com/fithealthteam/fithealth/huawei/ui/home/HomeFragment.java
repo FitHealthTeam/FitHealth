@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
     private ProgressBar progressBar;
     private Button btnSet,btnTimePick;
 
-    int minutes,seconds;
+    int hours,minutes;
 
 
 
@@ -157,15 +157,15 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
                     @Override
-                    public void onTimeSet(TimePicker view, int selectedMinute, int selectedSecond) {
+                    public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
+                        hours = selectedHour;
                         minutes = selectedMinute;
-                        seconds = selectedSecond;
-                        btnTimePick.setText(String.format(Locale.getDefault(),"%02d:%02d",minutes,seconds));
+                        btnTimePick.setText(String.format(Locale.getDefault(),"%02d:%02d",hours,minutes));
                     }
                 };
                 int style = AlertDialog.THEME_HOLO_LIGHT;
 
-                TimePickerDialog timePickerDialog = new TimePickerDialog(v.getContext(),style,onTimeSetListener,minutes,seconds,true);
+                TimePickerDialog timePickerDialog = new TimePickerDialog(v.getContext(),style,onTimeSetListener,hours,minutes,true);
 
                 timePickerDialog.setTitle("Select Time");
                 timePickerDialog.show();
@@ -184,7 +184,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if(minutes == 0 || seconds == 0 ){
+                if(hours == 0 && minutes == 0 ){
                     Toast.makeText(v.getContext(), "Please Pick a Time First!", Toast.LENGTH_SHORT).show();
                 }else{
 
@@ -197,13 +197,13 @@ public class HomeFragment extends Fragment {
 
                     long timeAtButtonClick = System.currentTimeMillis();
 
+                    long hourFromPick = hours * 1000 * 60 * 60;
                     long minuteFromPick = minutes * 1000 * 60;
-                    long secondsFromPick = seconds * 1000;
 
                     //long tenSecondsInMillis = 1000 * 10;
 
                     alarmManager.set(AlarmManager.RTC_WAKEUP,
-                            timeAtButtonClick + minuteFromPick + secondsFromPick,pendingIntent);
+                            timeAtButtonClick + hourFromPick + minuteFromPick,pendingIntent);
                 }
 
                 btnTimePick.setText("SET!");
