@@ -181,6 +181,24 @@ public class CloudDBZoneWrapper {
         return list;
     }
 
+    public int getExerciseCount() {
+        if (mCloudDBZone == null) {
+            Log.w(TAG, "CloudDBZone is null, try re-open it");
+            return 0;
+        }
+
+        int count = 0;
+
+        AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
+        Task<Long> queryTask = mCloudDBZone.executeCountQuery(
+                CloudDBZoneQuery.where(exercise.class)
+                        .equalTo("uid", user.getUid()),
+                "id",
+                CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_FROM_CLOUD_ONLY);
+        count = Integer.parseInt(Long.toString(queryTask.getResult()));
+        return count;
+    }
+
     //upsert function - update or add into the cloudDB
     public void upsertExercise(exercise exerciseItem){
         if (mCloudDBZone == null){
@@ -298,23 +316,6 @@ public class CloudDBZoneWrapper {
                 userCallback.showError("Query user list from cloud failed");
             }
         });
-    }
-
-    public int getExerciseCount() {
-        if (mCloudDBZone == null) {
-            Log.w(TAG, "CloudDBZone is null, try re-open it");
-            return 0;
-        }
-
-        int count = 0;
-
-        AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
-        Task<Long> queryTask = mCloudDBZone.executeCountQuery(
-                CloudDBZoneQuery.where(user.class).equalTo("uid", user.getUid()),
-                "uid",
-                CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_FROM_CLOUD_ONLY);
-        count = Integer.parseInt(Long.toString(queryTask.getResult()));
-        return count;
     }
 
     //method help to extract the user data into array and send back to query user data above

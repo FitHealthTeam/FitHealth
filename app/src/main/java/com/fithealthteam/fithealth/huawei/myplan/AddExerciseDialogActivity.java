@@ -62,6 +62,7 @@ public class AddExerciseDialogActivity extends AppCompatDialogFragment {
                             Toast.makeText(getContext(), "Please complete the form before continue !", Toast.LENGTH_SHORT).show();
                         }else{
                             temp.setCompleteStatus(false);
+                            temp.setDeleteStatus(false);
                             temp.setCalories(Double.parseDouble(caloriesInput.getText().toString()));
                             temp.setDate(Calendar.getInstance().getTime());
                             temp.setExerciseType(selectedExercise);

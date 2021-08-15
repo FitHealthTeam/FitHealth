@@ -136,7 +136,9 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
     //remove item from list
     public void removeItem(int position){
         //execute delete function to delete item in cloud db
-        cloudDBZoneWrapperInstance.deleteExercise(list.get(position));
+        //cloudDBZoneWrapperInstance.deleteExercise(list.get(position));
+        list.get(position).setDeleteStatus(true);
+        cloudDBZoneWrapperInstance.upsertExercise(list.get(position));
 
         list.remove(position);
         //update the list view
@@ -175,11 +177,20 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
                 count++;
             }
         }
-        completionText.setText(count + " of "+ list.size() +" has completed");
+        if(list.size() > 0){
+            completionText.setText(count + " of "+ list.size() +" has completed");
+        }else {
+            completionText.setText("0 of 0 has completed");
+        }
 
         //update the percentage circle indicator in my plan acitivty
         TextView percentageIndicator = findViewById(R.id.percentageIndicatorIndoor);
-        percentageIndicator.setText((count/list.size()*100)+"%");
+
+        if(list.size() > 0){
+            percentageIndicator.setText((count/list.size()*100)+"%");
+        }else {
+            percentageIndicator.setText(("0%"));
+        }
     }
 
     //Initialize Cloud DB Wrapper to use
@@ -190,7 +201,8 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
             cloudDBZoneWrapperInstance.openCloudDBZone();
             user = AGConnectAuth.getInstance().getCurrentUser();
             CloudDBZoneQuery<exercise> query = CloudDBZoneQuery.where(exercise.class)
-                    .equalTo("uid", user.getUid());
+                    .equalTo("uid", user.getUid())
+                    .equalTo("deleteStatus", false);
             cloudDBZoneWrapperInstance.queryExercise(query);
 
         }, 1000);
@@ -225,11 +237,21 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
                     count++;
                 }
             }
-            completionText.setText(count + " of "+ list.size() +" has completed");
+
+            if(list.size() > 0){
+                completionText.setText(count + " of "+ list.size() +" has completed");
+            }else {
+                completionText.setText("0 of 0 has completed");
+            }
 
             //update the percentage circle indicator in my plan acitivty
             TextView percentageIndicator = findViewById(R.id.percentageIndicatorIndoor);
-            percentageIndicator.setText((count/list.size()*100)+"%");
+
+            if(list.size() > 0){
+                percentageIndicator.setText((count/list.size()*100)+"%");
+            }else {
+                percentageIndicator.setText(("0%"));
+            }
 
         });
     }

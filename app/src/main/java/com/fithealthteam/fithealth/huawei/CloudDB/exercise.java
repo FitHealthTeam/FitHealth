@@ -17,7 +17,7 @@ import java.util.Date;
 /**
  * Definition of ObjectType exercise.
  *
- * @since 2021-08-15
+ * @since 2021-08-16
  */
 @PrimaryKeys({"id", "uid"})
 public final class exercise extends CloudDBZoneObject {
