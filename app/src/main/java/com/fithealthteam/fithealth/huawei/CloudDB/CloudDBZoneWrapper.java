@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.fithealthteam.fithealth.huawei.myplan.MyPlanActivity;
+import com.huawei.agconnect.auth.AGConnectAuth;
+import com.huawei.agconnect.auth.AGConnectUser;
 import com.huawei.agconnect.cloud.database.AGConnectCloudDB;
 import com.huawei.agconnect.cloud.database.CloudDBZone;
 import com.huawei.agconnect.cloud.database.CloudDBZoneConfig;
@@ -296,6 +298,23 @@ public class CloudDBZoneWrapper {
                 userCallback.showError("Query user list from cloud failed");
             }
         });
+    }
+
+    public int getExerciseCount() {
+        if (mCloudDBZone == null) {
+            Log.w(TAG, "CloudDBZone is null, try re-open it");
+            return 0;
+        }
+
+        int count = 0;
+
+        AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
+        Task<Long> queryTask = mCloudDBZone.executeCountQuery(
+                CloudDBZoneQuery.where(user.class).equalTo("uid", user.getUid()),
+                "uid",
+                CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_FROM_CLOUD_ONLY);
+        count = Integer.parseInt(Long.toString(queryTask.getResult()));
+        return count;
     }
 
     //method help to extract the user data into array and send back to query user data above
