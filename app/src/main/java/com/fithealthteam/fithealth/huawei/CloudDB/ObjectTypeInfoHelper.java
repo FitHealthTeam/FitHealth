@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Definition of ObjectType Helper.
  *
- * @since 2021-08-14
+ * @since 2021-08-15
  */
 public final class ObjectTypeInfoHelper {
     private static final int FORMAT_VERSION = 2;

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
 
+import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
 import com.fithealthteam.fithealth.huawei.authentication.authenticateActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        CloudDBZoneWrapper.initAGConnectCloudDB(getApplicationContext());
         super.onCreate(savedInstanceState);
         //hide the top action bar and title
         getSupportActionBar().hide();

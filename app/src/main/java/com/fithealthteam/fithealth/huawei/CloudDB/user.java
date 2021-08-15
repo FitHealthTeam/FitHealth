@@ -17,7 +17,7 @@ import java.util.Date;
 /**
  * Definition of ObjectType user.
  *
- * @since 2021-08-14
+ * @since 2021-08-15
  */
 @PrimaryKeys({"id"})
 @Indexes({"userId:id"})

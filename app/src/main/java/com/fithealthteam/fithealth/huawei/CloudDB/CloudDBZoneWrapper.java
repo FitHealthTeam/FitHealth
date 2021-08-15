@@ -11,6 +11,7 @@ import com.huawei.agconnect.cloud.database.CloudDBZoneObjectList;
 import com.huawei.agconnect.cloud.database.CloudDBZoneQuery;
 import com.huawei.agconnect.cloud.database.CloudDBZoneSnapshot;
 import com.huawei.agconnect.cloud.database.ListenerHandler;
+import com.huawei.agconnect.cloud.database.ObjectTypeInfo;
 import com.huawei.agconnect.cloud.database.exceptions.AGConnectCloudDBException;
 import com.huawei.hmf.tasks.OnFailureListener;
 import com.huawei.hmf.tasks.OnSuccessListener;
@@ -33,14 +34,16 @@ public class CloudDBZoneWrapper {
 
     private exerciseUICallBack exerciseCallback = exerciseUICallBack.DEFAULT;
 
-    //initialize Cloud DB in Application
-    public static void initAGConnectCloudDB(Context context) {
-        AGConnectCloudDB.initialize(context);
-    }
 
     //get AGConnectCloudDB instance
     public CloudDBZoneWrapper() {
         mCloudDB = AGConnectCloudDB.getInstance();
+    }
+
+
+    //initialize Cloud DB in Application
+    public static void initAGConnectCloudDB(Context context) {
+        AGConnectCloudDB.initialize(context);
     }
 
     //create an object type
@@ -50,6 +53,7 @@ public class CloudDBZoneWrapper {
         } catch (AGConnectCloudDBException e) {
             Log.w(TAG, "createObjectType: " + e.getMessage());
         }
+
     }
 
     //configure CloudDBZone configuration object and open CloudDBZone
@@ -64,9 +68,11 @@ public class CloudDBZoneWrapper {
                 CloudDBZoneConfig.CloudDBZoneAccessProperty.CLOUDDBZONE_PUBLIC);
         mConfig.setPersistenceEnabled(true);
         try {
-            mCloudDBZone = mCloudDB.openCloudDBZone(mConfig, true);
+            mCloudDBZone = mCloudDB.openCloudDBZone(mConfig,true);
         } catch (AGConnectCloudDBException e) {
             Log.w(TAG, "openCloudDBZone: " + e.getMessage());
+        }catch (Exception e){
+            Log.w("CloudDB", e.getMessage());
         }
     }
 
@@ -86,6 +92,18 @@ public class CloudDBZoneWrapper {
             mCloudDB.deleteCloudDBZone(mConfig.getCloudDBZoneName());
         } catch (AGConnectCloudDBException e) {
             Log.w(TAG, "deleteCloudDBZone: " + e.getMessage());
+        }
+    }
+
+    //subscription for local storage data changes monitoring
+    public void addExerciseSubcription(){
+        if(mCloudDBZone == null){
+            Log.w(TAG, "CloudDBZone is null !");
+            return;
+        }
+
+        try{
+            
         }
     }
 

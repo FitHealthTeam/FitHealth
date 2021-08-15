@@ -1,7 +1,6 @@
 package com.fithealthteam.fithealth.huawei.myplan;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -25,7 +24,11 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
     static ExerciseEventListAdapter adapter;
 
     private Handler handler = null;
-    private final CloudDBZoneWrapper cloudDBZoneWrapperInstance = new CloudDBZoneWrapper();
+    private CloudDBZoneWrapper cloudDBZoneWrapperInstance;
+
+    public MyPlanActivity(){
+        cloudDBZoneWrapperInstance = new CloudDBZoneWrapper();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +47,37 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
 
         //List View
         listView = findViewById(R.id.eventListView);
-        /*list.add(new Exercise("Fish n Chip", 300.00, false));
-        list.add(new Exercise("Swimming", -600.00, false));
-        list.add(new Exercise("KFC", 500.00, false));
-        list.add(new Exercise("Badminton", -300.00, false));*/
+
+        //testing purpose
+        /*
+        exercise ex1 = new exercise();
+        ex1.setExerciseType("Badminton");
+        ex1.setCalories(200.00);
+        ex1.setCompleteStatus(false);
+
+        exercise ex2 = new exercise();
+        ex1.setExerciseType("Swiming");
+        ex1.setCalories(200.00);
+        ex1.setCompleteStatus(false);
+
+        exercise ex3 = new exercise();
+        ex1.setExerciseType("Jogging");
+        ex1.setCalories(200.00);
+        ex1.setCompleteStatus(false);
+
+        exercise ex4 = new exercise();
+        ex1.setExerciseType("Hiking");
+        ex1.setCalories(600.00);
+        ex1.setCompleteStatus(false);
+
+        list.add(ex1);
+        list.add(ex2);
+        list.add(ex3);
+        list.add(ex4);*/
 
         //setup list adapter
         adapter = new ExerciseEventListAdapter(getApplicationContext(),list);
-        listView.setAdapter(adapter);
+        //listView.setAdapter(adapter);
 
     }
 
@@ -75,14 +101,18 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
             cloudDBZoneWrapperInstance.addCallBack(MyPlanActivity.this);
             cloudDBZoneWrapperInstance.createObjectType();
             cloudDBZoneWrapperInstance.openCloudDBZone();
-        }, 500);
+            cloudDBZoneWrapperInstance.queryAllExercise();
+        }, 1000);
     }
 
     //call back function from the CloudDBZoneWrapper
     @Override
     public void onAddorQuery(List<exercise> exerciseList) {
-        list.addAll(exerciseList);
-        listView.setAdapter(adapter);
+        handler.post(()->{
+            list.clear();
+            list.addAll(exerciseList);
+            listView.setAdapter(adapter);
+        });
     }
 
     @Override
@@ -99,5 +129,7 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
     public void showError(String error) {
 
     }
+
+
 
 }

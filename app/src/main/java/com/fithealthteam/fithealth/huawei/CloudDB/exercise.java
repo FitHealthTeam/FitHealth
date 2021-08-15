@@ -17,7 +17,7 @@ import java.util.Date;
 /**
  * Definition of ObjectType exercise.
  *
- * @since 2021-08-14
+ * @since 2021-08-15
  */
 @PrimaryKeys({"id", "uid"})
 public final class exercise extends CloudDBZoneObject {
@@ -28,13 +28,6 @@ public final class exercise extends CloudDBZoneObject {
     private String exerciseType;
 
     private Double calories;
-
-    public exercise(Class<? extends CloudDBZoneObject> aClass, String exerciseType, Double calories, Boolean completeStatus) {
-        super(aClass);
-        this.exerciseType = exerciseType;
-        this.calories = calories;
-        this.completeStatus = completeStatus;
-    }
 
     @DefaultValue(booleanValue = false)
     private Boolean completeStatus;
