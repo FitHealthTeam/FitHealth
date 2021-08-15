@@ -112,13 +112,17 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
 
         item.setUid(user.getUid());
 
-        CloudDBZoneQuery<exercise> tempQuery  = CloudDBZoneQuery.where(exercise.class)
-                .equalTo("uid", user.getUid());
 
         //cloudDBZoneWrapperInstance.queryExercise(tempQuery);
 
         //insert the new exercise into CloudDB
         handler.post(()->{
+            //get count for id
+            item.setId(cloudDBZoneWrapperInstance.getExerciseCount()+1);
+
+            CloudDBZoneQuery<exercise> tempQuery  = CloudDBZoneQuery.where(exercise.class)
+                    .equalTo("uid", user.getUid());
+
             cloudDBZoneWrapperInstance.upsertExercise(item);
         });
     }

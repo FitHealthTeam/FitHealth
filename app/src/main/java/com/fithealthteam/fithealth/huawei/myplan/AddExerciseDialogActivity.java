@@ -7,9 +7,12 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +22,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import com.fithealthteam.fithealth.huawei.CloudDB.exercise;
 import com.fithealthteam.fithealth.huawei.R;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -27,8 +31,8 @@ public class AddExerciseDialogActivity extends AppCompatDialogFragment {
     private AddExerciseDialogListener listener;
 
     private EditText caloriesInput;
-    private RadioGroup exerciseTypeRadioGroup;
     private String selectedExercise;
+    private Spinner spinner;
 
     @NonNull
     @Override
@@ -51,24 +55,39 @@ public class AddExerciseDialogActivity extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         exercise temp = new exercise();
-                        temp.setCompleteStatus(false);
-                        temp.setCalories(Double.parseDouble(caloriesInput.getText().toString()));
-                        temp.setDate(Calendar.getInstance().getTime());
-                        temp.setExerciseType(selectedExercise);
-                        //get info from layout and invoke the callback to activity
-                        listener.passExerciseInformation(temp);
+
+                        selectedExercise = spinner.getSelectedItem().toString();
+
+                        if(selectedExercise == null || caloriesInput.getText().toString() == null || caloriesInput.getText().toString().trim().isEmpty()){
+                            Toast.makeText(getContext(), "Please complete the form before continue !", Toast.LENGTH_SHORT).show();
+                        }else{
+                            temp.setCompleteStatus(false);
+                            temp.setCalories(Double.parseDouble(caloriesInput.getText().toString()));
+                            temp.setDate(Calendar.getInstance().getTime());
+                            temp.setExerciseType(selectedExercise);
+                            //get info from layout and invoke the callback to activity
+                            listener.passExerciseInformation(temp);
+                        }
                     }
                 });
 
-        //exercise type selection
-        exerciseTypeRadioGroup = v.findViewById(R.id.exerciseTypeRadioGroup);
-        exerciseTypeRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Toast.makeText(getContext(), "Selected Button is "+ ((RadioButton) v.findViewById(checkedId)).getText().toString(), Toast.LENGTH_SHORT).show();
-                selectedExercise = ((RadioButton) v.findViewById(checkedId)).getText().toString();
-            }
-        });
+
+       spinner = v.findViewById(R.id.spinnerExercise);
+
+        ArrayList<String> exerciseList = new ArrayList<String>();
+        exerciseList.add("Badminton");
+        exerciseList.add("Jogging");
+        exerciseList.add("Hiking");
+        exerciseList.add("Swimming");
+        exerciseList.add("Cycling");
+        exerciseList.add("Weightlifting");
+        exerciseList.add("Tennis");
+        exerciseList.add("Table Tennis");
+        exerciseList.add("Water Polo");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,exerciseList);
+
+        spinner.setAdapter(adapter);
 
         //calories for the exercise to insert
         caloriesInput = (EditText) v.findViewById(R.id.exerciseCalories);
