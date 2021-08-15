@@ -43,6 +43,10 @@ public final class user extends CloudDBZoneObject {
     @DefaultValue(booleanValue = false)
     private Boolean subscribeTips;
 
+    private Date Dob;
+
+    private Integer HealthPoint;
+
     public user() {
         super(user.class);
         this.drinkWater = false;
@@ -120,6 +124,22 @@ public final class user extends CloudDBZoneObject {
 
     public Boolean getSubscribeTips() {
         return subscribeTips;
+    }
+
+    public void setDob(Date Dob) {
+        this.Dob = Dob;
+    }
+
+    public Date getDob() {
+        return Dob;
+    }
+
+    public void setHealthPoint(Integer HealthPoint) {
+        this.HealthPoint = HealthPoint;
+    }
+
+    public Integer getHealthPoint() {
+        return HealthPoint;
     }
 
 }

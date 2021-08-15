@@ -80,6 +80,7 @@ public class ExerciseFragment extends Fragment implements CloudDBZoneWrapper.exe
         });
 
 
+
         //return the view object
         return root;
     }

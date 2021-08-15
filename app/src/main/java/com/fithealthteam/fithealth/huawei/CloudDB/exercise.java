@@ -34,9 +34,13 @@ public final class exercise extends CloudDBZoneObject {
 
     private Date date;
 
+    @DefaultValue(booleanValue = false)
+    private Boolean deleteStatus;
+
     public exercise() {
         super(exercise.class);
         this.completeStatus = false;
+        this.deleteStatus = false;
     }
 
     public void setId(Integer id) {
@@ -85,6 +89,14 @@ public final class exercise extends CloudDBZoneObject {
 
     public Date getDate() {
         return date;
+    }
+
+    public void setDeleteStatus(Boolean deleteStatus) {
+        this.deleteStatus = deleteStatus;
+    }
+
+    public Boolean getDeleteStatus() {
+        return deleteStatus;
     }
 
 }

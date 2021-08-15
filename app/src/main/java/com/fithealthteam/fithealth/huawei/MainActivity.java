@@ -29,11 +29,11 @@ import com.huawei.agconnect.auth.AGConnectUser;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private NotificationManagerCompat notificationManager;
+    //private NotificationManagerCompat notificationManager;
 
     //account for testing and debuging
-    //id = test@xkx.me
-    //password = abc123456
+    //id = fh1@xkx.me
+    //password = test123456
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        notificationManager = NotificationManagerCompat.from(this);
+        //notificationManager = NotificationManagerCompat.from(this);
 
 
     }
-
-    public void sendToNotifyChannel (){
+/*
+    public void sendToNotifyChannel (View v){
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID_1)
                 .setSmallIcon(R.drawable.auth_fithealthlogo)
                 .setContentTitle("Excessive Calories Intake")
@@ -85,5 +85,5 @@ public class MainActivity extends AppCompatActivity {
 
         notificationManager.notify(1, notification);
 
-    }
+    }*/
 }

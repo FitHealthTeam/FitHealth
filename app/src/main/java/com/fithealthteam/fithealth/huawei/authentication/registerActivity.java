@@ -2,10 +2,10 @@ package com.fithealthteam.fithealth.huawei.authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -14,24 +14,37 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
+import com.fithealthteam.fithealth.huawei.CloudDB.user;
 import com.fithealthteam.fithealth.huawei.MainActivity;
 import com.fithealthteam.fithealth.huawei.R;
 import com.huawei.agconnect.auth.AGConnectAuth;
-import com.huawei.agconnect.auth.AGConnectAuthCredential;
 import com.huawei.agconnect.auth.AGConnectUser;
-import com.huawei.agconnect.auth.EmailAuthProvider;
 import com.huawei.agconnect.auth.EmailUser;
 import com.huawei.agconnect.auth.SignInResult;
 import com.huawei.agconnect.auth.VerifyCodeResult;
 import com.huawei.agconnect.auth.VerifyCodeSettings;
+import com.huawei.agconnect.cloud.database.CloudDBZoneQuery;
 import com.huawei.hmf.tasks.OnFailureListener;
 import com.huawei.hmf.tasks.OnSuccessListener;
 import com.huawei.hmf.tasks.Task;
 import com.huawei.hmf.tasks.TaskExecutors;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
-public class registerActivity extends AppCompatActivity {
+public class registerActivity extends AppCompatActivity implements CloudDBZoneWrapper.userUICallBack {
+
+    private Handler handler = null;
+    private CloudDBZoneWrapper cloudDBZoneWrapper;
+    AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
+
+    public registerActivity() {
+        cloudDBZoneWrapper = new CloudDBZoneWrapper();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +59,7 @@ public class registerActivity extends AppCompatActivity {
         EditText lname = findViewById(R.id.lname_register);
         RadioButton male = findViewById(R.id.male);
         RadioButton female = findViewById(R.id.female);
+        EditText dob = findViewById(R.id.dob);
         Button submit = findViewById(R.id.submit_register);
         TextView login = findViewById(R.id.loginBtn);
 
@@ -74,7 +88,7 @@ public class registerActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Toast.makeText(getBaseContext(), "Please enter a valid email address!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Please enter an email address!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -85,6 +99,10 @@ public class registerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(verifyCode.getText().toString().trim().equals(null) || verifyCode.getText().toString().trim().isEmpty()) {
                     Toast.makeText(getBaseContext(), "Please insert the authentication code!", Toast.LENGTH_SHORT).show();
+                }
+
+                if (registerEmail.getText().toString().trim().equals(null) || registerEmail.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getBaseContext(), "Please enter an email address!", Toast.LENGTH_SHORT).show();
                 }
 
                 if(password.getText().toString().equals(null) || password.getText().toString().isEmpty()) {
@@ -113,12 +131,27 @@ public class registerActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(SignInResult signInResult) {
                                 // After an account is created, the user has signed in by default.
-                                AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
-
-                                //remember to update name gender
-
+                                user newUser = new user();
+                                newUser.setId(user.getUid());
+                                newUser.setFirstName(fname.getText().toString());
+                                newUser.setLastName(lname.getText().toString());
+                                if(male.isSelected()) {
+                                    newUser.setGender("Male");
+                                }
+                                if(female.isChecked()) {
+                                    newUser.setGender("Female");
+                                }
+                                Date dobDate = null;
+                                try {
+                                    dobDate = new SimpleDateFormat("yyyy-MM-dd").parse(dob.getText().toString());
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                newUser.setDob(dobDate);
+                                addUserInfo(newUser);
                                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -138,6 +171,55 @@ public class registerActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+
+    //Initialize Cloud DB Wrapper to use
+    public void initCloudDBWrapper(){
+        handler.postDelayed(() -> {
+            cloudDBZoneWrapper.addCallBack2(registerActivity.this);
+            cloudDBZoneWrapper.createObjectType();
+            cloudDBZoneWrapper.openCloudDBZone();
+            AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
+            CloudDBZoneQuery<user> query = CloudDBZoneQuery.where(user.class)
+                    .equalTo("uid", user.getUid());
+            cloudDBZoneWrapper.queryUser(query);
+        }, 1000);
+    }
+
+    public void addUserInfo (user user) {
+
+        CloudDBZoneQuery<user> tempQuery  = CloudDBZoneQuery.where(user.class)
+                .equalTo("uid", this.user.getUid());
+
+        handler.post(()->{
+            cloudDBZoneWrapper.upsertUser(user);
+        });
+        onDestroy();
+    }
+
+    protected void onDestroy() {
+        handler.post(cloudDBZoneWrapper::closeCloudDBZone);
+        super.onDestroy();
+    }
+
+    @Override
+    public void onAddorQuery(List<user> userList) {
+
+    }
+
+    @Override
+    public void onSubscribe(List<user> userList) {
+
+    }
+
+    @Override
+    public void onDelete(List<user> userList) {
+
+    }
+
+    @Override
+    public void showError(String error) {
 
     }
 }
