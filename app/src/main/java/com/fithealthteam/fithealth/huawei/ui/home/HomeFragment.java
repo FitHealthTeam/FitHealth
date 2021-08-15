@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment {
         mSliderView.startAutoCycle();
 
 
-        // calender view
+        /*// calender view
         mCalenderView = v.findViewById(R.id.calendarView);
         dateSelected = v.findViewById(R.id.dateSelected);
 
@@ -86,7 +86,7 @@ public class HomeFragment extends Fragment {
                 String date = dayOfMonth + "/" + (month + 1) + "/" + year;
                 dateSelected.setText(date);
             }
-        });
+        });*/
 
 /*
         // BMI Input
