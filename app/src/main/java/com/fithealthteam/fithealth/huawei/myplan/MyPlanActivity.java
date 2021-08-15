@@ -5,14 +5,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
 import com.fithealthteam.fithealth.huawei.CloudDB.exercise;
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.customListViewAdapter.ExerciseEventListAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.huawei.agconnect.auth.AGConnectAuth;
 import com.huawei.agconnect.auth.AGConnectUser;
 import com.huawei.agconnect.cloud.database.CloudDBZoneQuery;
@@ -22,7 +26,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrapper.exerciseUICallBack, ExerciseEventListAdapter.ExerciseListCallBack {
+public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrapper.exerciseUICallBack,
+        ExerciseEventListAdapter.ExerciseListCallBack,
+        AddExerciseDialogActivity.AddExerciseDialogListener {
 
     private ListView listView;
     private ArrayList<exercise> list = new ArrayList<>();
@@ -32,6 +38,8 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
 
     private Handler handler = null;
     private CloudDBZoneWrapper cloudDBZoneWrapperInstance;
+
+    AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
 
     public MyPlanActivity(){
         cloudDBZoneWrapperInstance = new CloudDBZoneWrapper();
@@ -87,8 +95,39 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
         adapter.addExerciseAdapterCallBack(MyPlanActivity.this);
         //listView.setAdapter(adapter);
 
+        FloatingActionButton addExercise = findViewById(R.id.addNewExercise);
+        addExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddExerciseDialogActivity addExerciseDialog = new AddExerciseDialogActivity();
+                addExerciseDialog.show(getSupportFragmentManager(),"Add New Exercise Dialog");
+            }
+        });
+
     }
 
+    //call back for add new exercise dialog
+    @Override
+    public void passExerciseInformation(exercise item) {
+
+        item.setUid(user.getUid());
+
+        CloudDBZoneQuery<exercise> tempQuery  = CloudDBZoneQuery.where(exercise.class)
+                .equalTo("uid", user.getUid());
+
+        //cloudDBZoneWrapperInstance.queryExercise(tempQuery);
+
+        //insert the new exercise into CloudDB
+        handler.post(()->{
+            cloudDBZoneWrapperInstance.upsertExercise(item);
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        handler.post(cloudDBZoneWrapperInstance::closeCloudDBZone);
+        super.onDestroy();
+    }
 
     //remove item from list
     public void removeItem(int position){
@@ -145,7 +184,7 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
             cloudDBZoneWrapperInstance.addCallBack(MyPlanActivity.this);
             cloudDBZoneWrapperInstance.createObjectType();
             cloudDBZoneWrapperInstance.openCloudDBZone();
-            AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
+            user = AGConnectAuth.getInstance().getCurrentUser();
             CloudDBZoneQuery<exercise> query = CloudDBZoneQuery.where(exercise.class)
                     .equalTo("uid", user.getUid());
             cloudDBZoneWrapperInstance.queryExercise(query);
@@ -203,9 +242,6 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
 
     @Override
     public void showError(String error) {
-
+        Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT);
     }
-
-
-
 }
