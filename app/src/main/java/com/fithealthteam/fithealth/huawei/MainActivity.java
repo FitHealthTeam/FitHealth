@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
 
+import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
 import com.fithealthteam.fithealth.huawei.authentication.authenticateActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        CloudDBZoneWrapper.initAGConnectCloudDB(getApplicationContext());
         super.onCreate(savedInstanceState);
         //hide the top action bar and title
         getSupportActionBar().hide();
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }else{
             Log.d("HMS Auth User", user.getEmail());
+            Log.d("HMS Auth User UID", user.getUid());
         }
 
         //li-hao check for whether newUser is true --> if (newUser == true) --> go to create Diet plan activity to load data --> store to db --> intent back to here

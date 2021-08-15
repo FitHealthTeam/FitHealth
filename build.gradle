@@ -4,7 +4,7 @@ buildscript {
         google()
         mavenCentral()
         maven {
-            url 'https://developer.huawei.com/repo/'
+            url "https://developer.huawei.com/repo/"
         }
     }
     dependencies {
@@ -12,7 +12,7 @@ buildscript {
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-        classpath 'com.huawei.agconnect:agcp:1.5.2.300'
+        classpath "com.huawei.agconnect:agcp:1.5.2.300"
     }
 }
 
@@ -23,7 +23,7 @@ task clean(type: Delete) {
 allprojects {
     repositories {
         maven {
-            url 'https://developer.huawei.com/repo/'
+            url "https://developer.huawei.com/repo/"
             }
         maven { url "https:/jitpack.io" }
     }

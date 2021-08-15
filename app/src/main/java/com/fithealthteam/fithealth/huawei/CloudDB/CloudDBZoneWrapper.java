@@ -11,6 +11,8 @@ import com.huawei.agconnect.cloud.database.CloudDBZoneObjectList;
 import com.huawei.agconnect.cloud.database.CloudDBZoneQuery;
 import com.huawei.agconnect.cloud.database.CloudDBZoneSnapshot;
 import com.huawei.agconnect.cloud.database.ListenerHandler;
+import com.huawei.agconnect.cloud.database.ObjectTypeInfo;
+import com.huawei.agconnect.cloud.database.OnSnapshotListener;
 import com.huawei.agconnect.cloud.database.exceptions.AGConnectCloudDBException;
 import com.huawei.hmf.tasks.OnFailureListener;
 import com.huawei.hmf.tasks.OnSuccessListener;
@@ -33,14 +35,16 @@ public class CloudDBZoneWrapper {
 
     private exerciseUICallBack exerciseCallback = exerciseUICallBack.DEFAULT;
 
-    //initialize Cloud DB in Application
-    public static void initAGConnectCloudDB(Context context) {
-        AGConnectCloudDB.initialize(context);
-    }
 
     //get AGConnectCloudDB instance
     public CloudDBZoneWrapper() {
         mCloudDB = AGConnectCloudDB.getInstance();
+    }
+
+
+    //initialize Cloud DB in Application
+    public static void initAGConnectCloudDB(Context context) {
+        AGConnectCloudDB.initialize(context);
     }
 
     //create an object type
@@ -50,6 +54,7 @@ public class CloudDBZoneWrapper {
         } catch (AGConnectCloudDBException e) {
             Log.w(TAG, "createObjectType: " + e.getMessage());
         }
+
     }
 
     //configure CloudDBZone configuration object and open CloudDBZone
@@ -64,9 +69,11 @@ public class CloudDBZoneWrapper {
                 CloudDBZoneConfig.CloudDBZoneAccessProperty.CLOUDDBZONE_PUBLIC);
         mConfig.setPersistenceEnabled(true);
         try {
-            mCloudDBZone = mCloudDB.openCloudDBZone(mConfig, true);
+            mCloudDBZone = mCloudDB.openCloudDBZone(mConfig,true);
         } catch (AGConnectCloudDBException e) {
             Log.w(TAG, "openCloudDBZone: " + e.getMessage());
+        }catch (Exception e){
+            Log.w("CloudDB", e.getMessage());
         }
     }
 
@@ -124,6 +131,31 @@ public class CloudDBZoneWrapper {
         });
     }
 
+    public void queryExercise(CloudDBZoneQuery<exercise> query){
+        if(mCloudDBZone == null){
+            Log.w(TAG, "CloudDBZone is null, try re-open it");
+            return;
+        }
+
+        Task<CloudDBZoneSnapshot<exercise>> queryTask = mCloudDBZone.executeQuery(
+                query,
+                CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_FROM_CLOUD_ONLY);
+
+        queryTask.addOnSuccessListener(new OnSuccessListener<CloudDBZoneSnapshot<exercise>>() {
+            @Override
+            public void onSuccess(CloudDBZoneSnapshot<exercise> exerciseCloudDBZoneSnapshot) {
+                List<exercise> tempResult = extractExerciseResult(exerciseCloudDBZoneSnapshot);
+                exerciseCallback.onAddorQuery(tempResult);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                //show failure message
+                exerciseCallback.showError("Query Failed");
+            }
+        });
+    }
+
     //extract it from cloudDB list object into normal List<Exercise> Object
     public List<exercise> extractExerciseResult(CloudDBZoneSnapshot<exercise> snapshot){
         CloudDBZoneObjectList<exercise> cursor = snapshot.getSnapshotObjects();
@@ -140,6 +172,40 @@ public class CloudDBZoneWrapper {
             snapshot.release();
         }
         return list;
+    }
+
+    //upsert function - update or add into the cloudDB
+    public void upsertExercise(exercise exerciseItem){
+        if (mCloudDBZone == null){
+            Log.w(TAG,"CloudDB Zone is null !");
+            return;
+        }
+
+        Task<Integer> upsertTask = mCloudDBZone.executeUpsert(exerciseItem);
+        upsertTask.addOnSuccessListener(new OnSuccessListener<Integer>() {
+            @Override
+            public void onSuccess(Integer integer) {
+                Log.w(TAG, " upsert " + integer + " record");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                exerciseCallback.showError("Upsert or Insert failed !");
+            }
+        });
+    }
+
+    //remove the exercise item from CloudDB
+    public void deleteExercise(exercise exerciseList){
+        if(mCloudDBZone == null){
+            Log.w(TAG, "CloudDB Zone is null.");
+            return;
+        }
+        Task<Integer> deleteTask = mCloudDBZone.executeDelete(exerciseList);
+        if(deleteTask.getException() != null){
+            exerciseCallback.showError("Delete Exercise Failed !");
+            return;
+        }
     }
 
     //add call back method
