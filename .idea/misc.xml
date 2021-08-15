@@ -25,7 +25,7 @@
         <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/activity_add_meal_dialog.xml" value="0.33" />
         <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/activity_authenticate.xml" value="0.25" />
         <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/activity_main.xml" value="0.2653985507246377" />
-        <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/activity_my_plan.xml" value="0.33" />
+        <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/activity_my_plan.xml" value="0.2767210144927536" />
         <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/community_fragment.xml" value="0.2653985507246377" />
         <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/custom_exercise_event_list_adapter.xml" value="0.3211050724637681" />
         <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/exercise_fragment.xml" value="0.25" />
@@ -50,19 +50,15 @@
         <entry key="..\:/Users/User/FitHealth/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/User/FitHealth/app/src/main/res/layout/slider_item.xml" value="0.2269021739130435" />
         <entry key="..\:/Users/User/FitHealth/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/haoyi/Desktop/FitHealth/app/src/main/res/drawable-v24/biking_badge.xml" value="0.24166666666666667" />
+        <entry key="..\:/Users/haoyi/Desktop/FitHealth/app/src/main/res/drawable/accoun_user.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/haoyi/Desktop/FitHealth/app/src/main/res/layout/activity_authenticate.xml" value="0.33" />
         <entry key="..\:/Users/haoyi/Desktop/FitHealth/app/src/main/res/layout/activity_login.xml" value="0.3171171171171171" />
-<<<<<<< Updated upstream
+        <entry key="..\:/Users/haoyi/Desktop/FitHealth/app/src/main/res/layout/activity_my_plan.xml" value="0.3171171171171171" />
         <entry key="..\:/Users/haoyi/Desktop/FitHealth/app/src/main/res/layout/activity_pass_reset.xml" value="0.22780797101449277" />
         <entry key="..\:/Users/haoyi/Desktop/FitHealth/app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="..\:/Users/haoyi/Desktop/FitHealth/app/src/main/res/layout/content_pass_reset.xml" value="0.22780797101449277" />
         <entry key="..\:/Users/haoyi/Desktop/FitHealth/app/src/main/res/layout/custom_exercise_event_list_adapter.xml" value="0.3171171171171171" />
-<<<<<<< Updated upstream
-=======
-        <entry key="..\:/Users/haoyi/Desktop/FitHealth/app/src/main/res/layout/activity_register.xml" value="0.22477477477477478" />
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         <entry key="..\:/Users/haoyi/Desktop/FitHealth/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/haoyi/Desktop/FitHealth/app/src/main/res/layout/settings_fragment.xml" value="0.33" />
       </map>
