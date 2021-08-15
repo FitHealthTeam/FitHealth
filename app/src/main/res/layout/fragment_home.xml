@@ -218,7 +218,7 @@
                 android:text="Hour/Minute"
                 android:textSize="16dp"
                 android:layout_marginStart="45dp"
-                android:layout_marginTop="110dp"
+                android:layout_marginTop="120dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -227,8 +227,8 @@
                 android:layout_width="140dp"
                 android:layout_height="70dp"
                 android:text="00:00"
-                android:textSize="20dp"
-                android:layout_marginTop="45dp"
+                android:textSize="22dp"
+                android:layout_marginTop="55dp"
                 android:layout_marginStart="20dp"
                 android:backgroundTint="#B0A5A5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -237,10 +237,10 @@
 
             <Button
                 android:id="@+id/btnSet"
-                android:layout_width="110dp"
-                android:layout_height="45dp"
+                android:layout_width="115dp"
+                android:layout_height="55dp"
                 android:text="Set Time"
-                android:textSize="15dp"
+                android:textSize="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="20dp"
                 android:backgroundTint="#F7F9F9"
