@@ -6,232 +6,268 @@
     android:layout_height="match_parent"
     tools:context=".ui.settings.SettingsFragment">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Welcome, user"
-        android:textColor="#555252"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.175"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Switch
-        android:id="@+id/drinkwater_remind"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="293dp"
-        android:layout_marginTop="428dp"
-        android:layout_marginEnd="52dp"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="384dp"
-        android:layout_marginEnd="153dp"
-        android:text="Excessive Calories Warning"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Switch
-        android:id="@+id/tip_subscribe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="293dp"
-        android:layout_marginTop="480dp"
-        android:layout_marginEnd="52dp"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="41dp"
-        android:layout_marginTop="224dp"
-        android:layout_marginEnd="169dp"
-        android:text="Your Badge Achievement"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/healthpt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="249dp"
-        android:layout_marginTop="176dp"
-        android:layout_marginEnd="135dp"
-        android:text="0"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="268dp"
-        android:layout_marginTop="176dp"
-        android:layout_marginEnd="86dp"
-        android:text="points"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/healthpt"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Switch
-        android:id="@+id/execess_calory_warn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="293dp"
-        android:layout_marginTop="372dp"
-        android:layout_marginEnd="52dp"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:layout_width="317dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="252dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/achievement_badge"
-            android:layout_width="37dp"
-            android:layout_height="43dp"
-            android:src="@drawable/trophy_badge" />
-
-        <Space
-            android:layout_width="20dp"
-            android:layout_height="match_parent" />
-
-        <ImageView
-            android:id="@+id/exercise_king_badge"
-            android:layout_width="42dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/exerciseking_badge" />
-
-        <Space
-            android:layout_width="20dp"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/runer_badge"
-            android:layout_width="40dp"
-            android:layout_height="43dp"
-            android:src="@drawable/runner_badge"
-            tools:layout_editor_absoluteX="160dp"
-            tools:layout_editor_absoluteY="182dp" />
-
-        <Space
-            android:layout_width="20dp"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/swimer_badge"
-            android:layout_width="38dp"
-            android:layout_height="43dp"
-            android:src="@drawable/swimmer_badge" />
-
-        <Space
-            android:layout_width="20dp"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/biking_badge"
-            android:layout_width="45dp"
-            android:layout_height="44dp"
-            android:src="@drawable/biking_badge" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="440dp"
-        android:layout_marginEnd="194dp"
-        android:text="Drink Water Reminder"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="41dp"
-        android:layout_marginTop="492dp"
-        android:layout_marginEnd="244dp"
-        android:text="Subscribe Tips"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="41dp"
-        android:layout_marginTop="176dp"
-        android:layout_marginEnd="255dp"
-        android:text="Healthy point"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/logoutBtn"
-        android:layout_width="303dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="50dp"
-        android:text="Logout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="358dp"
+        android:layout_height="730dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.493">
+
+        <TextView
+            android:id="@+id/user_firstlast_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="144dp"
+            android:layout_marginEnd="168dp"
+            android:text="user"
+            android:textColor="#555252"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.416"
+            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="144dp"
+            android:text="Welcome,"
+            android:textColor="#555252"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.087"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Switch
+            android:id="@+id/drinkwater_remind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="293dp"
+            android:layout_marginTop="428dp"
+            android:layout_marginEnd="52dp"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="384dp"
+            android:layout_marginEnd="153dp"
+            android:text="Excessive Calories Warning"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.514"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Switch
+            android:id="@+id/tip_subscribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="293dp"
+            android:layout_marginTop="480dp"
+            android:layout_marginEnd="52dp"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="240dp"
+            android:layout_marginEnd="169dp"
+            android:text="Your Badge Achievement"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.542"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/healthpt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="135dp"
+            android:layout_marginTop="204dp"
+            android:layout_marginEnd="18dp"
+            android:text="0"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/textView16"
+            app:layout_constraintStart_toEndOf="@+id/textView14"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="283dp"
+            android:layout_marginTop="204dp"
+            android:layout_marginEnd="36dp"
+            android:text="points"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Switch
+            android:id="@+id/execess_calory_warn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="293dp"
+            android:layout_marginTop="372dp"
+            android:layout_marginEnd="52dp"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="317dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="272dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.512"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/achievement_badge"
+                android:layout_width="37dp"
+                android:layout_height="43dp"
+                android:src="@drawable/trophy_badge" />
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/exercise_king_badge"
+                android:layout_width="42dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/exerciseking_badge" />
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/runer_badge"
+                android:layout_width="40dp"
+                android:layout_height="43dp"
+                android:src="@drawable/runner_badge"
+                tools:layout_editor_absoluteX="160dp"
+                tools:layout_editor_absoluteY="182dp" />
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/swimer_badge"
+                android:layout_width="38dp"
+                android:layout_height="43dp"
+                android:src="@drawable/swimmer_badge" />
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/biking_badge"
+                android:layout_width="45dp"
+                android:layout_height="44dp"
+                android:src="@drawable/biking_badge" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="440dp"
+            android:layout_marginEnd="194dp"
+            android:text="Drink Water Reminder"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.514"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="496dp"
+            android:layout_marginEnd="244dp"
+            android:text="Subscribe Tips"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.514"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="204dp"
+            android:layout_marginEnd="255dp"
+            android:text="Healthy point"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.514"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/logoutBtn"
+            android:layout_width="303dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="50dp"
+            android:backgroundTint="#B0A5A5"
+            android:text="Logout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/info_update"
+            android:layout_width="152dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/accoun_user"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
