@@ -110,7 +110,8 @@ public class ExerciseFragment extends Fragment implements CloudDBZoneWrapper.exe
             cloudDBZoneWrapperInstance.openCloudDBZone();
             AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
             CloudDBZoneQuery<exercise> query = CloudDBZoneQuery.where(exercise.class)
-                    .equalTo("uid", user.getUid());
+                    .equalTo("uid", user.getUid())
+                    .equalTo("deleteStatus", false);
             cloudDBZoneWrapperInstance.queryExercise(query);
 
         }, 500);
@@ -128,11 +129,20 @@ public class ExerciseFragment extends Fragment implements CloudDBZoneWrapper.exe
                     count++;
                 }
             }
-            completionText.setText(count + " of "+ exerciseList.size() +" has completed");
+
+            if(exerciseList.size() > 0){
+                completionText.setText(count + " of "+ exerciseList.size() +" has completed");
+            }else {
+                completionText.setText("0 of 0 has completed");
+            }
 
             //update the percentage circle indicator in my plan acitivty
             TextView percentageIndicator = root.findViewById(R.id.percentageIndicator);
-            percentageIndicator.setText((count/exerciseList.size()*100)+"%");
+            if(exerciseList.size() > 0){
+                percentageIndicator.setText((count/exerciseList.size()*100)+"%");
+            }else {
+                percentageIndicator.setText(("0%"));
+            }
         });
     }
 
