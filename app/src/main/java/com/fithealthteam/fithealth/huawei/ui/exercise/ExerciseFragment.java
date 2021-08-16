@@ -120,30 +120,32 @@ public class ExerciseFragment extends Fragment implements CloudDBZoneWrapper.exe
 
     @Override
     public void onAddorQuery(List<exercise> exerciseList) {
-        handler.post(()->{
-            //calculate the count
-            TextView completionText = root.findViewById(R.id.taskCompletion);
-            int count = 0;
-            for (exercise item: exerciseList) {
-                if(item.getCompleteStatus()){
-                    count++;
-                }
+        //calculate the count
+        TextView completionText = root.findViewById(R.id.taskCompletion);
+        int count = 0;
+        for (exercise item: exerciseList) {
+            if(item.getCompleteStatus()){
+                count++;
             }
+        }
 
-            if(exerciseList.size() > 0){
-                completionText.setText(count + " of "+ exerciseList.size() +" has completed");
-            }else {
-                completionText.setText("0 of 0 has completed");
-            }
+        int listSize = exerciseList.size();
 
-            //update the percentage circle indicator in my plan acitivty
-            TextView percentageIndicator = root.findViewById(R.id.percentageIndicator);
-            if(exerciseList.size() > 0){
-                percentageIndicator.setText((count/exerciseList.size()*100)+"%");
-            }else {
-                percentageIndicator.setText(("0%"));
-            }
-        });
+        if(listSize > 0){
+            completionText.setText(count + " of "+ listSize +" has completed");
+        }else {
+            completionText.setText("0 of 0 has completed");
+        }
+
+        //update the percentage circle indicator in my plan activity
+        TextView percentageIndicator = root.findViewById(R.id.percentageIndicator);
+
+        if(listSize > 0){
+            double percentageResult = ((double)count/listSize)*100;
+            percentageIndicator.setText((String.format("%.2f",percentageResult)+"%"));
+        }else {
+            percentageIndicator.setText(("0%"));
+        }
     }
 
     @Override
