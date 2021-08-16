@@ -112,18 +112,10 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
 
         item.setUid(user.getUid());
 
-
-        //cloudDBZoneWrapperInstance.queryExercise(tempQuery);
-
         //insert the new exercise into CloudDB
         handler.post(()->{
-            //get count for id
-            item.setId(cloudDBZoneWrapperInstance.getExerciseCount()+1);
-
-            CloudDBZoneQuery<exercise> tempQuery  = CloudDBZoneQuery.where(exercise.class)
-                    .equalTo("uid", user.getUid());
-
-            cloudDBZoneWrapperInstance.upsertExercise(item);
+            //proceed with generate id and insert
+            cloudDBZoneWrapperInstance.insertNewExercise(item);
         });
     }
 
@@ -140,9 +132,13 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
         list.get(position).setDeleteStatus(true);
         cloudDBZoneWrapperInstance.upsertExercise(list.get(position));
 
-        list.remove(position);
+        //list.remove(position);
         //update the list view
-        listView.setAdapter(adapter);
+        //listView.setAdapter(adapter);
+        CloudDBZoneQuery<exercise> query = CloudDBZoneQuery.where(exercise.class)
+                .equalTo("uid", user.getUid())
+                .equalTo("deleteStatus", false);
+        cloudDBZoneWrapperInstance.queryExercise(query);
     }
 
     //update the check box status in the object
@@ -185,7 +181,6 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
 
         //update the percentage circle indicator in my plan acitivty
         TextView percentageIndicator = findViewById(R.id.percentageIndicatorIndoor);
-
         if(list.size() > 0){
             percentageIndicator.setText((count/list.size()*100)+"%");
         }else {
@@ -211,49 +206,49 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
     //call back function from the CloudDBZoneWrapper
     @Override
     public void onAddorQuery(List<exercise> exerciseList) {
-        handler.post(()->{
-            double burntCalories = 0.00;
 
-            list.clear();
-            listPosition.clear();
-            for(int i = 0; i<exerciseList.size(); i++){
-                list.add(exerciseList.get(i));
-                listPosition.put(i, exerciseList.get(i).getId());
-                if(exerciseList.get(i).getCompleteStatus()){
-                    burntCalories += exerciseList.get(i).getCalories();
-                }
+        Log.d("ListCount", String.valueOf(exerciseList.size()));
+
+        double burntCalories = 0.00;
+
+        list.clear();
+        listPosition.clear();
+        for(int i = 0; i<exerciseList.size(); i++){
+            list.add(exerciseList.get(i));
+            listPosition.put(i, exerciseList.get(i).getId());
+            if(exerciseList.get(i).getCompleteStatus()){
+                burntCalories += exerciseList.get(i).getCalories();
             }
-            listView.setAdapter(adapter);
+        }
+        listView.setAdapter(adapter);
 
-            //show the burning calories
-            TextView burntCaloriesText = findViewById(R.id.BurntCalories);
-            burntCaloriesText.setText( burntCalories + " kcal");
+        //show the burning calories
+        TextView burntCaloriesText = findViewById(R.id.BurntCalories);
+        burntCaloriesText.setText( burntCalories + " kcal");
 
-            //calculate the count
-            TextView completionText = findViewById(R.id.taskCompletionIndoor);
-            int count = 0;
-            for (exercise item: list) {
-                if(item.getCompleteStatus()){
-                    count++;
-                }
+        //calculate the count
+        TextView completionText = findViewById(R.id.taskCompletionIndoor);
+        int count = 0;
+        for (exercise item: list) {
+            if(item.getCompleteStatus()){
+                count++;
             }
+        }
 
-            if(list.size() > 0){
-                completionText.setText(count + " of "+ list.size() +" has completed");
-            }else {
-                completionText.setText("0 of 0 has completed");
-            }
+        if(list.size() > 0){
+            completionText.setText(count + " of "+ list.size() +" has completed");
+        }else {
+            completionText.setText("0 of 0 has completed");
+        }
 
-            //update the percentage circle indicator in my plan acitivty
-            TextView percentageIndicator = findViewById(R.id.percentageIndicatorIndoor);
+        //update the percentage circle indicator in my plan acitivty
+        TextView percentageIndicator = findViewById(R.id.percentageIndicatorIndoor);
 
-            if(list.size() > 0){
-                percentageIndicator.setText((count/list.size()*100)+"%");
-            }else {
-                percentageIndicator.setText(("0%"));
-            }
-
-        });
+        if(list.size() > 0){
+            percentageIndicator.setText((count/list.size()*100)+"%");
+        }else {
+            percentageIndicator.setText(("0%"));
+        }
     }
 
     @Override

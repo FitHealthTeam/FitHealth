@@ -63,7 +63,7 @@ public class AddExerciseDialogActivity extends AppCompatDialogFragment {
                         }else{
                             temp.setCompleteStatus(false);
                             temp.setDeleteStatus(false);
-                            temp.setCalories(Double.parseDouble(caloriesInput.getText().toString()));
+                            temp.setCalories(Double.parseDouble(caloriesInput.getText().toString().trim()));
                             temp.setDate(Calendar.getInstance().getTime());
                             temp.setExerciseType(selectedExercise);
                             //get info from layout and invoke the callback to activity
