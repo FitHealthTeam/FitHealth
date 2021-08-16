@@ -1,9 +1,13 @@
 package com.fithealthteam.fithealth.huawei.CloudDB;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
-import com.fithealthteam.fithealth.huawei.myplan.MyPlanActivity;
+import androidx.annotation.NonNull;
+
 import com.huawei.agconnect.auth.AGConnectAuth;
 import com.huawei.agconnect.auth.AGConnectUser;
 import com.huawei.agconnect.cloud.database.AGConnectCloudDB;
@@ -13,8 +17,6 @@ import com.huawei.agconnect.cloud.database.CloudDBZoneObjectList;
 import com.huawei.agconnect.cloud.database.CloudDBZoneQuery;
 import com.huawei.agconnect.cloud.database.CloudDBZoneSnapshot;
 import com.huawei.agconnect.cloud.database.ListenerHandler;
-import com.huawei.agconnect.cloud.database.ObjectTypeInfo;
-import com.huawei.agconnect.cloud.database.OnSnapshotListener;
 import com.huawei.agconnect.cloud.database.exceptions.AGConnectCloudDBException;
 import com.huawei.hmf.tasks.OnFailureListener;
 import com.huawei.hmf.tasks.OnSuccessListener;
@@ -181,22 +183,40 @@ public class CloudDBZoneWrapper {
         return list;
     }
 
-    public int getExerciseCount() {
+    //generate id and execute upsertExercise method
+    public void insertNewExercise(exercise item) {
         if (mCloudDBZone == null) {
             Log.w(TAG, "CloudDBZone is null, try re-open it");
-            return 0;
+            return;
         }
-
-        int count = 0;
+        Handler handler = new Handler();
 
         AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
-        Task<Long> queryTask = mCloudDBZone.executeCountQuery(
-                CloudDBZoneQuery.where(exercise.class)
-                        .equalTo("uid", user.getUid()),
-                "id",
+
+        CloudDBZoneQuery<exercise> query = CloudDBZoneQuery.where(exercise.class).equalTo("uid", user.getUid());
+        CloudDBZoneQuery<exercise> query2 = CloudDBZoneQuery.where(exercise.class).equalTo("uid", user.getUid()).equalTo("deleteStatus",false);
+
+        Task<Long> countQueryTask = mCloudDBZone.executeCountQuery(query, "uid",
                 CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_FROM_CLOUD_ONLY);
-        count = Integer.parseInt(Long.toString(queryTask.getResult()));
-        return count;
+        countQueryTask.addOnSuccessListener(new OnSuccessListener<Long>() {
+            @Override
+            public void onSuccess(Long aLong) {
+                //set the fetch id count and pass to upsert
+                item.setId(Integer.valueOf(aLong.toString())+1);
+                upsertExercise(item);
+
+                //delay a bit to query and update UI to wait for insert action is complete
+                handler.postDelayed(()->{
+                        queryExercise(query2);
+                },500);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                Log.w(TAG, "Count query is failed: " + Log.getStackTraceString(e));
+            }
+        });
     }
 
     //upsert function - update or add into the cloudDB
