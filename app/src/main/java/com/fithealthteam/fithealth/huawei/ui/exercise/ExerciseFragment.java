@@ -102,6 +102,13 @@ public class ExerciseFragment extends Fragment implements CloudDBZoneWrapper.exe
         });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //close the CloudDB Zone Properly
+        cloudDBZoneWrapperInstance.closeCloudDBZone();
+    }
+
     //Initialize Cloud DB Wrapper to use
     public void initCloudDBWrapper(){
         handler.postDelayed(() -> {
