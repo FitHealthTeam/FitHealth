@@ -130,15 +130,22 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
         //execute delete function to delete item in cloud db
         //cloudDBZoneWrapperInstance.deleteExercise(list.get(position));
         list.get(position).setDeleteStatus(true);
+        Log.d("RemoveItem", "deleted item number "
+                +position
+        +"\n List Item : "
+        +list.get(position).getId());
+
         cloudDBZoneWrapperInstance.upsertExercise(list.get(position));
 
         //list.remove(position);
         //update the list view
         //listView.setAdapter(adapter);
-        CloudDBZoneQuery<exercise> query = CloudDBZoneQuery.where(exercise.class)
-                .equalTo("uid", user.getUid())
-                .equalTo("deleteStatus", false);
-        cloudDBZoneWrapperInstance.queryExercise(query);
+        handler.postDelayed(()->{
+            CloudDBZoneQuery<exercise> query = CloudDBZoneQuery.where(exercise.class)
+                    .equalTo("uid", user.getUid())
+                    .equalTo("deleteStatus", false);
+            cloudDBZoneWrapperInstance.queryExercise(query);
+        }, 500);
     }
 
     //update the check box status in the object
