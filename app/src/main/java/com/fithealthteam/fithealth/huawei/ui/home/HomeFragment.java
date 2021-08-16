@@ -128,13 +128,13 @@ public class HomeFragment extends Fragment {
 
         TextView tvBMI = v.findViewById(R.id.tvBMIResult);
 
-        String passedBMI = getArguments().getString("BMI");
-        tvBMI.setText(passedBMI);
+        //String passedBMI = getArguments().getString("BMI");
+        //tvBMI.setText(passedBMI);
 
         // Progress Bar
         progressBar = v.findViewById(R.id.bmiIndicator);
 
-        if(passedBMI != null){
+        /*if(passedBMI != null){
             float i = Float.parseFloat(passedBMI);
             //int a = Math.round(i);
             if(i>=18.5 && i<=24.9){
@@ -147,7 +147,7 @@ public class HomeFragment extends Fragment {
                 currentProgress = 10;
             }
             progressBar.setProgress(currentProgress);
-        }
+        }*/
 
         // Time Picker
         btnTimePick = v.findViewById(R.id.btnTimePick);

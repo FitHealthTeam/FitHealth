@@ -37,8 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //initialize the AGConnectCloudDB for CloudDB use
         CloudDBZoneWrapper.initAGConnectCloudDB(getApplicationContext());
+
         super.onCreate(savedInstanceState);
+
         //hide the top action bar and title
         getSupportActionBar().hide();
 

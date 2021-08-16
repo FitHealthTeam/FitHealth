@@ -60,7 +60,7 @@
                 android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:hint="Calories"
-                android:inputType="textPersonName"
+                android:inputType="number|numberDecimal"
                 android:minHeight="48dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
