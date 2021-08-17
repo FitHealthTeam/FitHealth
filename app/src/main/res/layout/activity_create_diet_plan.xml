@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".CreateDietPlan.CreateDietPlan_Activity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llCreatePlan"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_layout_home_lightbrown"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Plan"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="490dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_layout_silver"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="What is your weekly weight goal ?"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <RadioButton
+                android:id="@+id/rbLose0.25"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="  Lose 0.25 KG per week"
+                />
+
+            <RadioButton
+                android:id="@+id/rbLose0.50"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="  Lose 0.50 KG per week" />
+
+            <RadioButton
+                android:id="@+id/rbLose0.75"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="  Lose 0.75 KG per week" />
+
+            <RadioButton
+                android:id="@+id/rbLose1.00"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="  Lose 1.00 KG per week" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="How often do you exercise in a week ?"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="210dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="235dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <RadioButton
+                android:id="@+id/rbNoExer"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="  No exercise at all" />
+
+            <RadioButton
+                android:id="@+id/rb1per"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="  1 per week" />
+
+            <RadioButton
+                android:id="@+id/rb2to4per"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="  2 ~ 4 per week" />
+
+            <RadioButton
+                android:id="@+id/rb5per"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="  5 week and above" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Are you a vegetarian ?"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="400dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <Button
+            android:id="@+id/btnNo"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="No"
+            android:layout_marginTop="430dp"
+            android:layout_marginStart="30dp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <Button
+            android:id="@+id/btnYes"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="Yes"
+            android:layout_marginTop="430dp"
+            android:layout_marginStart="160dp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NEXT"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:textColor="#120DEC"
+        android:layout_marginStart="300dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+</LinearLayout>

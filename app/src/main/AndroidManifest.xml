@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FitHealth">
         <activity
+            android:name=".CreateDietPlan.CreateDietPlan_Activity"
+            android:exported="true" />
+        <activity
             android:name=".authentication.passResetActivity"
             android:exported="true" />
         <activity
@@ -37,7 +40,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".ui.home.ReminderBroadcast"/>
+        <receiver android:name=".ui.home.ReminderBroadcast" />
     </application>
 
 </manifest>
