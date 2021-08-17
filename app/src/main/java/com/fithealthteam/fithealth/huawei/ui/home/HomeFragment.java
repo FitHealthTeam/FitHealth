@@ -31,6 +31,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fithealthteam.fithealth.huawei.BMIInput.BMIInput_Activity;
+import com.fithealthteam.fithealth.huawei.CreateDietPlan.CreateDietPlan_Activity;
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.databinding.FragmentHomeBinding;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
@@ -119,7 +120,7 @@ public class HomeFragment extends Fragment {
         editBMI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), BMIInput_Activity.class);
+                Intent intent = new Intent(v.getContext(), CreateDietPlan_Activity.class);
                 startActivity(intent);
             }
         });
