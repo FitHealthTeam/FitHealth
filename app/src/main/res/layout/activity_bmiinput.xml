@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_gravity="center"
     android:backgroundTint="#AFAAAA"
     tools:context=".BMIInput.BMIInput_Activity">
 
@@ -69,9 +68,5 @@
         android:layout_marginTop="30dp"
         android:layout_marginHorizontal="40dp"
         android:backgroundTint="#B0A5A5" />
-
-
-
-
 
 </LinearLayout>

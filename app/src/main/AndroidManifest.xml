@@ -12,10 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FitHealth">
         <activity
-            android:name=".CreateDietPlan.CreateDietPlan_Activity"
+            android:name=".BMIInput.BMIInput_Activity"
             android:exported="true" />
         <activity
-            android:name=".BMIInput.BMIInput_Activity"
+            android:name=".CreateDietPlan.CreateDietPlan_Activity"
             android:exported="true" />
         <activity
             android:name=".authentication.passResetActivity"
