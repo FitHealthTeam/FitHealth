@@ -58,6 +58,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.huawei.agconnect:agconnect-core:1.5.2.300'
+
     implementation 'com.huawei.hms:push:5.0.4.302'
     implementation 'com.huawei.hms:hwid:5.0.5.301'
     implementation 'com.huawei.hms:location:5.0.4.300'
@@ -70,5 +71,8 @@ dependencies {
 
     //Huawei Auth Service
     implementation 'com.huawei.agconnect:agconnect-auth:1.6.0.300'
+
+    // add the Analytics Kit for Huawei Analytics
+    implementation 'com.huawei.hms:hianalytics:5.3.0.300'
 }
 apply plugin: 'com.huawei.agconnect'
