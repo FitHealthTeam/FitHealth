@@ -30,9 +30,6 @@
 -keep class com.huawei.hms.**{*;}
 
 
--keepattributes SourceFileLineNumberTable,
-
-
 
 
 

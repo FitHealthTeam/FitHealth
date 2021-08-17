@@ -24,6 +24,7 @@ import com.fithealthteam.fithealth.huawei.CloudDB.exercise;
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.databinding.ExerciseFragmentBinding;
 import com.fithealthteam.fithealth.huawei.databinding.FragmentHomeBinding;
+import com.fithealthteam.fithealth.huawei.motionTracking.MotionTrackingActivity;
 import com.fithealthteam.fithealth.huawei.myplan.MyPlanActivity;
 import com.huawei.agconnect.auth.AGConnectAuth;
 import com.huawei.agconnect.auth.AGConnectUser;
@@ -79,7 +80,14 @@ public class ExerciseFragment extends Fragment implements CloudDBZoneWrapper.exe
             initCloudDBWrapper();
         });
 
-
+        ConstraintLayout joggingExercise = root.findViewById(R.id.joggingExerciseBtn);
+        joggingExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), MotionTrackingActivity.class);
+                startActivity(i);
+            }
+        });
 
         //return the view object
         return root;
