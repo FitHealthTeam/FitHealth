@@ -63,20 +63,6 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        /*homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        final TextView textView = binding.textHome;
-
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                //textView.setText(s);
-            }
-        });
-        return root;*/
 
 
         //view object pass in
@@ -94,21 +80,6 @@ public class HomeFragment extends Fragment {
         mSliderView.startAutoCycle();
 
 
-        /*// calender view
-        mCalenderView = v.findViewById(R.id.calendarView);
-        dateSelected = v.findViewById(R.id.dateSelected);
-
-        //mCalenderView.setDate(20210814);
-
-        mCalenderView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String date = dayOfMonth + "/" + (month + 1) + "/" + year;
-                dateSelected.setText(date);
-            }
-        });*/
-
-
         // TO BMI Input Page
         editBMI = v.findViewById(R.id.editBMI);
 
@@ -120,12 +91,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
         // Retrieve BMI value
 
         TextView tvBMI = v.findViewById(R.id.tvBMIResult);
 
         //String passedBMI = getArguments().getString("BMI");
         //tvBMI.setText(passedBMI);
+
 
         // Progress Bar
         progressBar = v.findViewById(R.id.bmiIndicator);
@@ -144,6 +117,7 @@ public class HomeFragment extends Fragment {
             }
             progressBar.setProgress(currentProgress);
         }*/
+
 
         // Time Picker
         btnTimePick = v.findViewById(R.id.btnTimePick);

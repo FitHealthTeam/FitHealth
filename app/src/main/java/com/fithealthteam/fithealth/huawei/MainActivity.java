@@ -1,6 +1,5 @@
 package com.fithealthteam.fithealth.huawei;
 
-import static com.fithealthteam.fithealth.huawei.Notification.notify.CHANNEL_ID_1;
 
 import android.app.Notification;
 import android.content.Intent;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
+import com.fithealthteam.fithealth.huawei.CreateDietPlan.CreateDietPlan_Activity;
 import com.fithealthteam.fithealth.huawei.authentication.authenticateActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -55,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
         }else{
             Log.d("HMS Auth User", user.getEmail());
             Log.d("HMS Auth User UID", user.getUid());
+
+            Intent intent = new Intent(getApplicationContext(),CreateDietPlan_Activity.class);
+            startActivity(intent);
+
         }
 
         //li-hao check for whether newUser is true --> if (newUser == true) --> go to create Diet plan activity to load data --> store to db --> intent back to here

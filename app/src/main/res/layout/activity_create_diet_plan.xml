@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:text="What is your weekly weight goal ?"
             android:textStyle="bold"
-            android:textSize="18dp"
+            android:textSize="16dp"
             android:layout_marginStart="25dp"
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:text="How often do you exercise in a week ?"
             android:textStyle="bold"
-            android:textSize="18dp"
+            android:textSize="16dp"
             android:layout_marginStart="25dp"
             android:layout_marginTop="210dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -143,7 +143,7 @@
             android:layout_height="wrap_content"
             android:text="Are you a vegetarian ?"
             android:textStyle="bold"
-            android:textSize="18dp"
+            android:textSize="16dp"
             android:layout_marginStart="25dp"
             android:layout_marginTop="400dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -152,7 +152,7 @@
         <Button
             android:id="@+id/btnNo"
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:text="No"
             android:layout_marginTop="430dp"
             android:layout_marginStart="30dp"
@@ -164,7 +164,7 @@
         <Button
             android:id="@+id/btnYes"
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:text="Yes"
             android:layout_marginTop="430dp"
             android:layout_marginStart="160dp"
@@ -179,14 +179,15 @@
 
 
     <TextView
+        android:id="@+id/tvNext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="NEXT"
         android:textStyle="bold"
         android:textSize="25dp"
         android:textColor="#120DEC"
-        android:layout_marginStart="300dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="270dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
