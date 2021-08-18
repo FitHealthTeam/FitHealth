@@ -59,6 +59,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <RadioGroup
+            android:id="@+id/loseWeightGoal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -105,6 +106,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <RadioGroup
+            android:id="@+id/exercisePerWeek"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -149,7 +151,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <Button
+        <!-- <Button
             android:id="@+id/btnNo"
             android:layout_width="100dp"
             android:layout_height="45dp"
@@ -171,8 +173,31 @@
             android:backgroundTint="@color/white"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/> -->
+
+        <ToggleButton
+            android:id="@+id/btnNoTog"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:textOn="No"
+            android:textOff="No"
+            android:layout_marginTop="430dp"
+            android:layout_marginStart="30dp"
+            android:background="@drawable/selector"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
+        <ToggleButton
+            android:id="@+id/btnYesTog"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:textOn="Yes"
+            android:textOff="Yes"
+            android:layout_marginTop="430dp"
+            android:layout_marginStart="160dp"
+            android:background="@drawable/selector"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
