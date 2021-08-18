@@ -3,7 +3,6 @@ package com.fithealthteam.fithealth.huawei.ui.exercise;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -13,17 +12,17 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
 import com.fithealthteam.fithealth.huawei.CloudDB.exercise;
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.databinding.ExerciseFragmentBinding;
-import com.fithealthteam.fithealth.huawei.databinding.FragmentHomeBinding;
+import com.fithealthteam.fithealth.huawei.motionTracking.ExerciseMapActivity;
 import com.fithealthteam.fithealth.huawei.myplan.MyPlanActivity;
 import com.huawei.agconnect.auth.AGConnectAuth;
 import com.huawei.agconnect.auth.AGConnectUser;
@@ -79,7 +78,43 @@ public class ExerciseFragment extends Fragment implements CloudDBZoneWrapper.exe
             initCloudDBWrapper();
         });
 
+        ConstraintLayout joggingExercise = root.findViewById(R.id.joggingExerciseBtn);
+        joggingExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), ExerciseMapActivity.class);
+                i.putExtra("exerciseType", "Jogging");
+                startActivity(i);
+            }
+        });
 
+        ConstraintLayout hikingExercise = root.findViewById(R.id.hikingExerciseBtn);
+        hikingExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ExerciseMapActivity.class);
+                intent.putExtra("exerciseType", "Hiking");
+                startActivity(intent);
+            }
+        });
+
+        ConstraintLayout cyclingExercise = root.findViewById(R.id.cyclingExerciseBtn);
+        cyclingExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ExerciseMapActivity.class);
+                intent.putExtra("exerciseType", "Cycling");
+                startActivity(intent);
+            }
+        });
+
+        ConstraintLayout otherExerciseBtn = root.findViewById(R.id.otherExerciseBtn);
+        otherExerciseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"Will be unlocked more supported exercise in future !", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //return the view object
         return root;
