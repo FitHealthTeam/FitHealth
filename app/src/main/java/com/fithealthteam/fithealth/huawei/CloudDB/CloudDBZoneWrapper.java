@@ -219,6 +219,37 @@ public class CloudDBZoneWrapper {
         });
     }
 
+    //generate id and execute upsertExercise method from motion track
+    public void insertNewExerciseFromMotionTrack(exercise item) {
+        if (mCloudDBZone == null) {
+            Log.w(TAG, "CloudDBZone is null, try re-open it");
+            return;
+        }
+        Handler handler = new Handler();
+
+        AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
+
+        CloudDBZoneQuery<exercise> query = CloudDBZoneQuery.where(exercise.class).equalTo("uid", user.getUid());
+
+        Task<Long> countQueryTask = mCloudDBZone.executeCountQuery(query, "uid",
+                CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_FROM_CLOUD_ONLY);
+        countQueryTask.addOnSuccessListener(new OnSuccessListener<Long>() {
+            @Override
+            public void onSuccess(Long aLong) {
+                //set the fetch id count and pass to upsert
+                item.setId(Integer.valueOf(aLong.toString())+1);
+
+                item.setUid(user.getUid());
+                upsertExercise(item);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                Log.w(TAG, "Count query is failed: " + Log.getStackTraceString(e));
+            }
+        });
+    }
+
     //upsert function - update or add into the cloudDB
     public void upsertExercise(exercise exerciseItem){
         if (mCloudDBZone == null){

@@ -27,8 +27,14 @@
         <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/activity_add_exercise_dialog.xml" value="0.3211050724637681" />
         <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/activity_add_meal_dialog.xml" value="0.33" />
         <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/activity_authenticate.xml" value="0.25" />
+        <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/activity_exercise_map.xml" value="0.30085470085470084" />
+<<<<<<< Updated upstream
+=======
+        <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/activity_jogging_map.xml" value="0.30085470085470084" />
+>>>>>>> Stashed changes
         <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/activity_login.xml" value="0.30085470085470084" />
         <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/activity_main.xml" value="0.2653985507246377" />
+        <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/activity_motion_tracking.xml" value="0.30085470085470084" />
         <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/activity_my_plan.xml" value="0.2767210144927536" />
         <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/activity_pass_reset.xml" value="0.25" />
         <entry key="..\:/Users/User/Documents/GitHub/FitHealth/app/src/main/res/layout/community_fragment.xml" value="0.2653985507246377" />
