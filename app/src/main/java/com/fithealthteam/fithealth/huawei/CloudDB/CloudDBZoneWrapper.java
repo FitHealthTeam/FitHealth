@@ -404,6 +404,111 @@ public class CloudDBZoneWrapper {
         });
     }
 
+    //update drink Water
+    public void updateDrinkWater(String uid, boolean drinkWater){
+        if (mCloudDBZone == null){
+            Log.w(TAG,"CloudDB Zone is null !");
+            return;
+        }
+
+        CloudDBZoneQuery<user> query1 = CloudDBZoneQuery.where(user.class).
+                equalTo("id", uid);
+
+        Task<CloudDBZoneSnapshot<user>> queryTask = mCloudDBZone.executeQuery(
+                query1,
+                CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_FROM_CLOUD_ONLY);
+
+        queryTask.addOnSuccessListener(new OnSuccessListener<CloudDBZoneSnapshot<user>>() {
+            @Override
+            public void onSuccess(CloudDBZoneSnapshot<user> userCloudDBZoneSnapshot) {
+                List<user> tempResult = extractuserResult(userCloudDBZoneSnapshot);
+                user tempUser = tempResult.get(0);
+
+                tempUser.setDrinkWater(drinkWater);
+
+                upsertUser(tempUser);
+
+                userCallback.userOnAddorQuery(tempResult);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                //show failure message
+                userCallback.userShowError("Query user list from cloud failed");
+            }
+        });
+    }
+
+    //update drink Water
+    public void updatecaloriesWarning(String uid, boolean caloriesWarning){
+        if (mCloudDBZone == null){
+            Log.w(TAG,"CloudDB Zone is null !");
+            return;
+        }
+
+        CloudDBZoneQuery<user> query1 = CloudDBZoneQuery.where(user.class).
+                equalTo("id", uid);
+
+        Task<CloudDBZoneSnapshot<user>> queryTask = mCloudDBZone.executeQuery(
+                query1,
+                CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_FROM_CLOUD_ONLY);
+
+        queryTask.addOnSuccessListener(new OnSuccessListener<CloudDBZoneSnapshot<user>>() {
+            @Override
+            public void onSuccess(CloudDBZoneSnapshot<user> userCloudDBZoneSnapshot) {
+                List<user> tempResult = extractuserResult(userCloudDBZoneSnapshot);
+                user tempUser = tempResult.get(0);
+
+                tempUser.setExcessiveCalories(caloriesWarning);
+
+                upsertUser(tempUser);
+
+                userCallback.userOnAddorQuery(tempResult);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                //show failure message
+                userCallback.userShowError("Query user list from cloud failed");
+            }
+        });
+    }
+
+    //update drink Water
+    public void updateSubscribedTips(String uid, boolean subscribeTips){
+        if (mCloudDBZone == null){
+            Log.w(TAG,"CloudDB Zone is null !");
+            return;
+        }
+
+        CloudDBZoneQuery<user> query1 = CloudDBZoneQuery.where(user.class).
+                equalTo("id", uid);
+
+        Task<CloudDBZoneSnapshot<user>> queryTask = mCloudDBZone.executeQuery(
+                query1,
+                CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_FROM_CLOUD_ONLY);
+
+        queryTask.addOnSuccessListener(new OnSuccessListener<CloudDBZoneSnapshot<user>>() {
+            @Override
+            public void onSuccess(CloudDBZoneSnapshot<user> userCloudDBZoneSnapshot) {
+                List<user> tempResult = extractuserResult(userCloudDBZoneSnapshot);
+                user tempUser = tempResult.get(0);
+
+                tempUser.setSubscribeTips(subscribeTips);
+
+                upsertUser(tempUser);
+
+                userCallback.userOnAddorQuery(tempResult);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                //show failure message
+                userCallback.userShowError("Query user list from cloud failed");
+            }
+        });
+    }
+
     //remove the user data item from CloudDB
     public void deleteUser(user user){
         if(mCloudDBZone == null){
