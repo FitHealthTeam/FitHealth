@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -14,11 +15,13 @@ import android.widget.ToggleButton;
 
 import com.fithealthteam.fithealth.huawei.BMIInput.BMIInput_Activity;
 import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
+import com.fithealthteam.fithealth.huawei.CloudDB.user;
 import com.fithealthteam.fithealth.huawei.MainActivity;
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.authentication.authenticateActivity;
 import com.huawei.agconnect.auth.AGConnectAuth;
 import com.huawei.agconnect.auth.AGConnectUser;
+import com.huawei.agconnect.cloud.database.CloudDBZoneQuery;
 
 public class CreateDietPlan_Activity extends AppCompatActivity {
 
@@ -31,6 +34,7 @@ public class CreateDietPlan_Activity extends AppCompatActivity {
     ToggleButton btnNo;
     Boolean vegetarian;
 
+    private Handler handler;
     private CloudDBZoneWrapper cloudDBZoneWrapperInstance;
 
     public CreateDietPlan_Activity(){ cloudDBZoneWrapperInstance = new CloudDBZoneWrapper();}
@@ -51,37 +55,58 @@ public class CreateDietPlan_Activity extends AppCompatActivity {
         btnNo = findViewById(R.id.btnNoTog);
 
         tvNext = findViewById(R.id.tvNext);
-
+        
 
         tvNext.setOnClickListener(v -> {
 
-            String temp = null;
+            //String temp = null;
 
             if(btnYes.isChecked()){
                 vegetarian = true;
-                temp = "Yes";
+                //temp = "Yes";
             }else if(btnNo.isChecked()){
                 vegetarian = false;
-                temp = "No";
+                //temp = "No";
             }
 
             returnRbSelection();
 
-            Toast.makeText(getApplicationContext(), "Lose Weight Goal: " + rbWeightGoal.getText()
+            /*Toast.makeText(getApplicationContext(), "Lose Weight Goal: " + rbWeightGoal.getText()
                     + "; Exercise Per Week: " + rbExercisePerWeek.getText()
-                    + "; Vegetarian: " + temp, Toast.LENGTH_LONG).show();
+                    + "; Vegetarian: " + temp, Toast.LENGTH_LONG).show();*/
 
-            /*Intent intent;
+            Intent intent;
             if(user == null){
                 intent = new Intent(getApplicationContext(), authenticateActivity.class);
-
             }else{
                 intent = new Intent(getApplicationContext(), BMIInput_Activity.class);
             }
             startActivity(intent);
-            finish();*/
+            finish();
         });
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //close the CloudDB Zone Properly
+        cloudDBZoneWrapperInstance.closeCloudDBZone();
+    }
+
+    //Initialize Cloud DB Wrapper to use
+    public void initCloudDBWrapper(){
+        handler.postDelayed(() -> {
+            cloudDBZoneWrapperInstance.addCallBack((CloudDBZoneWrapper.exerciseUICallBack) CreateDietPlan_Activity.this);
+            cloudDBZoneWrapperInstance.createObjectType();
+            cloudDBZoneWrapperInstance.openCloudDBZone();
+            AGConnectUser userAG = AGConnectAuth.getInstance().getCurrentUser();
+            CloudDBZoneQuery<com.fithealthteam.fithealth.huawei.CloudDB.user> query = CloudDBZoneQuery.where(user.class)
+                    .equalTo("uid", userAG.getUid());
+            //.equalTo("deleteStatus", false);
+            cloudDBZoneWrapperInstance.queryUser(query);
+
+        }, 500);
     }
 
     public void returnRbSelection(){
@@ -92,17 +117,6 @@ public class CreateDietPlan_Activity extends AppCompatActivity {
         int radioIdPerWeek = exercisePerWeek.getCheckedRadioButtonId();
         rbExercisePerWeek = findViewById(radioIdPerWeek);
 
-        //Toast.makeText(getApplicationContext(), "Lose Weight Goal: " + rbWeightGoal.getText()
-            //    + "; Exercise Per Week: " + rbExercisePerWeek.getText(), Toast.LENGTH_LONG).show();
-
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        //close the CloudDB Zone Properly
-        cloudDBZoneWrapperInstance.closeCloudDBZone();
     }
 
 }

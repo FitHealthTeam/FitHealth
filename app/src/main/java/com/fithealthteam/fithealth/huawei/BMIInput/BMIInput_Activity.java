@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,17 +57,15 @@ public class BMIInput_Activity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "Weight: " + weight + "; Height: " + height , Toast.LENGTH_SHORT).show();
 
-                Intent intent;
+
                 if(user == null){
-                    intent = new Intent(getApplicationContext(), authenticateActivity.class);
-
+                    Intent intent = new Intent(getApplicationContext(), authenticateActivity.class);
+                    startActivity(intent);
                 }else{
-                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Log.d("HMS Auth User", user.getEmail());
+                    Log.d("HMS Auth User UID", user.getUid());
                 }
-                startActivity(intent);
-
                 finish();
-
             }
         });
 

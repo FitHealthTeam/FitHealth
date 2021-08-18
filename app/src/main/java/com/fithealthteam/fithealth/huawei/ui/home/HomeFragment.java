@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
 
-        // slider image
+        // Slider Image View
         mSliderView = v.findViewById(R.id.image_slider);
 
         SliderAdapter sliderAdapter = new SliderAdapter(images);
@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment {
         mSliderView.startAutoCycle();
 
 
-        // TO BMI Input Page
+        // Intent BMI Input Page
         editBMI = v.findViewById(R.id.editBMI);
 
         editBMI.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +93,6 @@ public class HomeFragment extends Fragment {
 
 
         // Retrieve BMI value
-
         TextView tvBMI = v.findViewById(R.id.tvBMIResult);
 
         //String passedBMI = getArguments().getString("BMI");
@@ -145,7 +144,7 @@ public class HomeFragment extends Fragment {
         // for fragment
         //SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
 
-        // Notification
+        // Reminder Notification
         createNotificationChannel();
 
         btnSet = v.findViewById(R.id.btnSet);
@@ -181,7 +180,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
 
 
 
