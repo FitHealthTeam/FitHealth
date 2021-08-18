@@ -206,7 +206,7 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
             }
         }
 
-        if(count >= 1){
+        if(count >= 100){
             return true;
         }else{
             return false;
