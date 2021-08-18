@@ -25,14 +25,16 @@ public class BMIInput_Activity extends AppCompatActivity {
     Button btnSave;
     EditText inputWeight,inputHeight;
 
+    double weight;
+    double height;
+
     private Handler handler;
     private CloudDBZoneWrapper cloudDBZoneWrapperInstance;
 
+    AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
+
     public BMIInput_Activity(){ cloudDBZoneWrapperInstance = new CloudDBZoneWrapper();}
 
-    user newUser = new user();
-
-    AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,25 +49,18 @@ public class BMIInput_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                double weight = Float.parseFloat(String.valueOf(inputWeight.getText()));
-                double height = Float.parseFloat(String.valueOf(inputHeight.getText()))/100;
 
-                addWeightHeight(newUser,height,weight);
-                newUser.setId(user.getUid());
-
-                cloudDBZoneWrapperInstance.upsertUser(newUser);
-
-                Toast.makeText(getApplicationContext(), "Weight: " + weight + "; Height: " + height , Toast.LENGTH_SHORT).show();
-
-
-                if(user == null){
-                    Intent intent = new Intent(getApplicationContext(), authenticateActivity.class);
-                    startActivity(intent);
+                // Get Text From User Input
+                if(inputWeight.getText().length() == 0 || inputHeight.length() == 0){
+                    Toast.makeText(getApplicationContext(), "Both Weight and Height are Required!", Toast.LENGTH_SHORT).show();
                 }else{
-                    Log.d("HMS Auth User", user.getEmail());
-                    Log.d("HMS Auth User UID", user.getUid());
+                    weight = Double.parseDouble(String.valueOf(inputWeight.getText()));
+                    height = Double.parseDouble(String.valueOf(inputHeight.getText()))/100;
+
+                    Toast.makeText(getApplicationContext(), "Weight: " + weight + "; Height: " + height , Toast.LENGTH_SHORT).show();
+                    finish();
                 }
-                finish();
+
             }
         });
 
@@ -78,25 +73,6 @@ public class BMIInput_Activity extends AppCompatActivity {
         cloudDBZoneWrapperInstance.closeCloudDBZone();
     }
 
-    //Initialize Cloud DB Wrapper to use
-    public void initCloudDBWrapper(){
-        handler.postDelayed(() -> {
-            cloudDBZoneWrapperInstance.addCallBack((CloudDBZoneWrapper.exerciseUICallBack) BMIInput_Activity.this);
-            cloudDBZoneWrapperInstance.createObjectType();
-            cloudDBZoneWrapperInstance.openCloudDBZone();
-            AGConnectUser userAG = AGConnectAuth.getInstance().getCurrentUser();
-            CloudDBZoneQuery<user> query = CloudDBZoneQuery.where(user.class)
-                    .equalTo("uid", userAG.getUid());
-            //.equalTo("deleteStatus", false);
-            cloudDBZoneWrapperInstance.queryUser(query);
-
-        }, 500);
-    }
-
-    public void addWeightHeight(user user,double mHeight,double mWeight){
-        user.setHeight(mHeight);
-        user.setWeight(mWeight);
-    }
 
 
 }
