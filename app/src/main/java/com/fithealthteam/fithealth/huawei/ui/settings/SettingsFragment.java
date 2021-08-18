@@ -41,6 +41,9 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
     private Handler handler = new Handler();
 
     private TextView healthpt;
+    private TextView userLFname;
+
+    Switch excessCalorySwitch, drinkWaterReminderSwitch, subscriptionSwitch;
 
     //authenticated user access here
     AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
@@ -64,10 +67,9 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
         });
 
         //execute the cloudDB task, delayed a bit to wait for initialization complete
-        handler.postDelayed(()->{
-            CloudDBZoneQuery<exercise> query1 = CloudDBZoneQuery.where(exercise.class).equalTo("uid", user.getUid()).equalTo("completeStatus", true);
-            cloudDBZoneWrapperInstance.queryExercise(query1);
-        },500);
+        handler.post(()->{
+            queryAll();
+        });
 
         Button logoutBtn = v.findViewById(R.id.logoutBtn);
         logoutBtn.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +81,7 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
             }
         });
 
-        TextView userLFname = v.findViewById(R.id.user_firstlast_name);
+        userLFname = v.findViewById(R.id.user_firstlast_name);
         healthpt =  v.findViewById(R.id.healthpt);
 
         //all achievement get
@@ -103,9 +105,9 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
 
 
         //switch
-        Switch excessCalorySwitch = v.findViewById(R.id.execess_calory_warn);
-        Switch drinkWaterReminderSwitch = v.findViewById(R.id.drinkwater_remind);
-        Switch subscriptionSwitch = v.findViewById(R.id.tip_subscribe);
+        excessCalorySwitch = v.findViewById(R.id.execess_calory_warn);
+        drinkWaterReminderSwitch = v.findViewById(R.id.drinkwater_remind);
+        subscriptionSwitch = v.findViewById(R.id.tip_subscribe);
 
         /* Execess calories formula
         For men:
@@ -118,33 +120,27 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
         excessCalorySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(excessCalorySwitch.getText().toString().toUpperCase().equals("ON")){
-                    //store on to db
-                } else {
-                    //store off to db
-                }
+                handler.post(()->{
+                    cloudDBZoneWrapperInstance.updatecaloriesWarning(user.getUid(),isChecked);
+                });
             }
         });
 
         drinkWaterReminderSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(drinkWaterReminderSwitch.getText().toString().toUpperCase().equals("ON")) {
-                    //store on to db
-                } else {
-                    //store off to db
-                }
+                handler.post(()->{
+                    cloudDBZoneWrapperInstance.updateDrinkWater(user.getUid(),isChecked);
+                });
             }
         });
 
         subscriptionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(subscriptionSwitch.getText().toString().toUpperCase().equals("ON")) {
-                    //store on to db
-                } else {
-                    //store off to db
-                }
+                handler.post(()->{
+                    cloudDBZoneWrapperInstance.updateSubscribedTips(user.getUid(),isChecked);
+                });
             }
         });
 
@@ -186,6 +182,16 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
         });
     }
 
+    public void queryAll(){
+        handler.postDelayed(()->{
+            CloudDBZoneQuery<exercise> query1 = CloudDBZoneQuery.where(exercise.class).equalTo("uid", user.getUid()).equalTo("completeStatus", true);
+            cloudDBZoneWrapperInstance.queryExercise(query1);
+
+            CloudDBZoneQuery<user> query2 = CloudDBZoneQuery.where(user.class).equalTo("id",user.getUid());
+            cloudDBZoneWrapperInstance.queryUser(query2);
+        },500);
+    }
+
     //determine count total of a type of exercise is done by user
     public int countExercise(List<exercise> list, String targetExercise){
         int count = 0;
@@ -206,7 +212,7 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
             }
         }
 
-        if(count >= 1){
+        if(count >= 100){
             return true;
         }else{
             return false;
@@ -264,6 +270,13 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
     //call back from cloudDBWrapper for user object
     @Override
     public void userOnAddorQuery(List<com.fithealthteam.fithealth.huawei.CloudDB.user> userList) {
+        com.fithealthteam.fithealth.huawei.CloudDB.user tempUser = userList.get(0);
+
+        userLFname.setText(tempUser.getFirstName() + " " + tempUser.getLastName());
+
+        excessCalorySwitch.setChecked(tempUser.getExcessiveCalories());
+        drinkWaterReminderSwitch.setChecked(tempUser.getDrinkWater());
+        subscriptionSwitch.setChecked(tempUser.getSubscribeTips());
 
     }
 
