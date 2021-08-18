@@ -230,7 +230,6 @@ public class CloudDBZoneWrapper {
         AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
 
         CloudDBZoneQuery<exercise> query = CloudDBZoneQuery.where(exercise.class).equalTo("uid", user.getUid());
-        CloudDBZoneQuery<exercise> query2 = CloudDBZoneQuery.where(exercise.class).equalTo("uid", user.getUid()).equalTo("deleteStatus",false);
 
         Task<Long> countQueryTask = mCloudDBZone.executeCountQuery(query, "uid",
                 CloudDBZoneQuery.CloudDBZoneQueryPolicy.POLICY_QUERY_FROM_CLOUD_ONLY);

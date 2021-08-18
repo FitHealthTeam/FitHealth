@@ -14,7 +14,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
 import com.fithealthteam.fithealth.huawei.CloudDB.exercise;
@@ -34,6 +36,8 @@ import com.huawei.hms.location.LocationSettingsRequest;
 import com.huawei.hms.location.LocationSettingsResponse;
 import com.huawei.hms.location.LocationSettingsStatusCodes;
 import com.huawei.hms.location.SettingsClient;
+
+import java.util.Calendar;
 
 public class ExerciseMapActivity extends AppCompatActivity {
 
@@ -116,18 +120,49 @@ public class ExerciseMapActivity extends AppCompatActivity {
                     }
                 });
 
+        handler.post(()->{
+            initCloudDBWrapper();
+        });
 
         String exerciseTextView = getIntent().getStringExtra("exerciseType");
         TextView exerciseName = findViewById(R.id.exerciseName);
         exerciseName.setText(exerciseTextView);
 
-        Button btn = findViewById(R.id.startMotionTrackBtn);
+        Button startbtn = findViewById(R.id.startMotionTrackBtn);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        startbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ExerciseMapActivity.this, MotionTrackingActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        EditText caloriesInput = findViewById(R.id.exerciseCaloriesInput);
+
+        Button createStartMotiontracking = findViewById(R.id.createStartMotionTracking);
+        createStartMotiontracking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exercise temp = new exercise();
+                temp.setDate(Calendar.getInstance().getTime());
+                temp.setDeleteStatus(false);
+                temp.setCompleteStatus(true);
+                temp.setExerciseType(exerciseTextView);
+
+                if(caloriesInput.getText().toString().trim().isEmpty() || caloriesInput.getText().toString() == null){
+                    Toast.makeText(getApplicationContext(), "Please key in the calories !", Toast.LENGTH_SHORT).show();
+                }else {
+                    temp.setCalories(Double.parseDouble(caloriesInput.getText().toString()));
+                    handler.post(()->{
+                        cloudDBZoneWrapperInstance.insertNewExerciseFromMotionTrack(temp);
+                    });
+
+                    handler.postDelayed(()->{
+                        Intent intent = new Intent(getApplicationContext(), MotionTrackingActivity.class);
+                        startActivity(intent);
+                    },500);
+                }
             }
         });
     }

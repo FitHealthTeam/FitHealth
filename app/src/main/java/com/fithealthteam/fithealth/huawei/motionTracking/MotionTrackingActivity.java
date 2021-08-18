@@ -122,7 +122,7 @@ public class MotionTrackingActivity extends AppCompatActivity implements OnMapRe
                     mMarkerStart.remove();
                     mMarkerEnd.remove();
                 }
-                MarkerOptions StartPointOptions = new MarkerOptions()
+                /*MarkerOptions StartPointOptions = new MarkerOptions()
                         .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher))
                         .position(path.getStartPoint());
                 StartPointOptions.title("Start Point");
@@ -133,7 +133,7 @@ public class MotionTrackingActivity extends AppCompatActivity implements OnMapRe
                         .position(path.getEndPoint());
                 EndPointOptions.title("End Point");
                 EndPointOptions.snippet("End Point");
-                mMarkerEnd = hwMap.addMarker(EndPointOptions);
+                mMarkerEnd = hwMap.addMarker(EndPointOptions);*/
             }
         } else {
             mIsRunning = true;
