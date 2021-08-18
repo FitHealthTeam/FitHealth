@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("HMS Auth User", user.getEmail());
             Log.d("HMS Auth User UID", user.getUid());
 
+            // Intent to CreateDiet
             Intent intent = new Intent(getApplicationContext(),CreateDietPlan_Activity.class);
             startActivity(intent);
 
