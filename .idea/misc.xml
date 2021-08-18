@@ -45,7 +45,10 @@
         <entry key="..\:/Users/User/FitHealth/app/src/main/res/drawable/rounded_layout_home_lightbrown.xml" value="0.2703125" />
         <entry key="..\:/Users/User/FitHealth/app/src/main/res/drawable/rounded_layout_home_white.xml" value="0.2703125" />
         <entry key="..\:/Users/User/FitHealth/app/src/main/res/drawable/rounded_layout_silver.xml" value="0.2703125" />
+        <entry key="..\:/Users/User/FitHealth/app/src/main/res/drawable/selector.xml" value="0.20677083333333332" />
         <entry key="..\:/Users/User/FitHealth/app/src/main/res/drawable/slider_item.xml" value="0.2703125" />
+        <entry key="..\:/Users/User/FitHealth/app/src/main/res/drawable/toggle_off.xml" value="0.20677083333333332" />
+        <entry key="..\:/Users/User/FitHealth/app/src/main/res/drawable/toggle_on.xml" value="0.20677083333333332" />
         <entry key="..\:/Users/User/FitHealth/app/src/main/res/layout/activity_add_exercise_dialog.xml" value="0.22192028985507245" />
         <entry key="..\:/Users/User/FitHealth/app/src/main/res/layout/activity_add_meal_dialog.xml" value="0.22192028985507245" />
         <entry key="..\:/Users/User/FitHealth/app/src/main/res/layout/activity_authenticate.xml" value="0.22327898550724637" />
