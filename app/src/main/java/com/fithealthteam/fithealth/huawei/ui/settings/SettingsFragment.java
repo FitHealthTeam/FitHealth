@@ -3,6 +3,7 @@ package com.fithealthteam.fithealth.huawei.ui.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +22,14 @@ import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.authentication.authenticateActivity;
 import com.fithealthteam.fithealth.huawei.authentication.passResetActivity;
 import com.huawei.agconnect.auth.AGConnectAuth;
+import com.huawei.hmf.tasks.OnCompleteListener;
+import com.huawei.hmf.tasks.Task;
+import com.huawei.hms.push.HmsMessaging;
 
 
 public class SettingsFragment extends Fragment {
+
+    private static final String TAG = "PushKit";
 
     private SettingsViewModel mViewModel;
 
@@ -93,10 +99,12 @@ public class SettingsFragment extends Fragment {
         drinkWaterReminderSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(drinkWaterReminderSwitch.getText().toString().toUpperCase().equals("ON")) {
+                if(isChecked) {
                     //store on to db
+                    Log.d("Switch", "isChecked");
                 } else {
                     //store off to db
+                    Log.d("Switch", "isNotChecked");
                 }
             }
         });
@@ -129,6 +137,48 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+    //subscribe the notification
+    public void subscribe(String topic) {
+        try {
+            // Subscribe to a topic.
+            HmsMessaging.getInstance(getContext()).subscribe(topic)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(Task<Void> task) {
+                            // Obtain the topic subscription result.
+                            if (task.isSuccessful()) {
+                                Log.i(TAG, "subscribe topic successfully");
+                            } else {
+                                Log.e(TAG, "subscribe topic failed, return value is " + task.getException().getMessage());
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+            Log.e(TAG, "subscribe failed, catch exception : " + e.getMessage());
+        }
+    }
+
+    //unsubscribe the notification
+    public void unsubscribe(String topic) {
+        try {
+            // Unsubscribe from a topic.
+            HmsMessaging.getInstance(getContext()).unsubscribe(topic)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(Task<Void> task) {
+                            // Obtain the topic unsubscription result.
+                            if (task.isSuccessful()) {
+                                Log.i(TAG, "unsubscribe topic successfully");
+                            } else {
+                                Log.e(TAG, "unsubscribe topic failed, return value is " + task.getException().getMessage());
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+            Log.e(TAG, "unsubscribe failed, catch exception : " + e.getMessage());
+        }
     }
 
 }
