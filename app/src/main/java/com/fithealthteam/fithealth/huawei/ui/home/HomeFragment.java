@@ -11,6 +11,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,16 +27,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.fithealthteam.fithealth.huawei.BMIInput.BMIInput_Activity;
+import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
+import com.fithealthteam.fithealth.huawei.CloudDB.user;
 import com.fithealthteam.fithealth.huawei.CreateDietPlan.CreateDietPlan_Activity;
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.databinding.FragmentHomeBinding;
+import com.huawei.agconnect.auth.AGConnectAuth;
+import com.huawei.agconnect.auth.AGConnectUser;
+import com.huawei.agconnect.cloud.database.CloudDBZoneQuery;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
+import java.util.List;
 import java.util.Locale;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUICallBack {
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
@@ -57,6 +64,14 @@ public class HomeFragment extends Fragment {
     private Button btnSet,btnTimePick;
 
     int hours,minutes;
+
+    private Handler handler = new Handler();
+    private CloudDBZoneWrapper cloudDBZoneWrapperInstance;
+
+    AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
+
+    public HomeFragment(){ cloudDBZoneWrapperInstance = new CloudDBZoneWrapper();}
+
 
 
 
@@ -202,9 +217,49 @@ public class HomeFragment extends Fragment {
 
     }
 
+    //initialize cloudDBZone
+    private void initCloudDBZone(){
+        handler.post(()->{
+            //add callback into cloudDBZoneWrapper
+            cloudDBZoneWrapperInstance.addUserCallBack(HomeFragment.this);
+
+            //initialize
+            cloudDBZoneWrapperInstance.createObjectType();
+            cloudDBZoneWrapperInstance.openCloudDBZone();
+        });
+    }
+
+    public void queryAll(){
+        handler.postDelayed(()->{
+            CloudDBZoneQuery<com.fithealthteam.fithealth.huawei.CloudDB.user> query2 = CloudDBZoneQuery.where(user.class).equalTo("id",user.getUid());
+            cloudDBZoneWrapperInstance.queryUser(query2);
+        },500);
+    }
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void userOnAddorQuery(List<com.fithealthteam.fithealth.huawei.CloudDB.user> userList) {
+
+    }
+
+    @Override
+    public void userOnSubscribe(List<com.fithealthteam.fithealth.huawei.CloudDB.user> userList) {
+
+    }
+
+    @Override
+    public void userOnDelete(List<com.fithealthteam.fithealth.huawei.CloudDB.user> userList) {
+
+    }
+
+    @Override
+    public void userShowError(String error) {
+
     }
 }
