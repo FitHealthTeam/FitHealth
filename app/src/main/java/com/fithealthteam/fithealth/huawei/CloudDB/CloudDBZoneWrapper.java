@@ -105,10 +105,6 @@ public class CloudDBZoneWrapper {
         exerciseCallback = UICallBack;
     }
 
-    //add callback for update UI
-    public void addUserCallBack(exerciseUICallBack UICallBack){
-        exerciseCallback = UICallBack;
-    }
 
     /*
     * CloudDB CRUD Function Here
@@ -333,12 +329,12 @@ public class CloudDBZoneWrapper {
             @Override
             public void onSuccess(CloudDBZoneSnapshot<user> usersnapshot) {
                 List<user> tempResult = extractuserResult(usersnapshot);
-                userCallback.onAddorQuery(tempResult);
+                userCallback.userOnAddorQuery(tempResult);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(Exception e) {
-                userCallback.showError("Query user list from cloud failed");
+                userCallback.userShowError("Query user list from cloud failed");
             }
         });
     }
@@ -358,13 +354,13 @@ public class CloudDBZoneWrapper {
             @Override
             public void onSuccess(CloudDBZoneSnapshot<user> userCloudDBZoneSnapshot) {
                 List<user> tempResult = extractuserResult(userCloudDBZoneSnapshot);
-                userCallback.onAddorQuery(tempResult);
+                userCallback.userOnAddorQuery(tempResult);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(Exception e) {
                 //show failure message
-                userCallback.showError("Query user list from cloud failed");
+                userCallback.userShowError("Query user list from cloud failed");
             }
         });
     }
@@ -422,7 +418,7 @@ public class CloudDBZoneWrapper {
     }
 
     //add call back method - to call
-    public void addCallBack2(userUICallBack InputUICallBack){
+    public void addUserCallBack(userUICallBack InputUICallBack){
         userCallback = InputUICallBack;
     }
 
@@ -430,29 +426,29 @@ public class CloudDBZoneWrapper {
     public interface userUICallBack {
         userUICallBack DEFAULT = new userUICallBack() {
             @Override
-            public void onAddorQuery(List<user> userList) {
+            public void userOnAddorQuery(List<user> userList) {
 
             }
 
             @Override
-            public void onSubscribe(List<user> userList) {
+            public void userOnSubscribe(List<user> userList) {
 
             }
 
             @Override
-            public void onDelete(List<user> userList) {
+            public void userOnDelete(List<user> userList) {
 
             }
 
             @Override
-            public void showError(String error) {
+            public void userShowError(String error) {
 
             }
         };
-        void onAddorQuery(List<user> userList);
-        void onSubscribe(List<user> userList);
-        void onDelete(List<user> userList);
-        void showError(String error);
+        void userOnAddorQuery(List<user> userList);
+        void userOnSubscribe(List<user> userList);
+        void userOnDelete(List<user> userList);
+        void userShowError(String error);
     }
 
 }
