@@ -112,7 +112,7 @@ public class ExerciseFragment extends Fragment implements CloudDBZoneWrapper.exe
         otherExerciseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"Will be unlocked more supported exercise in future !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"Will be unlocked more exercise type in future !", Toast.LENGTH_SHORT).show();
             }
         });
 

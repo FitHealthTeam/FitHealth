@@ -177,7 +177,7 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
     //Initialize Cloud DB Wrapper to use
     public void initCloudDBWrapper(){
         handler.postDelayed(() -> {
-            cloudDBZoneWrapper.addCallBack2(registerActivity.this);
+            cloudDBZoneWrapper.addUserCallBack(registerActivity.this);
             cloudDBZoneWrapper.createObjectType();
             cloudDBZoneWrapper.openCloudDBZone();
             AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
@@ -203,23 +203,24 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
         super.onDestroy();
     }
 
+
     @Override
-    public void onAddorQuery(List<user> userList) {
+    public void userOnAddorQuery(List<com.fithealthteam.fithealth.huawei.CloudDB.user> userList) {
 
     }
 
     @Override
-    public void onSubscribe(List<user> userList) {
+    public void userOnSubscribe(List<com.fithealthteam.fithealth.huawei.CloudDB.user> userList) {
 
     }
 
     @Override
-    public void onDelete(List<user> userList) {
+    public void userOnDelete(List<com.fithealthteam.fithealth.huawei.CloudDB.user> userList) {
 
     }
 
     @Override
-    public void showError(String error) {
+    public void userShowError(String error) {
 
     }
 }

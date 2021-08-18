@@ -85,6 +85,7 @@ public class AddExerciseDialogActivity extends AppCompatDialogFragment {
         exerciseList.add("Tennis");
         exerciseList.add("Table Tennis");
         exerciseList.add("Water Polo");
+        exerciseList.add("Gym");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,exerciseList);
 
