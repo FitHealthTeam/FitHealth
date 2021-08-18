@@ -55,7 +55,7 @@ public class CreateDietPlan_Activity extends AppCompatActivity {
         btnNo = findViewById(R.id.btnNoTog);
 
         tvNext = findViewById(R.id.tvNext);
-        
+
 
         tvNext.setOnClickListener(v -> {
 
