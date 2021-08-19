@@ -30,11 +30,13 @@ import androidx.fragment.app.Fragment;
 
 import com.fithealthteam.fithealth.huawei.BMIInput.BMIInput_Activity;
 import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
+import com.fithealthteam.fithealth.huawei.CloudDB.exercise;
 import com.fithealthteam.fithealth.huawei.CloudDB.user;
 import com.fithealthteam.fithealth.huawei.CreateDietPlan.CreateDietPlan_Activity;
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.authentication.authenticateActivity;
 import com.fithealthteam.fithealth.huawei.databinding.FragmentHomeBinding;
+import com.fithealthteam.fithealth.huawei.ui.settings.SettingsFragment;
 import com.huawei.agconnect.auth.AGConnectAuth;
 import com.huawei.agconnect.auth.AGConnectUser;
 import com.huawei.agconnect.cloud.database.CloudDBZoneQuery;
@@ -45,7 +47,7 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.List;
 import java.util.Locale;
 
-public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUICallBack {
+public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUICallBack, CloudDBZoneWrapper.exerciseUICallBack {
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
@@ -62,6 +64,7 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
     TextView dateSelected;
     ImageView editBMI;
     TextView tvBMI;
+    TextView burnedCalories;
 
     private int currentProgress = 0;
     private ProgressBar progressBar;
@@ -126,12 +129,11 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
             }
         });
 
+        // Retrieve Calories value
+        burnedCalories = v.findViewById(R.id.tvBurnedCaloriesResult);
 
         // Retrieve BMI value
         tvBMI = v.findViewById(R.id.tvBMIResult);
-
-        //String passedBMI = getArguments().getString("BMI");
-        //tvBMI.setText(passedBMI);
 
 
         // Progress Bar
@@ -251,6 +253,7 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
     private void initCloudDBZone(){
         handler.post(()->{
             //add callback into cloudDBZoneWrapper
+            cloudDBZoneWrapperInstance.addExerciseCallBack(HomeFragment.this);
             cloudDBZoneWrapperInstance.addUserCallBack(HomeFragment.this);
 
             //initialize
@@ -261,6 +264,9 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
 
     public void queryAll(){
         handler.postDelayed(()->{
+            CloudDBZoneQuery<exercise> query1 = CloudDBZoneQuery.where(exercise.class).equalTo("uid", user.getUid()).equalTo("completeStatus", true);
+            cloudDBZoneWrapperInstance.queryExercise(query1);
+
             CloudDBZoneQuery<com.fithealthteam.fithealth.huawei.CloudDB.user> query2 = CloudDBZoneQuery.where(user.class).equalTo("id",user.getUid());
             cloudDBZoneWrapperInstance.queryUser(query2);
         },500);
@@ -273,6 +279,7 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
         binding = null;
     }
 
+    // User
     @Override
     public void userOnAddorQuery(List<com.fithealthteam.fithealth.huawei.CloudDB.user> userList) {
         com.fithealthteam.fithealth.huawei.CloudDB.user tempUser = userList.get(0);
@@ -320,6 +327,34 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
 
     @Override
     public void userShowError(String error) {
+
+    }
+
+    // Exercise
+    @Override
+    public void onAddorQuery(List<exercise> exerciseList) {
+        exercise tempExercise = exerciseList.get(0);
+        double calories = tempExercise.getCalories();
+
+        if(calories != 0){
+            String burnedCaloriesResult = String.format("%.2f",calories);
+            burnedCalories.setText(burnedCaloriesResult + " kal");
+        }
+
+    }
+
+    @Override
+    public void onSubscribe(List<exercise> exerciseList) {
+
+    }
+
+    @Override
+    public void onDelete(List<exercise> exerciseList) {
+
+    }
+
+    @Override
+    public void showError(String error) {
 
     }
 }
