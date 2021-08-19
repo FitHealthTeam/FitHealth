@@ -280,7 +280,7 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
     // User
     @Override
     public void userOnAddorQuery(List<com.fithealthteam.fithealth.huawei.CloudDB.user> userList) {
-        if(userList != null) {
+        if(userList.size()>0) {
             com.fithealthteam.fithealth.huawei.CloudDB.user tempUser = userList.get(0);
             double weight = 0;
             double height = 0;
@@ -290,7 +290,7 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
             height = tempUser.getHeight();
 
             // if user don't have weight and height value = new user
-            if (weight == 0 || height == 0) {
+            if (tempUser.getWeight() == 0 || tempUser.getHeight() == 0) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), BMIInput_Activity.class);
                 startActivity(intent);
             } else {
@@ -334,7 +334,7 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
     @Override
     public void onAddorQuery(List<exercise> exerciseList) {
 
-        if(exerciseList != null) {
+        if(exerciseList.size() >0) {
             double calories = 0;
             double totalCalories = 0;
 
