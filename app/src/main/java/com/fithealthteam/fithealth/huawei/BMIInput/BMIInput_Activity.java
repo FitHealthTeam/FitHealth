@@ -74,7 +74,8 @@ public class BMIInput_Activity extends AppCompatActivity implements CloudDBZoneW
                         cloudDBZoneWrapperInstance.updateWeight(user.getUid(),weight,height);
                     });
 
-                    Toast.makeText(getApplicationContext(), "Weight: " + weight + "; Height: " + height , Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Weight: " + weight + "; Height: " + height , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Your Details Has Been Saved!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
 
