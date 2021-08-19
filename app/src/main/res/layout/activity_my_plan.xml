@@ -88,19 +88,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/targetBurnCaloriesText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="31dp"
-            android:layout_marginTop="10dp"
-            android:text="Target Burnt Calories"
-            android:textColor="@color/grey"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/taskCompletionIndoor" />
-
-        <TextView
             android:id="@+id/textView15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -111,33 +98,20 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/targetBurnCaloriesText" />
-
-        <TextView
-            android:id="@+id/targetBurntCalories"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="28dp"
-            android:text="1849 kcal"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/percentageIndicatorIndoor" />
+            app:layout_constraintTop_toBottomOf="@+id/taskCompletionIndoor" />
 
         <TextView
             android:id="@+id/BurntCalories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="28dp"
             android:text="0 kcal"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/targetBurntCalories" />
+            app:layout_constraintTop_toBottomOf="@+id/percentageIndicatorIndoor" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
