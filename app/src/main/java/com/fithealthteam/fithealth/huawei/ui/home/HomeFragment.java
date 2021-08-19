@@ -283,10 +283,28 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
         weight = tempUser.getWeight();
         height = tempUser.getHeight();
 
-        bmi = weight / (height * height);
-        String bmiResult = String.format("%.2f",bmi);
+        // if user don't have weight and height value = new user
+        if(weight == 0 || height == 0){
+            Intent intent = new Intent(getActivity().getApplicationContext(),BMIInput_Activity.class);
+            startActivity(intent);
+        }else {
+            bmi = weight / (height * height);
+            String bmiResult = String.format("%.2f",bmi);
 
-        tvBMI.setText(bmiResult + " kg/m2");
+            tvBMI.setText(bmiResult + " kg/m2");
+
+            if(bmi>=18.5 && bmi<=24.9){
+                currentProgress = 70;
+            }else if(bmi>=25 && bmi<=29.9){
+                currentProgress = 45;
+            }else if(bmi>=30 && bmi<=39.9){
+                currentProgress = 30;
+            }else {
+                currentProgress = 10;
+            }
+            progressBar.setProgress(currentProgress);
+
+        }
 
     }
 
