@@ -280,7 +280,7 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
     // User
     @Override
     public void userOnAddorQuery(List<com.fithealthteam.fithealth.huawei.CloudDB.user> userList) {
-        if(userList != null) {
+        if(userList.size()>0) {
             com.fithealthteam.fithealth.huawei.CloudDB.user tempUser = userList.get(0);
             double weight = 0;
             double height = 0;
