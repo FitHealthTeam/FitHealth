@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,7 @@ import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
 import com.fithealthteam.fithealth.huawei.CloudDB.user;
 import com.fithealthteam.fithealth.huawei.CreateDietPlan.CreateDietPlan_Activity;
 import com.fithealthteam.fithealth.huawei.R;
+import com.fithealthteam.fithealth.huawei.authentication.authenticateActivity;
 import com.fithealthteam.fithealth.huawei.databinding.FragmentHomeBinding;
 import com.huawei.agconnect.auth.AGConnectAuth;
 import com.huawei.agconnect.auth.AGConnectUser;
@@ -58,6 +61,7 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
     CalendarView mCalenderView;
     TextView dateSelected;
     ImageView editBMI;
+    TextView tvBMI;
 
     private int currentProgress = 0;
     private ProgressBar progressBar;
@@ -78,10 +82,26 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-
-
         //view object pass in
         View v = inflater.inflate(R.layout.fragment_home, container, false);
+
+        if(user == null){
+            Intent intent = new Intent(v.getContext(), authenticateActivity.class);
+            startActivity(intent);
+        }else{
+            Log.d("HMS Auth User", user.getEmail());
+            Log.d("HMS Auth User UID", user.getUid());
+        }
+
+        //proceed to initialize cloudDBZoneWrapper
+        handler.post(()->{
+            initCloudDBZone();
+        });
+
+        //execute the cloudDB task, delayed a bit to wait for initialization complete
+        handler.post(()->{
+            queryAll();
+        });
 
 
         // Slider Image View
@@ -108,7 +128,7 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
 
 
         // Retrieve BMI value
-        TextView tvBMI = v.findViewById(R.id.tvBMIResult);
+        tvBMI = v.findViewById(R.id.tvBMIResult);
 
         //String passedBMI = getArguments().getString("BMI");
         //tvBMI.setText(passedBMI);
@@ -217,6 +237,16 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //init cloudDBZoneWrapper and update the value
+        handler = new Handler(Looper.getMainLooper());
+        handler.post(()->{
+            initCloudDBZone();
+        });
+    }
+
     //initialize cloudDBZone
     private void initCloudDBZone(){
         handler.post(()->{
@@ -245,6 +275,18 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
 
     @Override
     public void userOnAddorQuery(List<com.fithealthteam.fithealth.huawei.CloudDB.user> userList) {
+        com.fithealthteam.fithealth.huawei.CloudDB.user tempUser = userList.get(0);
+        double weight = 0;
+        double height = 0;
+        double bmi;
+
+        weight = tempUser.getWeight();
+        height = tempUser.getHeight();
+
+        bmi = weight / (height * height);
+        String bmiResult = String.format("%.2f",bmi);
+
+        tvBMI.setText(bmiResult + " kg/m2");
 
     }
 
