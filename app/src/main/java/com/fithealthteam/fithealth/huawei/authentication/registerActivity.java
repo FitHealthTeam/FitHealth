@@ -119,7 +119,7 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
 
                 if(fname.getText().toString().equals(null) || fname.getText().toString().isEmpty()){
                     Toast.makeText(getBaseContext(), "Please insert your first name!", Toast.LENGTH_SHORT).show();
-                    check++;
+                   check++;
                 }
 
                 if(lname.getText().toString().equals(null) || lname.getText().toString().isEmpty()){
@@ -127,15 +127,16 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
                     check++;
                 }
 
-
-                if(!male.isChecked() && !female.isChecked()){
+                //!male.isChecked() && !female.isChecked()
+                if(rgGender.getCheckedRadioButtonId() == -1){
                     Toast.makeText(getBaseContext(), "Please insert your gender!", Toast.LENGTH_SHORT).show();
                     check++;
                 }
 
-                if (check == 5) {
+                //Toast.makeText(getBaseContext(), check, Toast.LENGTH_SHORT).show();
+
+                if(check == 0){
                     Toast.makeText(getBaseContext(), "success", Toast.LENGTH_SHORT).show();
-                    check=0;
                     EmailUser emailUser = new EmailUser.Builder()
                             .setEmail(registerEmail.getText().toString().trim())
                             .setVerifyCode(verifyCode.getText().toString().trim())
