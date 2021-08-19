@@ -264,7 +264,7 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
 
     public void queryAll(){
         handler.postDelayed(()->{
-            CloudDBZoneQuery<exercise> query1 = CloudDBZoneQuery.where(exercise.class).equalTo("uid", user.getUid()).equalTo("completeStatus", true);
+            CloudDBZoneQuery<exercise> query1 = CloudDBZoneQuery.where(exercise.class).equalTo("uid", user.getUid()).equalTo("completeStatus", true).equalTo("deleteStatus",false);
             cloudDBZoneWrapperInstance.queryExercise(query1);
 
             CloudDBZoneQuery<com.fithealthteam.fithealth.huawei.CloudDB.user> query2 = CloudDBZoneQuery.where(user.class).equalTo("id",user.getUid());
@@ -333,12 +333,23 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
     // Exercise
     @Override
     public void onAddorQuery(List<exercise> exerciseList) {
-        exercise tempExercise = exerciseList.get(0);
-        double calories = tempExercise.getCalories();
 
-        if(calories != 0){
-            String burnedCaloriesResult = String.format("%.2f",calories);
-            burnedCalories.setText(burnedCaloriesResult + " kal");
+        if(exerciseList != null) {
+            double calories = 0;
+            double totalCalories = 0;
+
+            for (exercise temp : exerciseList) {
+                calories = temp.getCalories();
+                totalCalories = +calories;
+            }
+
+            //exercise tempExercise = exerciseList.get(0);
+            //double calories = tempExercise.getCalories();
+
+            if (totalCalories != 0) {
+                String burnedCaloriesResult = String.format("%.2f", calories);
+                burnedCalories.setText(burnedCaloriesResult + " kal");
+            }
         }
 
     }
