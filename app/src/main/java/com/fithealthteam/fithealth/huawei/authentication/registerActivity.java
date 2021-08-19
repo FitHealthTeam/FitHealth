@@ -157,7 +157,7 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(Exception e) {
-                                Toast.makeText(getBaseContext(), "Authentication code is not valid.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getBaseContext(), "Error: " + e.getCause() , Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -197,7 +197,7 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
             startActivity(intent);
             finish();
-        },600);
+        },1000);
     }
 
     protected void onDestroy() {
