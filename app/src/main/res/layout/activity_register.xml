@@ -225,7 +225,7 @@
             android:ems="10"
             android:hint="Insert your email address"
             android:inputType="textPersonName"
-            android:text="t@slix.ml"
+            android:text="m@slix.ml"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
