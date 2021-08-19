@@ -386,7 +386,7 @@ public class CloudDBZoneWrapper {
     //upsert function - update or add user data into the cloudDB
     public void upsertUser(user user){
         if (mCloudDBZone == null){
-            Log.w(TAG,"CloudDB Zone is null ! from user upsert");
+            Log.e(TAG,"CloudDB Zone is null ! From user upsert");
             return;
         }
 

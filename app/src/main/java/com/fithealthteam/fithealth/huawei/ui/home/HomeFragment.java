@@ -290,7 +290,7 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
             height = tempUser.getHeight();
 
             // if user don't have weight and height value = new user
-            if (weight == 0 || height == 0) {
+            if (tempUser.getWeight() == 0 || tempUser.getHeight() == 0) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), BMIInput_Activity.class);
                 startActivity(intent);
             } else {
