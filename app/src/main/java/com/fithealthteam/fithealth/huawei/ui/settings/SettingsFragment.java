@@ -109,10 +109,6 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
         biking_badge.setImageResource(R.drawable.biking_badge_light);
         */
 
-        //check later using health point
-
-
-
         //switch
         excessCalorySwitch = v.findViewById(R.id.execess_calory_warn);
         drinkWaterReminderSwitch = v.findViewById(R.id.drinkwater_remind);
