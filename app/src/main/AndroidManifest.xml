@@ -40,6 +40,8 @@
         <activity
             android:name=".authentication.authenticateActivity"
             android:exported="true" />
+        <activity android:name=".motionTracking.ExerciseMapActivity" android:exported="true"/>
+        <activity android:name=".motionTracking.MotionTrackingActivity" android:exported="true"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
