@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.huawei.hms:push:5.0.4.302@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/7de0166951111d6cf2eaf1200f91bc35/transformed/jetified-push-5.0.4.302/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7de0166951111d6cf2eaf1200f91bc35/transformed/jetified-push-5.0.4.302/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7de0166951111d6cf2eaf1200f91bc35/transformed/jetified-push-5.0.4.302/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/42e715c071d4118b547e5b1ec83f7eed/transformed/jetified-push-5.0.4.302/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/42e715c071d4118b547e5b1ec83f7eed/transformed/jetified-push-5.0.4.302/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/42e715c071d4118b547e5b1ec83f7eed/transformed/jetified-push-5.0.4.302/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.huawei.hms/push/5.0.4.302/da39a3ee5e6b4b0d3255bfef95601890afd80709/push-5.0.4.302-javadoc.jar!/" />
