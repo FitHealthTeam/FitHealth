@@ -2,6 +2,7 @@ package com.fithealthteam.fithealth.huawei.ui.settings;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -45,6 +46,10 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
 
     Switch excessCalorySwitch, drinkWaterReminderSwitch, subscriptionSwitch;
 
+    SharedPreferences sharedPref;
+
+    SharedPreferences.Editor prefEditor;
+
     //authenticated user access here
     AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
 
@@ -70,6 +75,10 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
         handler.post(()->{
             queryAll();
         });
+
+        //prepare shared preferences to store a copy of some of the settings
+        sharedPref = getContext().getSharedPreferences("MySharedPreferences", getContext().MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = sharedPref.edit();
 
         Button logoutBtn = v.findViewById(R.id.logoutBtn);
         logoutBtn.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +132,8 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
                 handler.post(()->{
                     cloudDBZoneWrapperInstance.updatecaloriesWarning(user.getUid(),isChecked);
                 });
+                prefEditor.putBoolean("excessCalories",isChecked);
+                prefEditor.commit();
             }
         });
 
@@ -132,6 +143,9 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
                 handler.post(()->{
                     cloudDBZoneWrapperInstance.updateDrinkWater(user.getUid(),isChecked);
                 });
+
+                prefEditor.putBoolean("drinkWaterReminder",isChecked);
+                prefEditor.commit();
             }
         });
 
@@ -141,6 +155,8 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
                 handler.post(()->{
                     cloudDBZoneWrapperInstance.updateSubscribedTips(user.getUid(),isChecked);
                 });
+                prefEditor.putBoolean("subscription",isChecked);
+                prefEditor.commit();
             }
         });
 
@@ -241,6 +257,7 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
         if(canGetBadge(exerciseList, "Biking")){
             biking_badge.setImageResource(R.drawable.biking_badge_light);
         }
+
         if(canGetBadge(exerciseList, "Gym")
         && canGetBadge(exerciseList, "Jogging")
         && canGetBadge(exerciseList, "Swimming")
@@ -249,6 +266,8 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
             fullachievement_badge.setImageResource(R.drawable.trophy_badge_light);
         }
 
+        //store a copy if does not exist in shared preferences
+        boolean resultexcessCalories = sharedPref.getBoolean("excessCalories", false);
     }
 
     @Override
@@ -277,6 +296,7 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
         excessCalorySwitch.setChecked(tempUser.getExcessiveCalories());
         drinkWaterReminderSwitch.setChecked(tempUser.getDrinkWater());
         subscriptionSwitch.setChecked(tempUser.getSubscribeTips());
+
 
     }
 

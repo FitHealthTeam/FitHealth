@@ -12,27 +12,33 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
+import com.fithealthteam.fithealth.huawei.CloudDB.exercise;
 import com.fithealthteam.fithealth.huawei.CloudDB.user;
 import com.fithealthteam.fithealth.huawei.MainActivity;
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.authentication.authenticateActivity;
+import com.fithealthteam.fithealth.huawei.ui.settings.SettingsFragment;
 import com.huawei.agconnect.auth.AGConnectAuth;
 import com.huawei.agconnect.auth.AGConnectUser;
 import com.huawei.agconnect.cloud.database.CloudDBZoneQuery;
 
-public class BMIInput_Activity extends AppCompatActivity {
+import java.util.List;
+
+public class BMIInput_Activity extends AppCompatActivity implements CloudDBZoneWrapper.userUICallBack {
 
     Button btnSave;
     EditText inputWeight,inputHeight;
 
-    private Handler handler;
+    double weight;
+    double height;
+
+    private Handler handler = new Handler();
     private CloudDBZoneWrapper cloudDBZoneWrapperInstance;
+
+    AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
 
     public BMIInput_Activity(){ cloudDBZoneWrapperInstance = new CloudDBZoneWrapper();}
 
-    user newUser = new user();
-
-    AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,29 +49,35 @@ public class BMIInput_Activity extends AppCompatActivity {
         inputWeight = findViewById(R.id.weight);
         inputHeight = findViewById(R.id.height);
 
+        //proceed to initialize cloudDBZoneWrapper
+        handler.post(()->{
+            initCloudDBZone();
+        });
+
+        //execute the cloudDB task, delayed a bit to wait for initialization complete
+        handler.post(()->{
+            queryAll();
+        });
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                double weight = Float.parseFloat(String.valueOf(inputWeight.getText()));
-                double height = Float.parseFloat(String.valueOf(inputHeight.getText()))/100;
-
-                addWeightHeight(newUser,height,weight);
-                newUser.setId(user.getUid());
-
-                cloudDBZoneWrapperInstance.upsertUser(newUser);
-
-                Toast.makeText(getApplicationContext(), "Weight: " + weight + "; Height: " + height , Toast.LENGTH_SHORT).show();
-
-
-                if(user == null){
-                    Intent intent = new Intent(getApplicationContext(), authenticateActivity.class);
-                    startActivity(intent);
+                // Get Text From User Input
+                if(inputWeight.getText().length() == 0 || inputHeight.length() == 0){
+                    Toast.makeText(getApplicationContext(), "Both Weight and Height are Required!", Toast.LENGTH_SHORT).show();
                 }else{
-                    Log.d("HMS Auth User", user.getEmail());
-                    Log.d("HMS Auth User UID", user.getUid());
+                    weight = Double.parseDouble(String.valueOf(inputWeight.getText()));
+                    height = Double.parseDouble(String.valueOf(inputHeight.getText()))/100;
+
+                    handler.post(()->{
+                        cloudDBZoneWrapperInstance.updateWeight(user.getUid(),weight,height);
+                    });
+
+                    Toast.makeText(getApplicationContext(), "Weight: " + weight + "; Height: " + height , Toast.LENGTH_SHORT).show();
+                    finish();
                 }
-                finish();
+
             }
         });
 
@@ -78,25 +90,43 @@ public class BMIInput_Activity extends AppCompatActivity {
         cloudDBZoneWrapperInstance.closeCloudDBZone();
     }
 
-    //Initialize Cloud DB Wrapper to use
-    public void initCloudDBWrapper(){
-        handler.postDelayed(() -> {
-            cloudDBZoneWrapperInstance.addCallBack((CloudDBZoneWrapper.exerciseUICallBack) BMIInput_Activity.this);
+    //initialize cloudDBZone
+    private void initCloudDBZone(){
+        handler.post(()->{
+            //add callback into cloudDBZoneWrapper
+            cloudDBZoneWrapperInstance.addUserCallBack(BMIInput_Activity.this);
+
+            //initialize
             cloudDBZoneWrapperInstance.createObjectType();
             cloudDBZoneWrapperInstance.openCloudDBZone();
-            AGConnectUser userAG = AGConnectAuth.getInstance().getCurrentUser();
-            CloudDBZoneQuery<user> query = CloudDBZoneQuery.where(user.class)
-                    .equalTo("uid", userAG.getUid());
-            //.equalTo("deleteStatus", false);
-            cloudDBZoneWrapperInstance.queryUser(query);
-
-        }, 500);
+        });
     }
 
-    public void addWeightHeight(user user,double mHeight,double mWeight){
-        user.setHeight(mHeight);
-        user.setWeight(mWeight);
+    public void queryAll(){
+        handler.postDelayed(()->{
+            CloudDBZoneQuery<user> query2 = CloudDBZoneQuery.where(user.class).equalTo("id",user.getUid());
+            cloudDBZoneWrapperInstance.queryUser(query2);
+        },500);
     }
 
 
+    @Override
+    public void userOnAddorQuery(List<com.fithealthteam.fithealth.huawei.CloudDB.user> userList) {
+
+    }
+
+    @Override
+    public void userOnSubscribe(List<com.fithealthteam.fithealth.huawei.CloudDB.user> userList) {
+
+    }
+
+    @Override
+    public void userOnDelete(List<com.fithealthteam.fithealth.huawei.CloudDB.user> userList) {
+
+    }
+
+    @Override
+    public void userShowError(String error) {
+
+    }
 }

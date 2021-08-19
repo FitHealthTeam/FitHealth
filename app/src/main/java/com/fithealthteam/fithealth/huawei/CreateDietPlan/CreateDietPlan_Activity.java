@@ -37,50 +37,35 @@ public class CreateDietPlan_Activity extends AppCompatActivity {
     private Handler handler;
     private CloudDBZoneWrapper cloudDBZoneWrapperInstance;
 
+    AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
+
     public CreateDietPlan_Activity(){ cloudDBZoneWrapperInstance = new CloudDBZoneWrapper();}
 
-    AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_diet_plan);
 
-        //CloudDBZoneWrapper.initAGConnectCloudDB(getApplicationContext());
 
         weightGoal = findViewById(R.id.loseWeightGoal);
         exercisePerWeek = findViewById(R.id.exercisePerWeek);
-
         btnYes = findViewById(R.id.btnYesTog);
         btnNo = findViewById(R.id.btnNoTog);
-
         tvNext = findViewById(R.id.tvNext);
 
 
         tvNext.setOnClickListener(v -> {
 
-            //String temp = null;
-
             if(btnYes.isChecked()){
                 vegetarian = true;
-                //temp = "Yes";
             }else if(btnNo.isChecked()){
                 vegetarian = false;
-                //temp = "No";
             }
 
             returnRbSelection();
 
-            /*Toast.makeText(getApplicationContext(), "Lose Weight Goal: " + rbWeightGoal.getText()
-                    + "; Exercise Per Week: " + rbExercisePerWeek.getText()
-                    + "; Vegetarian: " + temp, Toast.LENGTH_LONG).show();*/
-
-            Intent intent;
-            if(user == null){
-                intent = new Intent(getApplicationContext(), authenticateActivity.class);
-            }else{
-                intent = new Intent(getApplicationContext(), BMIInput_Activity.class);
-            }
+            Intent intent = new Intent(getApplicationContext(),BMIInput_Activity.class);
             startActivity(intent);
             finish();
         });
@@ -94,29 +79,11 @@ public class CreateDietPlan_Activity extends AppCompatActivity {
         cloudDBZoneWrapperInstance.closeCloudDBZone();
     }
 
-    //Initialize Cloud DB Wrapper to use
-    public void initCloudDBWrapper(){
-        handler.postDelayed(() -> {
-            cloudDBZoneWrapperInstance.addCallBack((CloudDBZoneWrapper.exerciseUICallBack) CreateDietPlan_Activity.this);
-            cloudDBZoneWrapperInstance.createObjectType();
-            cloudDBZoneWrapperInstance.openCloudDBZone();
-            AGConnectUser userAG = AGConnectAuth.getInstance().getCurrentUser();
-            CloudDBZoneQuery<com.fithealthteam.fithealth.huawei.CloudDB.user> query = CloudDBZoneQuery.where(user.class)
-                    .equalTo("uid", userAG.getUid());
-            //.equalTo("deleteStatus", false);
-            cloudDBZoneWrapperInstance.queryUser(query);
-
-        }, 500);
-    }
-
     public void returnRbSelection(){
-
         int radioIdGoal = weightGoal.getCheckedRadioButtonId();
         rbWeightGoal = findViewById(radioIdGoal);
-
         int radioIdPerWeek = exercisePerWeek.getCheckedRadioButtonId();
         rbExercisePerWeek = findViewById(radioIdPerWeek);
-
     }
 
 }
