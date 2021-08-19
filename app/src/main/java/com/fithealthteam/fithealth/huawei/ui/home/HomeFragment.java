@@ -299,14 +299,17 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
 
                 tvBMI.setText(bmiResult + " kg/m2");
 
-                if (bmi >= 18.5 && bmi <= 24.9) {
-                    currentProgress = 70;
-                } else if (bmi >= 25 && bmi <= 29.9) {
-                    currentProgress = 45;
-                } else if (bmi >= 30 && bmi <= 39.9) {
-                    currentProgress = 30;
-                } else {
+                if(bmi < 18.5){
                     currentProgress = 10;
+                }
+                else if (bmi >= 18.5 && bmi <= 24.9) {
+                    currentProgress = 20;
+                } else if (bmi >= 25 && bmi <= 29.9) {
+                    currentProgress = 40;
+                } else if (bmi >= 30 && bmi <= 39.9) {
+                    currentProgress = 60;
+                } else {
+                    currentProgress = 80;
                 }
                 progressBar.setProgress(currentProgress);
 
@@ -340,11 +343,11 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
 
             for (exercise temp : exerciseList) {
                 calories = temp.getCalories();
-                totalCalories = +calories;
+                totalCalories += calories;
             }
 
             if (totalCalories != 0) {
-                String burnedCaloriesResult = String.format("%.2f", calories);
+                String burnedCaloriesResult = String.format("%.2f", totalCalories);
                 burnedCalories.setText(burnedCaloriesResult + " kal");
             }
         }
