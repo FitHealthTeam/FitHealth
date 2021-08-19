@@ -15,7 +15,7 @@ public class ReminderBroadcast extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"notify")
                 .setSmallIcon(R.drawable.ic_edit_bmi)
                 .setContentTitle("Gentle Reminder")
-                .setContentText("Hey user, it's time to leave your desk and do some exercise!")
+                .setContentText("Hey user, it's time to get some exercise!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
