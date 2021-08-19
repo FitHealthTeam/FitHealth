@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
 import com.fithealthteam.fithealth.huawei.CloudDB.exercise;
 import com.fithealthteam.fithealth.huawei.CloudDB.user;
+import com.fithealthteam.fithealth.huawei.MainActivity;
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.authentication.authenticateActivity;
 import com.fithealthteam.fithealth.huawei.authentication.passResetActivity;
@@ -109,14 +110,12 @@ public class SettingsFragment extends Fragment implements CloudDBZoneWrapper.use
         biking_badge.setImageResource(R.drawable.biking_badge_light);
         */
 
-        //check later using health point
-
-
 
         //switch
         excessCalorySwitch = v.findViewById(R.id.execess_calory_warn);
         drinkWaterReminderSwitch = v.findViewById(R.id.drinkwater_remind);
         subscriptionSwitch = v.findViewById(R.id.tip_subscribe);
+
 
         /* Execess calories formula
         For men:

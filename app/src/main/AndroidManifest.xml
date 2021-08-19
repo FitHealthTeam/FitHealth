@@ -54,6 +54,12 @@
         </activity>
 
         <receiver android:name=".ui.home.ReminderBroadcast" />
+
+        <receiver android:name=".Notification.backgroundProcess">
+            <intent-filter>
+                <action android:name="backgroundProcess"></action>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

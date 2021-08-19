@@ -1,15 +1,25 @@
 package com.fithealthteam.fithealth.huawei;
 
 
+import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Switch;
 
 import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
 import com.fithealthteam.fithealth.huawei.CreateDietPlan.CreateDietPlan_Activity;
+import com.fithealthteam.fithealth.huawei.Notification.backgroundProcess;
 import com.fithealthteam.fithealth.huawei.authentication.authenticateActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -80,20 +90,52 @@ public class MainActivity extends AppCompatActivity {
 
         //notificationManager = NotificationManagerCompat.from(this);
 
+        Handler handler = new Handler();
 
+        SharedPreferences pref = getSharedPreferences("MySharedPreferences",0);
 
+       boolean excesssCalorySwitch = pref.getBoolean("excessCalories",  false);
+       boolean drinkWaterReminderSwitch = pref.getBoolean("drinkWaterReminder",  false);
+       boolean subscriptionSwitch = pref.getBoolean("subscription", false);
+
+        if(excesssCalorySwitch == true) {
+            notifyMessage(this,8*60*60, "Calories Intake Reminder"
+                    , "Reminder: Beware with your calaries intake per day!");
+        }
+
+        if(drinkWaterReminderSwitch == true) {
+            notifyMessage(this,(24/8)*60*60, "Drink Water Notification"
+                    , "Reminder: Remember to drink your water!");
+        }
+
+        if(subscriptionSwitch == true) {
+            notifyMessage(this,12*60*60, "Subcription Reminder"
+                    , "Don' missed out our new tips!");
+        }
     }
-/*
-    public void sendToNotifyChannel (View v){
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID_1)
-                .setSmallIcon(R.drawable.auth_fithealthlogo)
-                .setContentTitle("Excessive Calories Intake")
-                .setContentText("Warning: You have exceed your daily calories consuption!")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .build();
 
-        notificationManager.notify(1, notification);
+    public void notifyMessage(Context c, double interval, String pushTitle, String pushMessage) {
+        initializeNotification();
+        Intent intent = new Intent(c, backgroundProcess.class);
+        intent.putExtra("pushTitle", pushTitle);
+        intent.putExtra("pushMessage", pushMessage);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,intent,0);
 
-    }*/
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, 100, (long) (1000*interval), pendingIntent);
+    }
+
+    public void initializeNotification(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = "FitHealthReminderChannel";
+            String description = "Channel for fithealth";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("FitHealth", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
 }
