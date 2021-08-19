@@ -94,50 +94,49 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
         }else{
             Log.d("HMS Auth User", user.getEmail());
             Log.d("HMS Auth User UID", user.getUid());
-        }
 
-        //proceed to initialize cloudDBZoneWrapper
-        handler.post(()->{
-            initCloudDBZone();
-        });
+            //proceed to initialize cloudDBZoneWrapper
+            handler.post(()->{
+                initCloudDBZone();
+            });
 
-        //execute the cloudDB task, delayed a bit to wait for initialization complete
-        handler.post(()->{
-            queryAll();
-        });
-
-
-        // Slider Image View
-        mSliderView = v.findViewById(R.id.image_slider);
-
-        SliderAdapter sliderAdapter = new SliderAdapter(images);
-
-        mSliderView.setSliderAdapter(sliderAdapter);
-        mSliderView.setIndicatorAnimation(IndicatorAnimationType.NONE);
-        mSliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        mSliderView.startAutoCycle();
+            //execute the cloudDB task, delayed a bit to wait for initialization complete
+            handler.post(()->{
+                queryAll();
+            });
 
 
-        // Intent BMI Input Page
-        editBMI = v.findViewById(R.id.editBMI);
+            // Slider Image View
+            mSliderView = v.findViewById(R.id.image_slider);
 
-        editBMI.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), BMIInput_Activity.class);
-                startActivity(intent);
-            }
-        });
+            SliderAdapter sliderAdapter = new SliderAdapter(images);
 
-        // Retrieve Calories value
-        burnedCalories = v.findViewById(R.id.tvBurnedCaloriesResult);
-
-        // Retrieve BMI value
-        tvBMI = v.findViewById(R.id.tvBMIResult);
+            mSliderView.setSliderAdapter(sliderAdapter);
+            mSliderView.setIndicatorAnimation(IndicatorAnimationType.NONE);
+            mSliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+            mSliderView.startAutoCycle();
 
 
-        // Progress Bar
-        progressBar = v.findViewById(R.id.bmiIndicator);
+            // Intent BMI Input Page
+            editBMI = v.findViewById(R.id.editBMI);
+
+            editBMI.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), BMIInput_Activity.class);
+                    startActivity(intent);
+                }
+            });
+
+            // Retrieve Calories value
+            burnedCalories = v.findViewById(R.id.tvBurnedCaloriesResult);
+
+            // Retrieve BMI value
+            tvBMI = v.findViewById(R.id.tvBMIResult);
+
+
+            // Progress Bar
+            progressBar = v.findViewById(R.id.bmiIndicator);
 
         /*if(passedBMI != null){
             float i = Float.parseFloat(passedBMI);
@@ -155,70 +154,69 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
         }*/
 
 
-        // Time Picker
-        btnTimePick = v.findViewById(R.id.btnTimePick);
+            // Time Picker
+            btnTimePick = v.findViewById(R.id.btnTimePick);
 
-        btnTimePick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
-                        hours = selectedHour;
-                        minutes = selectedMinute;
-                        btnTimePick.setText(String.format(Locale.getDefault(),"%02d:%02d",hours,minutes));
-                    }
-                };
-                int style = AlertDialog.THEME_HOLO_LIGHT;
+            btnTimePick.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
+                            hours = selectedHour;
+                            minutes = selectedMinute;
+                            btnTimePick.setText(String.format(Locale.getDefault(),"%02d:%02d",hours,minutes));
+                        }
+                    };
+                    int style = AlertDialog.THEME_HOLO_LIGHT;
 
-                TimePickerDialog timePickerDialog = new TimePickerDialog(v.getContext(),style,onTimeSetListener,hours,minutes,true);
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(v.getContext(),style,onTimeSetListener,hours,minutes,true);
 
-                timePickerDialog.setTitle("Select Time");
-                timePickerDialog.show();
-            }
-        });
-
-        // for fragment
-        //SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-
-        // Reminder Notification
-        createNotificationChannel();
-
-        btnSet = v.findViewById(R.id.btnSet);
-
-        btnSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(hours == 0 && minutes == 0 ){
-                    Toast.makeText(v.getContext(), "Please Pick a Time First!", Toast.LENGTH_SHORT).show();
-                }else{
-
-                    Toast.makeText(v.getContext(), "Reminder Set!", Toast.LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(v.getContext(),ReminderBroadcast.class);
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(v.getContext(),0,intent,0);
-
-                    AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
-
-                    long timeAtButtonClick = System.currentTimeMillis();
-
-                    long hourFromPick = hours * 1000 * 60 * 60;
-                    long minuteFromPick = minutes * 1000 * 60;
-
-                    //long tenSecondsInMillis = 1000 * 10;
-
-                    alarmManager.set(AlarmManager.RTC_WAKEUP,
-                            timeAtButtonClick + hourFromPick + minuteFromPick,pendingIntent);
+                    timePickerDialog.setTitle("Select Time");
+                    timePickerDialog.show();
                 }
+            });
 
-                btnTimePick.setText("SET!");
+            // for fragment
+            //SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+
+            // Reminder Notification
+            createNotificationChannel();
+
+            btnSet = v.findViewById(R.id.btnSet);
+
+            btnSet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(hours == 0 && minutes == 0 ){
+                        Toast.makeText(v.getContext(), "Please Pick a Time First!", Toast.LENGTH_SHORT).show();
+                    }else{
+
+                        Toast.makeText(v.getContext(), "Reminder Set!", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(v.getContext(),ReminderBroadcast.class);
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(v.getContext(),0,intent,0);
+
+                        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
+
+                        long timeAtButtonClick = System.currentTimeMillis();
+
+                        long hourFromPick = hours * 1000 * 60 * 60;
+                        long minuteFromPick = minutes * 1000 * 60;
+
+                        //long tenSecondsInMillis = 1000 * 10;
+
+                        alarmManager.set(AlarmManager.RTC_WAKEUP,
+                                timeAtButtonClick + hourFromPick + minuteFromPick,pendingIntent);
+                    }
+
+                    btnTimePick.setText("SET!");
 
 
-            }
-        });
-
-
+                }
+            });
+        }
 
         return v;
     }
