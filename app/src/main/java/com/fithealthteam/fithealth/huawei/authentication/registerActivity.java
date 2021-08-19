@@ -40,7 +40,8 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
 
     private Handler handler = null;
     private CloudDBZoneWrapper cloudDBZoneWrapper;
-    AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
+    AGConnectUser user;
+
 
     public registerActivity() {
         cloudDBZoneWrapper = new CloudDBZoneWrapper();
@@ -131,6 +132,7 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
                             @Override
                             public void onSuccess(SignInResult signInResult) {
                                 // After an account is created, the user has signed in by default.
+                                user = AGConnectAuth.getInstance().getCurrentUser();
                                 user newUser = new user();
                                 newUser.setId(user.getUid());
                                 newUser.setFirstName(fname.getText().toString());
@@ -149,9 +151,7 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
                                 }
                                 newUser.setDob(dobDate);
                                 addUserInfo(newUser);
-                                Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                                startActivity(intent);
-                                finish();
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -180,21 +180,24 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
             cloudDBZoneWrapper.addUserCallBack(registerActivity.this);
             cloudDBZoneWrapper.createObjectType();
             cloudDBZoneWrapper.openCloudDBZone();
-            AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
-            CloudDBZoneQuery<user> query = CloudDBZoneQuery.where(user.class)
-                    .equalTo("uid", user.getUid());
-            cloudDBZoneWrapper.queryUser(query);
         }, 1000);
     }
 
     public void addUserInfo (user user) {
 
-        CloudDBZoneQuery<user> tempQuery  = CloudDBZoneQuery.where(user.class)
-                .equalTo("uid", this.user.getUid());
-
         handler.post(()->{
-            cloudDBZoneWrapper.upsertUser(user);
+            initCloudDBWrapper();
         });
+
+        handler.postDelayed(()->{
+            cloudDBZoneWrapper.upsertUser(user);
+        }, 500);
+
+        handler.postDelayed(()->{
+            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        },600);
         onDestroy();
     }
 
