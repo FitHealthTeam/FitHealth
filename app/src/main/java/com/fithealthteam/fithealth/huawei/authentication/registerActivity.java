@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +59,7 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
         EditText password = findViewById(R.id.password_register);
         EditText fname = findViewById(R.id.fname_register);
         EditText lname = findViewById(R.id.lname_register);
+        RadioGroup rgGender = findViewById(R.id.gender);
         RadioButton male = findViewById(R.id.male);
         RadioButton female = findViewById(R.id.female);
         EditText dob = findViewById(R.id.dob);
@@ -98,73 +100,88 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int check = 0;
+
                 if(verifyCode.getText().toString().trim().equals(null) || verifyCode.getText().toString().trim().isEmpty()) {
                     Toast.makeText(getBaseContext(), "Please insert the authentication code!", Toast.LENGTH_SHORT).show();
+                    check++;
                 }
 
                 if (registerEmail.getText().toString().trim().equals(null) || registerEmail.getText().toString().trim().isEmpty()) {
                     Toast.makeText(getBaseContext(), "Please enter an email address!", Toast.LENGTH_SHORT).show();
+                    check++;
                 }
 
                 if(password.getText().toString().equals(null) || password.getText().toString().isEmpty()) {
                     Toast.makeText(getBaseContext(), "Please insert a password!", Toast.LENGTH_SHORT).show();
+                    check++;
                 }
 
                 if(fname.getText().toString().equals(null) || fname.getText().toString().isEmpty()){
                     Toast.makeText(getBaseContext(), "Please insert your first name!", Toast.LENGTH_SHORT).show();
+                    check++;
                 }
 
                 if(lname.getText().toString().equals(null) || lname.getText().toString().isEmpty()){
                     Toast.makeText(getBaseContext(), "Please insert your last name!", Toast.LENGTH_SHORT).show();
+                    check++;
                 }
 
-                if(male.isSelected() && female.isSelected()){
+
+                if(!male.isChecked() && !female.isChecked()){
                     Toast.makeText(getBaseContext(), "Please insert your gender!", Toast.LENGTH_SHORT).show();
+                    check++;
                 }
 
-                EmailUser emailUser = new EmailUser.Builder()
-                        .setEmail(registerEmail.getText().toString().trim())
-                        .setVerifyCode(verifyCode.getText().toString().trim())
-                        .setPassword(password.getText().toString()) //optional
-                        .build();
-                AGConnectAuth.getInstance().createUser(emailUser)
-                        .addOnSuccessListener(new OnSuccessListener<SignInResult>() {
-                            @Override
-                            public void onSuccess(SignInResult signInResult) {
-                                // After an account is created, the user has signed in by default.
-                                user = AGConnectAuth.getInstance().getCurrentUser();
-                                user newUser = new user();
-                                newUser.setId(user.getUid());
-                                newUser.setFirstName(fname.getText().toString());
-                                newUser.setLastName(lname.getText().toString());
-                                newUser.setSubscribeTips(false);
-                                newUser.setDrinkWater(false);
-                                newUser.setHeight(0.00);
-                                newUser.setWeight(0.00);
+                if (check == 5) {
+                    Toast.makeText(getBaseContext(), "success", Toast.LENGTH_SHORT).show();
+                    check=0;
+                    EmailUser emailUser = new EmailUser.Builder()
+                            .setEmail(registerEmail.getText().toString().trim())
+                            .setVerifyCode(verifyCode.getText().toString().trim())
+                            .setPassword(password.getText().toString()) //optional
+                            .build();
+                    AGConnectAuth.getInstance().createUser(emailUser)
+                            .addOnSuccessListener(new OnSuccessListener<SignInResult>() {
+                                @Override
+                                public void onSuccess(SignInResult signInResult) {
+                                    // After an account is created, the user has signed in by default.
+                                    user = AGConnectAuth.getInstance().getCurrentUser();
+                                    user newUser = new user();
+                                    newUser.setId(user.getUid());
+                                    newUser.setFirstName(fname.getText().toString());
+                                    newUser.setLastName(lname.getText().toString());
+                                    newUser.setSubscribeTips(false);
+                                    newUser.setDrinkWater(false);
+                                    newUser.setHeight(0.00);
+                                    newUser.setWeight(0.00);
 
-                                if(male.isSelected()) {
-                                    newUser.setGender("Male");
-                                }
-                                if(female.isChecked()) {
-                                    newUser.setGender("Female");
-                                }
-                                Date dobDate = null;
-                                try {
-                                    dobDate = new SimpleDateFormat("yyyy-MM-dd").parse(dob.getText().toString());
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                newUser.setDob(dobDate);
-                                addUserInfo(newUser);
+                                    if(male.isChecked()) {
+                                        newUser.setGender("Male");
+                                    }
 
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(Exception e) {
-                                Toast.makeText(getBaseContext(), "Error: " + e.getCause() , Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                                    if(female.isChecked()) {
+                                        newUser.setGender("Female");
+                                    }
+
+                                    Date dobDate = null;
+                                    try {
+                                        dobDate = new SimpleDateFormat("yyyy-MM-dd").parse(dob.getText().toString());
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    newUser.setDob(dobDate);
+                                    addUserInfo(newUser);
+
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(Exception e) {
+                                    Toast.makeText(getBaseContext(), "Error: " + e.getCause() , Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
             }
         });
 
