@@ -301,6 +301,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="16dp"
             android:ems="10"
+            android:hint="YYYY-MM-DD"
             android:inputType="date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

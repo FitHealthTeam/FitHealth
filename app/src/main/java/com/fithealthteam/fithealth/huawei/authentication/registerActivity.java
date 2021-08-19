@@ -38,9 +38,10 @@ import java.util.Locale;
 
 public class registerActivity extends AppCompatActivity implements CloudDBZoneWrapper.userUICallBack {
 
-    private Handler handler = null;
+    private Handler handler = new Handler();
     private CloudDBZoneWrapper cloudDBZoneWrapper;
-    AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
+    AGConnectUser user;
+
 
     public registerActivity() {
         cloudDBZoneWrapper = new CloudDBZoneWrapper();
@@ -66,7 +67,7 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
         //authentication
         VerifyCodeSettings settings = new VerifyCodeSettings.Builder()
                 .action(VerifyCodeSettings.ACTION_REGISTER_LOGIN)
-                .sendInterval(5)
+                .sendInterval(30)
                 .locale(Locale.SIMPLIFIED_CHINESE)
                 .build();
         Button verifyrqt = findViewById(R.id.verify_request);
@@ -131,6 +132,7 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
                             @Override
                             public void onSuccess(SignInResult signInResult) {
                                 // After an account is created, the user has signed in by default.
+                                user = AGConnectAuth.getInstance().getCurrentUser();
                                 user newUser = new user();
                                 newUser.setId(user.getUid());
                                 newUser.setFirstName(fname.getText().toString());
@@ -149,15 +151,13 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
                                 }
                                 newUser.setDob(dobDate);
                                 addUserInfo(newUser);
-                                Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                                startActivity(intent);
-                                finish();
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(Exception e) {
-                                Toast.makeText(getBaseContext(), "Authentication code is not valid.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getBaseContext(), "Error: " + e.getCause() , Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -180,22 +180,24 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
             cloudDBZoneWrapper.addUserCallBack(registerActivity.this);
             cloudDBZoneWrapper.createObjectType();
             cloudDBZoneWrapper.openCloudDBZone();
-            AGConnectUser user = AGConnectAuth.getInstance().getCurrentUser();
-            CloudDBZoneQuery<user> query = CloudDBZoneQuery.where(user.class)
-                    .equalTo("uid", user.getUid());
-            cloudDBZoneWrapper.queryUser(query);
         }, 1000);
     }
 
     public void addUserInfo (user user) {
 
-        CloudDBZoneQuery<user> tempQuery  = CloudDBZoneQuery.where(user.class)
-                .equalTo("uid", this.user.getUid());
-
         handler.post(()->{
-            cloudDBZoneWrapper.upsertUser(user);
+            initCloudDBWrapper();
         });
-        onDestroy();
+
+        handler.postDelayed(()->{
+            cloudDBZoneWrapper.upsertUser(user);
+        }, 500);
+
+        handler.postDelayed(()->{
+            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        },1000);
     }
 
     protected void onDestroy() {
