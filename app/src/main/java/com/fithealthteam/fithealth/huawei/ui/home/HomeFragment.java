@@ -334,7 +334,7 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
     @Override
     public void onAddorQuery(List<exercise> exerciseList) {
 
-        if(exerciseList != null) {
+        if(exerciseList.size() >0) {
             double calories = 0;
             double totalCalories = 0;
 
