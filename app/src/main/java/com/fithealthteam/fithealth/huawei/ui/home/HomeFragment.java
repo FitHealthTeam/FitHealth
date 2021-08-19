@@ -340,11 +340,11 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
 
             for (exercise temp : exerciseList) {
                 calories = temp.getCalories();
-                totalCalories = +calories;
+                totalCalories += calories;
             }
 
             if (totalCalories != 0) {
-                String burnedCaloriesResult = String.format("%.2f", calories);
+                String burnedCaloriesResult = String.format("%.2f", totalCalories);
                 burnedCalories.setText(burnedCaloriesResult + " kal");
             }
         }
