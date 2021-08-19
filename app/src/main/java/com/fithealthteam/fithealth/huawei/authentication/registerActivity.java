@@ -38,7 +38,7 @@ import java.util.Locale;
 
 public class registerActivity extends AppCompatActivity implements CloudDBZoneWrapper.userUICallBack {
 
-    private Handler handler = null;
+    private Handler handler = new Handler();
     private CloudDBZoneWrapper cloudDBZoneWrapper;
     AGConnectUser user;
 
@@ -67,7 +67,7 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
         //authentication
         VerifyCodeSettings settings = new VerifyCodeSettings.Builder()
                 .action(VerifyCodeSettings.ACTION_REGISTER_LOGIN)
-                .sendInterval(5)
+                .sendInterval(30)
                 .locale(Locale.SIMPLIFIED_CHINESE)
                 .build();
         Button verifyrqt = findViewById(R.id.verify_request);
@@ -198,7 +198,6 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
             startActivity(intent);
             finish();
         },600);
-        onDestroy();
     }
 
     protected void onDestroy() {
