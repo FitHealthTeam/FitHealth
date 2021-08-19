@@ -54,11 +54,17 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
 
     // slider images list
     SliderView mSliderView;
-    int[] images = {R.drawable.healthtips_1,
+    int[] images = {R.drawable.oneone,
+            R.drawable.healthtips_1,
+            R.drawable.twotwo,
             R.drawable.healthtips_2,
+            R.drawable.threethree,
             R.drawable.healthtips_3,
+            R.drawable.fourfour,
             R.drawable.healthtips_4,
-            R.drawable.healthtips_5};
+            R.drawable.fivefive,
+            R.drawable.healthtips_5,
+            R.drawable.sixsix};
 
     CalendarView mCalenderView;
     TextView dateSelected;
