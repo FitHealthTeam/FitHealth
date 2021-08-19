@@ -137,6 +137,11 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
                                 newUser.setId(user.getUid());
                                 newUser.setFirstName(fname.getText().toString());
                                 newUser.setLastName(lname.getText().toString());
+                                newUser.setSubscribeTips(false);
+                                newUser.setDrinkWater(false);
+                                newUser.setHeight(0.00);
+                                newUser.setWeight(0.00);
+
                                 if(male.isSelected()) {
                                     newUser.setGender("Male");
                                 }
@@ -176,11 +181,11 @@ public class registerActivity extends AppCompatActivity implements CloudDBZoneWr
 
     //Initialize Cloud DB Wrapper to use
     public void initCloudDBWrapper(){
-        handler.postDelayed(() -> {
+        handler.post(() -> {
             cloudDBZoneWrapper.addUserCallBack(registerActivity.this);
             cloudDBZoneWrapper.createObjectType();
             cloudDBZoneWrapper.openCloudDBZone();
-        }, 1000);
+        });
     }
 
     public void addUserInfo (user user) {
