@@ -35,10 +35,8 @@ import com.huawei.hms.maps.HuaweiMap;
 import com.huawei.hms.maps.LocationSource;
 import com.huawei.hms.maps.MapView;
 import com.huawei.hms.maps.OnMapReadyCallback;
-import com.huawei.hms.maps.model.BitmapDescriptorFactory;
 import com.huawei.hms.maps.model.LatLng;
 import com.huawei.hms.maps.model.Marker;
-import com.huawei.hms.maps.model.MarkerOptions;
 import com.huawei.hms.maps.model.PolylineOptions;
 
 import java.text.DecimalFormat;
@@ -82,7 +80,7 @@ public class MotionTrackingActivity extends AppCompatActivity implements OnMapRe
         checkLocationSettings();
 
         // initialize MapView
-        mapView = findViewById(R.id.hw_mapview);
+        mapView = findViewById(R.id.Huawei_MapView);
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
@@ -91,10 +89,10 @@ public class MotionTrackingActivity extends AppCompatActivity implements OnMapRe
         mapView.getMapAsync(this);
 
         //show the measured movement to users
-        mTvSpeed = findViewById(R.id.tv_speed);
-        mTvDistance = findViewById(R.id.tv_distance);
-        mTime = findViewById(R.id.cm_time);
-        mTvStart = findViewById(R.id.tv_start);
+        mTvSpeed = findViewById(R.id.movementSpeed);
+        mTvDistance = findViewById(R.id.movedDistance);
+        mTime = findViewById(R.id.elapsedTime);
+        mTvStart = findViewById(R.id.motionTrackingStart);
         mTvStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,6 +168,7 @@ public class MotionTrackingActivity extends AppCompatActivity implements OnMapRe
      */
     private void removeLocationUpdatesWithCallback() {
         try {
+
             Task<Void> voidTask = fusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
             voidTask.addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
