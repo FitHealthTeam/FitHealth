@@ -32,7 +32,6 @@ import com.fithealthteam.fithealth.huawei.BMIInput.BMIInput_Activity;
 import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
 import com.fithealthteam.fithealth.huawei.CloudDB.exercise;
 import com.fithealthteam.fithealth.huawei.CloudDB.user;
-import com.fithealthteam.fithealth.huawei.CreateDietPlan.CreateDietPlan_Activity;
 import com.fithealthteam.fithealth.huawei.R;
 import com.fithealthteam.fithealth.huawei.authentication.authenticateActivity;
 import com.fithealthteam.fithealth.huawei.databinding.FragmentHomeBinding;
