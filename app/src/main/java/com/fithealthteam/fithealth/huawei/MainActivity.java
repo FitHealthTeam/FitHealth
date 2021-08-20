@@ -95,9 +95,9 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences("MySharedPreferences",0);
 
-       boolean excesssCalorySwitch = pref.getBoolean("excessCalories",  true);
-       boolean drinkWaterReminderSwitch = pref.getBoolean("drinkWaterReminder",  true);
-       boolean subscriptionSwitch = pref.getBoolean("subscription", true);
+       boolean excesssCalorySwitch = pref.getBoolean("excessCalories",  false);
+       boolean drinkWaterReminderSwitch = pref.getBoolean("drinkWaterReminder",  false);
+       boolean subscriptionSwitch = pref.getBoolean("subscription", false);
 
 
         if(excesssCalorySwitch == true) {

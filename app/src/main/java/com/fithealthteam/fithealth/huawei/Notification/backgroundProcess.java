@@ -19,7 +19,7 @@ public class backgroundProcess extends BroadcastReceiver{
                     .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
                     .setContentTitle(intent.getStringExtra("pushTitle"))
                     .setContentText(intent.getStringExtra("pushMessage"))
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setPriority(NotificationManagerCompat.IMPORTANCE_HIGH)
                     .setAutoCancel(true);
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
