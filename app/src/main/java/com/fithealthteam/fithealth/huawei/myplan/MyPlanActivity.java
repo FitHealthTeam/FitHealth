@@ -166,7 +166,7 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
         }
 
         TextView burntCaloriesText = findViewById(R.id.BurntCalories);
-        burntCaloriesText.setText(burntCalories + " kcal");
+        burntCaloriesText.setText(String.format("%.2f", burntCalories) + " kcal");
 
         //calculate the count
         TextView completionText = findViewById(R.id.taskCompletionIndoor);
@@ -230,7 +230,7 @@ public class MyPlanActivity extends AppCompatActivity implements CloudDBZoneWrap
 
         //show the burning calories
         TextView burntCaloriesText = findViewById(R.id.BurntCalories);
-        burntCaloriesText.setText( burntCalories + " kcal");
+        burntCaloriesText.setText( String.format("%.2f", burntCalories) + " kcal");
 
         //calculate the count
         TextView completionText = findViewById(R.id.taskCompletionIndoor);

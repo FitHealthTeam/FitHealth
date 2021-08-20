@@ -18,7 +18,6 @@ import android.view.WindowManager;
 import android.widget.Switch;
 
 import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
-import com.fithealthteam.fithealth.huawei.CreateDietPlan.CreateDietPlan_Activity;
 import com.fithealthteam.fithealth.huawei.Notification.backgroundProcess;
 import com.fithealthteam.fithealth.huawei.Notification.backgroundProcess2;
 import com.fithealthteam.fithealth.huawei.Notification.backgroundProcess3;
