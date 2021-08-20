@@ -12,10 +12,10 @@ import com.fithealthteam.fithealth.huawei.R;
 
 import java.util.Random;
 
-public class backgroundProcess extends BroadcastReceiver{
+public class backgroundProcess3 extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("MyAPP", "background is called");
+            Log.d("MyAPP3", "background is called");
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, intent.getStringExtra("channelID"))
                     .setSmallIcon(R.drawable.auth_fithealthlogo)
                     .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })

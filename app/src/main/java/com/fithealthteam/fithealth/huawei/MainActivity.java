@@ -20,6 +20,8 @@ import android.widget.Switch;
 import com.fithealthteam.fithealth.huawei.CloudDB.CloudDBZoneWrapper;
 import com.fithealthteam.fithealth.huawei.CreateDietPlan.CreateDietPlan_Activity;
 import com.fithealthteam.fithealth.huawei.Notification.backgroundProcess;
+import com.fithealthteam.fithealth.huawei.Notification.backgroundProcess2;
+import com.fithealthteam.fithealth.huawei.Notification.backgroundProcess3;
 import com.fithealthteam.fithealth.huawei.authentication.authenticateActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -111,22 +113,42 @@ public class MainActivity extends AppCompatActivity {
         if(drinkWaterReminderSwitch == true) {
             Log.i("drinkNotify", "drinkWater is reminding");
             String chnID2 = "fithealth2";
-            initializeNotification(chnID2);
-            notifyMessage(this,0.001, "Drink Water Notification"
+            initializeNotification2(chnID2);
+            notifyMessage2(this, 0.002, "Drink Water Notification"
                     , "Reminder: Remember to drink your water!", chnID2);
         }
 
         if(subscriptionSwitch == true) {
             Log.i("subscribeNotify", "subscription is reminding");
             String chnID3 = "fithealth3";
-            initializeNotification(chnID3);
-            notifyMessage(this,0.001, "Subcription Reminder"
+            initializeNotification3(chnID3);
+            notifyMessage3(this,0.003, "Subcription Reminder"
                     , "Don' missed out our new tips!", chnID3);
         }
     }
 
     public void notifyMessage(Context c, double interval, String pushTitle, String pushMessage, String channelID) {
         Intent intent = new Intent(c, backgroundProcess.class);
+        intent.putExtra("pushTitle", pushTitle);
+        intent.putExtra("pushMessage", pushMessage);
+        intent.putExtra("channelID", channelID);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(c,0,intent,0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), (long) (interval*3600000), pendingIntent);
+    }
+
+    public void notifyMessage2(Context c, double interval, String pushTitle, String pushMessage, String channelID) {
+        Intent intent = new Intent(c, backgroundProcess2.class);
+        intent.putExtra("pushTitle", pushTitle);
+        intent.putExtra("pushMessage", pushMessage);
+        intent.putExtra("channelID", channelID);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(c,0,intent,0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), (long) (interval*3600000), pendingIntent);
+    }
+
+    public void notifyMessage3(Context c, double interval, String pushTitle, String pushMessage, String channelID) {
+        Intent intent = new Intent(c, backgroundProcess3.class);
         intent.putExtra("pushTitle", pushTitle);
         intent.putExtra("pushMessage", pushMessage);
         intent.putExtra("channelID", channelID);
@@ -148,4 +170,29 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void initializeNotification2(String channel_id){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = "FitHealthReminderChannel2";
+            String description = "Channel for fithealth2";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel(channel_id, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    public void initializeNotification3(String channel_id){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = "FitHealthReminderChannel2";
+            String description = "Channel for fithealth2";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel(channel_id, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 }

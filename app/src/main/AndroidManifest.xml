@@ -41,8 +41,6 @@
         <activity
             android:name=".authentication.authenticateActivity"
             android:exported="true" />
-        <activity android:name=".motionTracking.ExerciseMapActivity" android:exported="true"/>
-        <activity android:name=".motionTracking.MotionTrackingActivity" android:exported="true"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -56,11 +54,15 @@
 
         <receiver android:name=".ui.home.ReminderBroadcast" />
 
-        <receiver android:name=".Notification.backgroundProcess">
-            <intent-filter>
-                <action android:name="backgroundProcess"></action>
-            </intent-filter>
-        </receiver>
+        <receiver android:name=".Notification.backgroundProcess3"
+            android:enabled="true"/>
+
+        <receiver android:name=".Notification.backgroundProcess2"
+            android:enabled="true"/>
+
+        <receiver android:name=".Notification.backgroundProcess"
+            android:enabled="true"/>
+
     </application>
 
 </manifest>
