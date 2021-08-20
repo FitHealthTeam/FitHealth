@@ -248,9 +248,9 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
         super.onResume();
         //init cloudDBZoneWrapper and update the value
         handler = new Handler(Looper.getMainLooper());
-        handler.post(()->{
-            initCloudDBZone();
-        });
+        //handler.post(()->{
+        //    initCloudDBZone();
+        //});
     }
 
     //initialize cloudDBZone
@@ -281,6 +281,8 @@ public class HomeFragment extends Fragment implements CloudDBZoneWrapper.userUIC
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        //close the cloudDBZone when destroy
+        handler.post(cloudDBZoneWrapperInstance::closeCloudDBZone);
     }
 
     // User
