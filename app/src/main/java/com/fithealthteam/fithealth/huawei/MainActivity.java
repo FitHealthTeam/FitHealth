@@ -43,11 +43,6 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    //private NotificationManagerCompat notificationManager;
-
-    //account for testing and debuging
-    //id = fh1@xkx.me
-    //password = test123456
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +65,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d("HMS Auth User", user.getEmail());
             Log.d("HMS Auth User UID", user.getUid());
 
-            // Intent to CreateDiet
-            /*Intent intent = new Intent(getApplicationContext(),CreateDietPlan_Activity.class);
-            startActivity(intent);*/
-
         }
 
         //li-hao check for whether newUser is true --> if (newUser == true) --> go to create Diet plan activity to load data --> store to db --> intent back to here
@@ -92,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        //notificationManager = NotificationManagerCompat.from(this);
         Handler handler = new Handler();
 
         SharedPreferences pref = getSharedPreferences("MySharedPreferences",0);
@@ -103,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(excesssCalorySwitch == true) {
-            Log.i("excessNotify", "excessCalories is reminding");
+            //Log.i("excessNotify", "excessCalories is reminding");
             String chnID = "fithealth1";
             initializeNotification(chnID);
             notifyMessage(this,0.001, "Calories Intake Reminder"
@@ -111,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(drinkWaterReminderSwitch == true) {
-            Log.i("drinkNotify", "drinkWater is reminding");
+            //Log.i("drinkNotify", "drinkWater is reminding");
             String chnID2 = "fithealth2";
             initializeNotification2(chnID2);
             notifyMessage2(this, 0.002, "Drink Water Notification"
@@ -119,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(subscriptionSwitch == true) {
-            Log.i("subscribeNotify", "subscription is reminding");
+            //Log.i("subscribeNotify", "subscription is reminding");
             String chnID3 = "fithealth3";
             initializeNotification3(chnID3);
             notifyMessage3(this,0.003, "Subcription Reminder"
