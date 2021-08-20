@@ -36,6 +36,8 @@ import com.fithealthteam.fithealth.huawei.databinding.ActivityMainBinding;
 import com.huawei.agconnect.auth.AGConnectAuth;
 import com.huawei.agconnect.auth.AGConnectUser;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
@@ -93,16 +95,16 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences("MySharedPreferences",0);
 
-       boolean excesssCalorySwitch = pref.getBoolean("excessCalories",  false);
-       boolean drinkWaterReminderSwitch = pref.getBoolean("drinkWaterReminder",  false);
-       boolean subscriptionSwitch = pref.getBoolean("subscription", false);
+       boolean excesssCalorySwitch = pref.getBoolean("excessCalories",  true);
+       boolean drinkWaterReminderSwitch = pref.getBoolean("drinkWaterReminder",  true);
+       boolean subscriptionSwitch = pref.getBoolean("subscription", true);
 
 
         if(excesssCalorySwitch == true) {
             Log.i("excessNotify", "excessCalories is reminding");
             String chnID = "fithealth1";
             initializeNotification(chnID);
-            notifyMessage(this,8, "Calories Intake Reminder"
+            notifyMessage(this,0.001, "Calories Intake Reminder"
                     , "Reminder: Beware with your calories intake per day!", chnID);
         }
 
@@ -110,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i("drinkNotify", "drinkWater is reminding");
             String chnID2 = "fithealth2";
             initializeNotification(chnID2);
-            notifyMessage(this,24/8, "Drink Water Notification"
+            notifyMessage(this,0.001, "Drink Water Notification"
                     , "Reminder: Remember to drink your water!", chnID2);
         }
 
@@ -118,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i("subscribeNotify", "subscription is reminding");
             String chnID3 = "fithealth3";
             initializeNotification(chnID3);
-            notifyMessage(this,12, "Subcription Reminder"
+            notifyMessage(this,0.001, "Subcription Reminder"
                     , "Don' missed out our new tips!", chnID3);
         }
     }
@@ -128,9 +130,9 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("pushTitle", pushTitle);
         intent.putExtra("pushMessage", pushMessage);
         intent.putExtra("channelID", channelID);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,intent,0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(c,0,intent,0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, 2000, (long) (interval*AlarmManager.INTERVAL_HOUR), pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), (long) (interval*3600000), pendingIntent);
     }
 
     public void initializeNotification(String channel_id){
