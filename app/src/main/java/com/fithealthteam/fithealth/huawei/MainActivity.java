@@ -97,36 +97,40 @@ public class MainActivity extends AppCompatActivity {
        boolean drinkWaterReminderSwitch = pref.getBoolean("drinkWaterReminder",  false);
        boolean subscriptionSwitch = pref.getBoolean("subscription", false);
 
+
         if(excesssCalorySwitch == true) {
             Log.i("excessNotify", "excessCalories is reminding");
-            initializeNotification("fithealth1");
-            notifyMessage(this,8*60*60, "Calories Intake Reminder"
-                    , "Reminder: Beware with your calories intake per day!");
+            String chnID = "fithealth1";
+            initializeNotification(chnID);
+            notifyMessage(this,8, "Calories Intake Reminder"
+                    , "Reminder: Beware with your calories intake per day!", chnID);
         }
 
         if(drinkWaterReminderSwitch == true) {
             Log.i("drinkNotify", "drinkWater is reminding");
-            initializeNotification("fithealth2");
-            notifyMessage(this,(24/8)*60*60, "Drink Water Notification"
-                    , "Reminder: Remember to drink your water!");
+            String chnID2 = "fithealth2";
+            initializeNotification(chnID2);
+            notifyMessage(this,24/8, "Drink Water Notification"
+                    , "Reminder: Remember to drink your water!", chnID2);
         }
 
         if(subscriptionSwitch == true) {
             Log.i("subscribeNotify", "subscription is reminding");
-            initializeNotification("fithealth3");
-            notifyMessage(this,12*60*60, "Subcription Reminder"
-                    , "Don' missed out our new tips!");
+            String chnID3 = "fithealth3";
+            initializeNotification(chnID3);
+            notifyMessage(this,12, "Subcription Reminder"
+                    , "Don' missed out our new tips!", chnID3);
         }
     }
 
-    public void notifyMessage(Context c, double interval, String pushTitle, String pushMessage) {
+    public void notifyMessage(Context c, double interval, String pushTitle, String pushMessage, String channelID) {
         Intent intent = new Intent(c, backgroundProcess.class);
         intent.putExtra("pushTitle", pushTitle);
         intent.putExtra("pushMessage", pushMessage);
+        intent.putExtra("channelID", channelID);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,intent,0);
-
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, 1000, (long) (1000*interval), pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, 2000, (long) (interval*AlarmManager.INTERVAL_HOUR), pendingIntent);
     }
 
     public void initializeNotification(String channel_id){

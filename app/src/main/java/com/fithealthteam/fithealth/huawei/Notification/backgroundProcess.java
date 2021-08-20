@@ -14,12 +14,13 @@ public class backgroundProcess extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d("MyAPP", "background is called");
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "FitHealth")
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, intent.getStringExtra("channelID"))
                     .setSmallIcon(R.drawable.auth_fithealthlogo)
                     .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
                     .setContentTitle(intent.getStringExtra("pushTitle"))
                     .setContentText(intent.getStringExtra("pushMessage"))
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setAutoCancel(true);
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
             notificationManager.notify(200,builder.build());
