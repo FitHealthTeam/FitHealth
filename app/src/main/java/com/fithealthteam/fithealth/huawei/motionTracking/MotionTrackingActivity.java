@@ -34,12 +34,14 @@ import com.huawei.hms.maps.CameraUpdateFactory;
 import com.huawei.hms.maps.HuaweiMap;
 import com.huawei.hms.maps.LocationSource;
 import com.huawei.hms.maps.MapView;
+import com.huawei.hms.maps.MapsInitializer;
 import com.huawei.hms.maps.OnMapReadyCallback;
 import com.huawei.hms.maps.model.LatLng;
 import com.huawei.hms.maps.model.Marker;
 import com.huawei.hms.maps.model.PolylineOptions;
 
 import java.text.DecimalFormat;
+import java.util.Calendar;
 
 public class MotionTrackingActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -52,7 +54,7 @@ public class MotionTrackingActivity extends AppCompatActivity implements OnMapRe
     private FusedLocationProviderClient fusedLocationProviderClient;
     private PathBean path = new PathBean();
     private long seconds = 0;
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private Handler handler = new Handler();
     private DecimalFormat decimalFormat = new DecimalFormat("0.00");
     private PolylineOptions polylineOptions;
     private boolean mIsRunning = false;
@@ -60,6 +62,8 @@ public class MotionTrackingActivity extends AppCompatActivity implements OnMapRe
     private Runnable timeRunnable = new Runnable() {
         @Override
         public void run() {
+            Log.d("MAP_Data", Long.toString(Calendar.getInstance().getTimeInMillis()) + " second : "
+            + seconds);
             mTime.setText(formatSeconds());
             handler.postDelayed(this, 1000);
         }
@@ -145,22 +149,22 @@ public class MotionTrackingActivity extends AppCompatActivity implements OnMapRe
 
     @Override
     protected void onStart() {
-        super.onStart();
         mapView.onStart();
+        super.onStart();
     }
 
     @Override
     protected void onStop() {
-        super.onStop();
         mapView.onStop();
+        super.onStop();
     }
 
     @Override
     protected void onDestroy() {
         removeLocationUpdatesWithCallback();
-        super.onDestroy();
         handler.removeCallbacksAndMessages(null);
         mapView.onDestroy();
+        super.onDestroy();
     }
 
     /**
@@ -194,14 +198,14 @@ public class MotionTrackingActivity extends AppCompatActivity implements OnMapRe
 
     @Override
     protected void onResume() {
-        super.onResume();
         mapView.onResume();
+        super.onResume();
     }
 
     @Override
     public void onLowMemory() {
-        super.onLowMemory();
         mapView.onLowMemory();
+        super.onLowMemory();
     }
 
     private void checkLocationSettings() {
@@ -276,18 +280,23 @@ public class MotionTrackingActivity extends AppCompatActivity implements OnMapRe
 
         path.addPoint(latLng);
         float distance = path.updateDistance();
-        double sportMile = distance / 1000d;
+        double sportMile = distance / 1000.00;
 
         if (seconds > 0) {
-            double distribution = (double) seconds / 60d / sportMile;
+            double distribution = sportMile / ((double) seconds / 60d /60d);
             path.setDistribution(distribution);
             mTvSpeed.setText(decimalFormat.format(distribution));
             mTvDistance.setText(decimalFormat.format(sportMile));
+
+            Log.d("MAP_Data", "Distribution : " + distribution);
         } else {
             path.setDistribution(0d);
             mTvSpeed.setText("0.00");
             mTvDistance.setText("0.00");
         }
+        Log.d("MAP_Data", "Seconds : " +Long.toString(seconds)
+        + "\ndistance : " + distance
+        + "\nsportMile : " + sportMile);
 
         //draw the path on the map view
         polylineOptions.add(latLng);
@@ -316,6 +325,7 @@ public class MotionTrackingActivity extends AppCompatActivity implements OnMapRe
     @Override
     public void onMapReady(HuaweiMap huaweiMap) {
         hwMap = huaweiMap;
+        hwMap.setMapType(HuaweiMap.MAP_TYPE_NORMAL);
         hwMap.setMyLocationEnabled(true);
         hwMap.getUiSettings().setZoomControlsEnabled(false);
 
