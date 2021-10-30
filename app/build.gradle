@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.fithealthteam.fithealth.huawei"
-        minSdk 21
+        minSdk 23
         targetSdk 30
         versionCode 1
         versionName "1.0"
@@ -22,6 +22,15 @@ android {
             storePassword 'MAD@FitHealth_2021'
             keyPassword 'MAD@FitHealth_2021'
             keyAlias 'key0'
+        }
+
+        debug {
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+        release {
+            v1SigningEnabled true
+            v2SigningEnabled true
         }
     }
     buildTypes {
